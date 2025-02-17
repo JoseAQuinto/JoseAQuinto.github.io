@@ -1,0 +1,280 @@
+.bienvenidosDT {
+  display: flex; /* Diseño en línea */
+  justify-content: space-between; /* Espaciado entre texto e imagen */
+  align-items: flex-start; /* Alineación superior */
+  padding: 50px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 55px;
+  max-width: 100%;
+  margin: 6%;
+  margin-top: 170px;
+  gap: 22px; /* Espacio entre texto e imagen */
+}
+
+.bienvenidosDT .texto {
+  flex: 2; /* Más espacio para texto */
+}
+
+.bienvenidosDT .texto h2 {
+  font-size: 35px;
+  text-align: center;
+  margin: 0 0 10px 0;
+}
+
+.bienvenidosDT .texto hr {
+  border: 0;
+  height: 1px;
+  background: #ccc;
+  margin-bottom: 15px;
+}
+
+.bienvenidosDT .texto p {
+  font-size: 20px;
+  line-height: 1.8;
+  color: #555;
+  text-align: justify;
+}
+
+.bienvenidosDT .imagen {
+  flex: 1;
+  text-align: center;
+  margin: auto;
+}
+
+.bienvenidosDT .imagen img {
+  max-width: 100%;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.videos {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.fiestacumpleaños, .cenasempresa {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 30px;
+  border-radius: 30px;
+  max-width: 40%;
+  text-align: center;
+  font-size: 22px;
+}
+
+.videos .fiestacumpleaños video {
+  width: 90%;
+  margin-bottom: 40px;
+  border-radius: 2%;
+}
+
+.videos .cenasempresa video {
+  width: 85%;
+  margin-bottom: 40px;
+  border-radius: 2%;
+}
+
+.especiales-mes {
+  padding: 50px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 30px;
+  max-width: 100%;
+  margin: 6%;
+  text-align: center;
+}
+
+.especiales-mes h2 {
+  font-size: 30px;
+  margin-bottom: 20px;
+  color: #3c3c3b;
+  display: inline-block;
+  padding-bottom: 40px;
+}
+
+.platos {
+  display: flex;
+  justify-content: space-between;
+  gap: 2%;
+}
+
+.plato {
+  flex: 5;
+  border-radius: 20px;
+  transition: transform 0.4s ease;
+}
+
+.plato:hover {
+  transform: scale(1.1);
+}
+
+.plato img {
+  width: 80%;
+  height: 80%;
+  border-radius: 30px;
+}
+
+.plato p {
+  font-size: 25px;
+  margin-top: 25px;
+  text-align: center;
+  color: #3c3c3b;
+}
+
+.eventos-ubicacion {
+  display: flex;
+  width: 100%;
+  gap: 2%;
+  justify-content: space-around;
+}
+
+.eventos-ubicacion h2 {
+  margin-top: 4%;
+}
+
+.ubicacion {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  width: 60%;
+  text-align: center;
+  font-size: 20px;
+  margin: 40px auto; /* Centrado horizontal */
+  padding: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.ubicacion h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.ubicacion p {
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.mapa {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto; /* Centrado */
+  padding: 10px;
+}
+
+.mapa iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9; /* Proporción estándar para mapas */
+  border: none;
+  border-radius: 10px;
+}
+
+.seccionnavidad {
+  display: flex; /* Diseño en línea */
+  justify-content: space-between; /* Espaciado entre texto e imagen */
+  align-items: flex-start; /* Alineación superior */
+  padding: 50px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 55px;
+  max-width: 100%;
+  margin: 6%;
+  margin-top: 170px;
+  gap: 20px; /* Espacio entre texto e imagen */
+}
+
+.seccionnavidad .texto {
+  flex: 2; /* Más espacio para texto */
+}
+
+.seccionnavidad .texto h2 {
+  font-size: 35px;
+  text-align: center;
+  margin: 0 0 10px 0;
+}
+
+.seccionnavidad .texto hr {
+  border: 0;
+  height: 1px;
+  background: #ccc;
+  margin-bottom: 15px;
+}
+
+.seccionnavidad .texto p {
+  width: 85%;
+  font-size: 20px;
+  line-height: 1.8;
+  color: #555;
+  text-align: justify;
+}
+
+.seccionnavidad .imagen {
+  flex: 1;
+  text-align: center;
+}
+
+.seccionnavidad .imagen img {
+  max-width: 100%;
+  border-radius: 15px;
+  margin-top: 30%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.reserva {
+  text-align: center;
+  padding: 40px;
+  margin-bottom: 15px;
+}
+
+.reserva p {
+  color: white;
+  margin-top: 1%;
+}
+
+.btn-reserva {
+  display: inline-block;
+  padding: 15px 35px;
+  position: relative;
+  color: #000000;
+  font-size: 30px;
+  border-radius: 20px;
+  border: 0.5px solid black;
+  overflow: hidden;
+  text-decoration: none;
+  background-image: url('../Imagenes/fondomaderaclaro.webp');
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.btn-reserva:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.swiper-container {
+  width: 100%;
+  height: 500px;
+  margin-top: 20px;
+  margin-bottom: 200px;
+}
+
+.swiper-slide img {
+  width: 80%;
+  height: 100%;
+  margin-top: 100px;
+  object-fit: cover;
+  object-position: center;
+  transform:translateY(150px); /* ajusta la imagen del slide */
+  transform:translateX(13%);
+}
+
+
+
+.swiper-button-next, .swiper-button-prev {
+  color: #fff;
+}
+
+.swiper-pagination {
+  position: absolute;
+  bottom: 10px;
+}
+

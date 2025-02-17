@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/DTGeneral.css">
+    <link rel="stylesheet" href="../css/DTContacto.css" />
+    <title>Formulario de Contacto</title>
+</head>
+
+<body>
+    <!-- Menú de navegación -->
+    <header>
+        <nav class="navbar">
+            <ul>
+                <li><a href="../DolceTavolaHome.html" class="itemmenu">HOME</a></li>
+                <li class="submenu">
+                    <a href="#" class="itemmenu">MENÚ</a>
+                    <ul>
+                        <li class="subsubmenu">
+                            <a href="DolceTavolaMenu.html" class="itemmenu">Menú del día</a>
+                        </li>
+                        <li class="subsubmenu">
+                            <a href="#" class="itemmenu">Arroces</a>
+                            <ul>
+                                <li><a href="DolceTavolaRisottoMilanesa.html" class="itemmenu">Risotto a la Milanesa</a></li>
+                                <li><a href="DolceTavolaRisottoFruttiMate.html" class="itemmenu">Risotto Frutti di Mare</a></li>
+                                <li><a href="DolceTavolaRisottoaiFunghi.html" class="itemmenu">Risotto ai Funghi</a></li>
+                            </ul>
+                        </li>
+                        <li class="subsubmenu">
+                            <a href="#" class="itemmenu">Pastas</a>
+                            <ul>
+                                <li><a href="DolceTavolaLasagnaBolognese.html" class="itemmenu">Lasagna alla Bolognese</a></li>
+                                <li><a href="DolceTavolaSpaghettiCarbonara.html" class="itemmenu">Spaghetti Carbonara</a></li>
+                                <li><a href="DolceTavolaPenneAlPesto.html" class="itemmenu">Penne al Pesto</a></li>
+                            </ul>
+                        </li>
+                        <li class="subsubmenu">
+                            <a href="#" class="itemmenu">Pizzas</a>
+                            <ul>
+                                <li><a href="DolceTavolaPizzaMargarita.html" class="itemmenu">Pizza Margherita</a></li>
+                                <li><a href="DolceTavolaPizzaDiavola.html" class="itemmenu">Pizza Diavola</a></li>
+                                <li><a href="DolceTavolaPizzaCuatroFormaggi.html" class="itemmenu">Pizza Quattro Formaggi</a></li>
+                            </ul>
+                        </li>
+                        <li class="subsubmenu">
+                            <a href="#" class="itemmenu">Postres</a>
+                            <ul>
+                                <li><a href="DolceTavolaTiramisu.html" class="itemmenu">Tiramisú</a></li>
+                                <li><a href="DolceTavolaPannaCotta.html" class="itemmenu">Panna Cotta</a></li>
+                                <li><a href="DolceTavolaCannoliSiciliani.html" class="itemmenu">Cannoli Siciliani</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="../DolceTavolaHome.html"><img src="../Imagenes/LogoSinFondoLDT.png" alt="La Dolce Tavola" class="logo" /></a>
+                </li>
+                <li><a href="DolceTavolaReservas.html" class="itemmenu">RESERVAS</a></li>
+                <li class="submenu"><a href="DolceTavolaContacto.html" class="itemmenu">CONTACTO</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Formulario de contacto -->
+    <div class="contenido-principal">
+        <div class="contacto">
+            <h2>Contacte con nosotros</h2>
+            <hr />
+            <form>
+                <label for="name">Nombre: *</label>
+                <input type="text" id="name" placeholder="Nombre completo" required />
+
+                <label for="email">Email: *</label>
+                <input type="email" id="email" placeholder="ejemplo@gmail.com" required />
+
+                <label for="phone">Teléfono: *</label>
+                <input type="tel" id="phone" placeholder="123-456-789" required />
+
+                <fieldset>
+                    <legend>Me pongo en contacto por: *</legend>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="contact-reason" /> Organización de
+                            evento</label>
+                        <label><input type="checkbox" name="contact-reason" /> Solicitud
+                            laboral</label>
+                        <label><input type="checkbox" name="contact-reason" /> Colaboración de
+                            Marketing</label>
+                        <label><input type="checkbox" name="contact-reason" /> Colaboración al
+                            espectáculo</label>
+                        <label><input type="checkbox" name="contact-reason" /> Inconveniente en
+                            servicio</label>
+                        <label><input type="checkbox" name="contact-reason" /> Otro</label>
+                    </div>
+                </fieldset>
+
+                <div class="form-group">
+                    <label for="restaurant">Seleccione el restaurante: *</label>
+                    <select id="restaurant" name="restaurant" required>
+                        <option value="">-- Seleccione un restaurante --</option>
+                        <option value="roma">D.T Roma</option>
+                        <option value="venecia">D.T Venecia</option>
+                        <option value="florencia">D.T Florencia</option>
+                    </select>
+                    </div>
+                    <br>
+
+                <label for="observations">Observaciones:</label>
+                <textarea id="observations"
+                    placeholder="Me gustaría reservar todo el local para una fiesta privada."></textarea>
+
+                <button type="submit">Enviar</button>
+                <p class="mandatory-note">(Los campos con * son obligatorios)</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="footer">
+        <div class="footer-logo">
+            <img src="../Imagenes/LogoSinFondoLDT.png" alt="La Dolce Tavola">
+        </div>
+        <p class="footer-text">© Todos los derechos reservados - La Dolce Tavola</p>
+        <div class="social-media">
+            <a href="https://web.whatsapp.com/"><img src="../Imagenes/whatssaplogo.png" alt="WhatsApp"></a>
+            <a href="https://www.instagram.com/"><img src="../Imagenes/instagramlogo.png" alt="Instagram"></a>
+            <a href="https://x.com/"><img src="../Imagenes/xlogo.png" alt="Twitter"></a>
+            <a href="https://www.youtube.com/"><img src="../Imagenes/youtubelogo.png" alt="YouTube"></a>
+        </div>
+    </footer>
+</body>
+
+</html>

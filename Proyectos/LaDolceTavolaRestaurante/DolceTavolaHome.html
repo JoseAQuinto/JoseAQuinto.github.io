@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>La Dolce Tavola</title>
+    
+    <!-- Incluir SwiperJS CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <!-- Incluir SwiperJS desde CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- Enlazar el archivo externo -->
+    <script src="js/swiper-init.js"></script>
+
+    <link rel="stylesheet" href="css/DTGeneral.css">
+    <link rel="stylesheet" href="css/DTHome.css" />
+    
+</head>
+
+
+<body>
+    <!-- Encabezado -->
+    <header>
+        <nav class="navbar">
+            <ul>
+                <li><a href="HTML/DolceTavolaHome.html" class="itemmenu">HOME</a></li>
+                <li class="submenu">
+                    <a href="#" class="itemmenu">MENÚ</a>
+                    <ul>
+                        <li class="subsubmenu">
+                            <a href="HTML/DolceTavolaMenu.html" class="itemmenu">Menú del día</a>
+                        </li>
+                        <li class="subsubmenu">
+                            <a href="#" class="itemmenu">Arroces</a>
+                            <ul>
+                                <li><a href="HTML/DolceTavolaRisottoMilanesa.html" class="itemmenu">Risotto a la Milanesa</a></li>
+                                <li><a href="HTML/DolceTavolaRisottoFruttiMate.html" class="itemmenu">Risotto Frutti di Mare</a></li>
+                                <li><a href="HTML/DolceTavolaRisottoaiFunghi.html" class="itemmenu">Risotto ai Funghi</a></li>
+                            </ul>
+                        </li>
+                        <li class="subsubmenu">
+                            <a href="#" class="itemmenu">Pastas</a>
+                            <ul>
+                                <li><a href="HTML/DolceTavolaLasagnaBolognese.html" class="itemmenu">Lasagna alla Bolognese</a></li>
+                                <li><a href="HTML/DolceTavolaSpaghettiCarbonara.html" class="itemmenu">Spaghetti Carbonara</a></li>
+                                <li><a href="HTML/DolceTavolaPenneAlPesto.html" class="itemmenu">Penne al Pesto</a></li>
+                            </ul>
+                        </li>
+                        <li class="subsubmenu">
+                            <a href="#" class="itemmenu">Pizzas</a>
+                            <ul>
+                                <li><a href="HTML/DolceTavolaPizzaMargarita.html" class="itemmenu">Pizza Margherita</a></li>
+                                <li><a href="HTML/DolceTavolaPizzaDiavola.html" class="itemmenu">Pizza Diavola</a></li>
+                                <li><a href="HTML/DolceTavolaPizzaCuatroFormaggi.html" class="itemmenu">Pizza Quattro Formaggi</a></li>
+                            </ul>
+                        </li>
+                        <li class="subsubmenu">
+                            <a href="#" class="itemmenu">Postres</a>
+                            <ul>
+                                <li><a href="HTML/DolceTavolaTiramisu.html" class="itemmenu">Tiramisú</a></li>
+                                <li><a href="HTML/DolceTavolaPannaCotta.html" class="itemmenu">Panna Cotta</a></li>
+                                <li><a href="HTML/DolceTavolaCannoliSiciliani.html" class="itemmenu">Cannoli Siciliani</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="HTML/DolceTavolaHome.html"><img src="Imagenes/LogoSinFondoLDT.png" alt="La Dolce Tavola" class="logo" /></a>
+                </li>
+                <li><a href="HTML/DolceTavolaReservas.html" class="itemmenu">RESERVAS</a></li>
+                <li class="submenu"><a href="HTML/DolceTavolaContacto.html" class="itemmenu">CONTACTO</a></li>
+            </ul>
+        </nav>
+    </header>
+
+<section>
+    <!-- Galería de imágenes con SwiperJS -->
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="Imagenes/img1.jpg" alt="Plato 1"></div>
+        <div class="swiper-slide"><img src="Imagenes/img2.jpg" alt="Plato 2"></div>
+        <div class="swiper-slide"><img src="Imagenes/img3.jpg" alt="Plato 3"></div>
+        <div class="swiper-slide"><img src="Imagenes/img4.jpg" alt="Plato 4"></div>
+    </div>
+    <!-- Paginación y navegación -->
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+</div>
+
+</section>
+
+    
+    <section class="bienvenidosDT">
+        <div class="texto">
+            <h2>Bienvenido a la Dolce Tavola</h2>
+            <hr />
+            <p>
+                Bienvenido a La Dolce Tavola, donde cada plato es un viaje a la auténtica Italia. 
+                Sumérgete en nuestros sabores tradicionales, elaborados con ingredientes frescos y 
+                recetas artesanales que capturan la esencia de la cocina italiana. Desde nuestras 
+                pastas caseras hasta nuestras deliciosas pizzas al horno de leña, cada bocado es una 
+                celebración de lo mejor de la gastronomía italiana. Ven y descubre el arte de compartir 
+                una buena mesa en un ambiente cálido y acogedor, Disfrutarás una experiencia culinaria inolvidable.
+            </p>
+        </div>
+        <div class="imagen">
+            <img src="Imagenes/EntradaDolceTavola.png" alt="Entrada La Dolce Tavola">
+        </div>
+    </section>
+    
+        <section class="videos">
+            <div class="fiestacumpleaños">
+                <h2>Celebra fiestas</h2>
+                <hr />
+                <!-- Video1 -->
+                <p>Fiestas de cumpleaños personalizadas</p>
+                <video controls>
+                    <source src="videos/videofiestas.mp4" type="video/mp4" alt="video de unos amigos celebrando un cumpleaños en el restaurante">
+                    Tu navegador no soporta el elemento de video.
+                </video>
+            </div>     
+        
+            <div class="cenasempresa">
+                <h2>Cenas de empresa</h2>
+                <hr />
+                <!-- Video2 -->
+                <p>Cenas para empresas de hasta 50 personas</p>
+                <video controls>
+                    <source src="videos/videoempresa.mp4" type="video/mp4" alt="video de una cena de empresa">
+                    Tu navegador no soporta el elemento de video.
+                </video>
+            </div>
+        </section>
+        
+        <section class="especiales-mes">
+            <h2><u>Platos especiales del mes</u></h2>
+            <div class="platos">
+                <div class="plato">
+                    <img src="Imagenes/Tartar di tonno e avocado.jpg" />
+                    <p>Tartar di tonno e avocado</p>
+                </div>
+                <div class="plato">
+                    <img src="Imagenes/Spaguetti alla Bolognese.jpg" />
+                    <p>Spaguetti alla Bolognese</p>
+                </div>
+                <div class="plato">
+                    <img src="Imagenes/Lasagna al Tartufo.jpg" />
+                    <p>Lasagna al Tartufo</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="eventos-ubicacion">
+            <div class="ubicacion">
+                <h2>Ubicación del Restaurante</h2>
+                <p>
+                    Nos encontramos en un lugar icónico, cerca de la Plaza de San Marcos en Venecia. 
+                    ¡Visítanos y disfruta de una experiencia gastronómica única!
+                </p>
+                
+                <div class="mapa">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2903.663614184727!2d12.334589776293022!3d45.43401807108202!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x477eb1d85df0b12b%3A0x422e41fcaccb4b0!2sPlaza%20de%20San%20Marcos!5e0!3m2!1ses!2ses!4v1707057857453!5m2!1ses!2ses" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+
+        <section class="seccionnavidad">
+            <div class="texto">
+                <h2>¡Aprovecha nuestros platos especiales de Navidad!</h2>
+                <hr />
+                <p>
+                    🎄 ¡Celebra la Navidad en La Dolce Tavola!🎄 <br><br>
+
+
+                Estas fiestas, queremos que vivas la magia de la Navidad a través de los sabores únicos de nuestra cocina italiana. 
+                Hemos preparado un menú especial navideño lleno de tradición, creatividad y la calidad que nos caracteriza.<br><br>
+
+                <b>Antipasto de la Nonna:</b> selección de embutidos y quesos italianos con salsas especiales.<br>
+                <b>Ravioli di Natale:</b> pasta fresca rellena de castañas y ricotta con queso parmesano.<br>
+                <b>Pollo al Marsala:</b> cocinado al horno con vino Marsala y hierbas.<br>
+                <b>Tiramisú de Pandoro:</b> nuestro postre clásico con un toque festivo.<br>
+
+                <br><b>Todas las bebidas serán gratuitas.</b><br>
+                Reserva antes del 10 de diciembre y obtén un 10% de descuento.<br><br>
+
+                Celebra la Navidad con nosotros. ¡Te esperamos!
+
+                </p>
+            </div>
+            <div class="imagen">
+                <img src="Imagenes/navidadimg.jpg" alt="Navidad en La Dolce Tavola">
+            </div>
+        </section>
+
+        <section class="reserva">
+            <a href="HTML/DolceTavolaReservas.html" class="btn-reserva">Reservar mesa</a>
+            <p>(Reserva mínima 30 días de antelación)</p>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-logo">
+            <img src="Imagenes/LogoSinFondoLDT.png" alt="La Dolce Tavola">
+        </div>
+        <p class="footer-text">© Todos los derechos reservados - La Dolce Tavola</p>
+        <div class="social-media">
+            <a href="https://web.whatsapp.com/"><img src="Imagenes/whatssaplogo.png" alt="WhatsApp"></a>
+            <a href="https://www.instagram.com/"><img src="Imagenes/instagramlogo.png" alt="Instagram"></a>
+            <a href="https://x.com/"><img src="Imagenes/xlogo.png" alt="Twitter"></a>
+            <a href="https://www.youtube.com/"><img src="Imagenes/youtubelogo.png" alt="Twitter"></a>
+        </div>
+    </footer>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let swiper = new Swiper('.swiper-container', {
+                slidesPerView: 1,    // Número de slides visibles a la vez
+                spaceBetween: 30,    // Espacio entre slides
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                autoplay: {
+                    delay: 3000,  // Tiempo en milisegundos entre cada slide
+                },
+                effect: 'slide',  // Efecto de transición
+                loop: true,       // Activa el loop infinito
+                keyboard: {
+                    enabled: true,
+                },
+                mousewheel: {
+                    enabled: true,
+                },
+                speed: 800,        // Velocidad de animación en milisegundos
+            });
+        });
+    </script>
+    
+</body>
+
+</html>

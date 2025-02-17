@@ -1,0 +1,115 @@
+.container {
+  padding: 50px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 84px;
+  max-width: 100%;
+  margin: 6%;
+  margin-top: 170px;
+  text-align: center;
+}
+
+.menu {
+  text-align: center;
+}
+
+.menu h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.menu-sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  justify-content: space-around;
+}
+
+.wine-sections {   
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.section {
+  width: auto;
+  text-align: center;
+}
+
+.menu-sections ul {
+  list-style-position: inside;
+  text-align: center;
+}
+
+.menu-sections ul li {
+  text-align: left;
+  margin-left: 24%;
+}
+
+.wine-section {
+  flex: 1;
+  max-width: 30%;
+  text-align: center;
+}
+
+.contenedorPrinc {
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  max-width: 65%;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  text-align: justify;
+}
+
+.contenedorPrinc h2 {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 1.5em;
+}
+
+.chart {
+  text-align: center;
+}
+
+.chart h5 {
+  font-size: 20px;
+}
+
+.chart img {
+  border-radius: 5px;
+}
+
+.reserva {
+  margin-top: 5%;
+  text-align: center;
+  padding: 40px;
+}
+
+.reserva p {
+  color: white;
+  margin-top: 1%;
+}
+
+.btn-reserva {
+  display: inline-block;
+  padding: 15px 35px;
+  position: relative;
+  color: #000000;
+  font-size: 30px;
+  border-radius: 20px;
+  border: 0.5px solid black;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  text-decoration: none;
+  background-image: url('../Imagenes/fondomaderaclaro.webp');
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.btn-reserva:hover {
+  transform: scale(1.05); 
+  filter: brightness(1.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
