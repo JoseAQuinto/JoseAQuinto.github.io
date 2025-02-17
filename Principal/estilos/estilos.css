@@ -47,7 +47,7 @@ body {
   margin-bottom: 60px; /* Más espacio entre tarjetas */
   border: none;
   border-radius: 15px;
-  overflow: hidden;
+  /* Se elimina overflow: hidden para evitar recortes en imágenes superpuestas */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   background-color: #ffffff;
 }
@@ -88,10 +88,33 @@ body {
   background: linear-gradient(135deg, #5a67d8, #6b46c1);
 }
 
-/* Imágenes en las tarjetas */
-.card img {
-  object-fit: cover;
-  height: 100%;
+/* Contenedor de Imágenes con superposición */
+.img-container {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.img-container img {
+  border-radius: 0.5rem;
+  display: block;
+}
+
+.first-img {
+  width: 100%;
+  height: auto;
+}
+
+/* Ajuste en la imagen superpuesta para que se vea completa y genere profundidad */
+.second-img {
+  position: absolute;
+  bottom: -15px;
+  right: -10px;
+  width: 70%;
+  border: 3px solid #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  z-index: 1;
+  transform: translate(10px, 10px);
 }
 
 /* Sección Acerca de Mí */
@@ -135,4 +158,75 @@ body {
   color: #fff;
   font-size: 0.9rem;
   letter-spacing: 0.5px;
+}
+
+/* Contenedor interno de la sección hero */
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Botón de llamada a la acción (ya estilizado en btn-primary) */
+/* Puedes ajustar márgenes si lo deseas */
+.hero-content .btn-primary {
+  margin-top: 20px;
+}
+
+/* Ícono de scroll animado */
+.scroll-down {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 2rem;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
+
+/* Sección de Proyectos en Grande */
+.project-section {
+  /* Puedes ajustar el padding si lo deseas */
+}
+
+.project-large {
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.project-large:not(:last-child) {
+  margin-bottom: 3rem;
+}
+
+.project-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 1rem;
+}
+
+.project-description {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+/* Ajustes para el carrusel */
+.carousel-item img {
+  border-radius: 10px;
+  /* Puedes definir una altura fija o dejarlo adaptativo */
+  object-fit: cover;
 }
