@@ -1,82 +1,163 @@
 /* Global */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Montserrat', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f8f9fa;
+  background: #f5f7fa;
   color: #333;
+  line-height: 1.6;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* Carrusel Full-Screen */
-.carousel-item {
-  min-height: 100vh;
-  background-size: cover;
-  background-position: center;
-  position: relative;
+.hidden {
+  opacity: 0;
+  transform: translateY(20px);
 }
 
-/* Overlay para la descripción del proyecto */
-.carousel-overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.6);
-  padding: 2rem 3rem;
+.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* Modo Oscuro Mejorado */
+.dark-mode {
+  background: #2f2f2f;
+  color: #e0e0e0;
+}
+
+.dark-mode .container {
+  background: #222222;
+  color: #e0e0e0;
   border-radius: 10px;
-  text-align: center;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .footer-section {
+  background: #252525;
+}
+
+/* Oscurecer fondo de las Cards en Modo Oscuro */
+.dark-mode .project-card {
+  background: #3a3a3a;
+  color: #e0e0e0;
+}
+
+/* Efecto Parallax */
+.parallax {
+  position: relative;
+  background: url('../img/fondo.jpg') no-repeat center center fixed;
+  background-size: cover;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.parallax::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3); /* Overlay sutil para mejorar la legibilidad */
+  z-index: 1;
+}
+
+.parallax > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Scroll Indicator en la Sección Parallax */
+.scroll-indicator {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
   color: #fff;
-  max-width: 80%;
+  animation: bounce 2s infinite;
 }
 
-/* Títulos y descripción de proyectos */
-.project-title {
-  font-size: 3rem;
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
+
+/* Estilos de las Tarjetas */
+.project-card {
+  border: none;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-img-top {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 20px;
+  text-align: center;
+}
+
+.card-title {
+  font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 1rem;
+  color: #222;
+  margin-bottom: 0.5rem;
 }
 
-.project-description {
-  font-size: 1.25rem;
-  margin-bottom: 1.5rem;
+.card-text {
+  font-size: 1rem;
+  color: #555;
 }
 
-/* Botón primario */
+/* Botones */
 .btn-primary {
   background: linear-gradient(135deg, #667eea, #764ba2);
   border: none;
   border-radius: 50px;
   padding: 10px 25px;
   font-weight: 600;
-  transition: background 0.3s ease;
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #5a67d8, #6b46c1);
-}
-
-/* Contenedor para las imágenes extra */
-.extra-images {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  display: flex;
-  gap: 10px;
-  /* Opcional: ajustar el z-index para que se superpongan correctamente */
-  z-index: 2;
-}
-
-.extra-images img {
-  width: 150px;
-  border: 3px solid #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  /* Para generar un efecto de superposición, se puede usar un pequeño desplazamiento en la segunda imagen */
-}
-
-.extra-images img:nth-child(2) {
-  margin-left: -30px;
-  margin-top: 20px;
+  transform: translateY(-3px);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Footer */
@@ -85,6 +166,72 @@ body {
   color: #fff;
   font-size: 0.9rem;
   letter-spacing: 0.5px;
-  padding: 1rem 0;
+  padding: 1.5rem 0;
   text-align: center;
 }
+
+/* Ícono del Botón de Modo Oscuro */
+#darkModeToggle {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1050;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#darkModeToggle:hover {
+  background-color: #555;
+  transform: scale(1.05);
+}
+
+/* Estilos para los íconos sociales del Footer */
+.footer-section .social-icons a {
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.footer-section .social-icons a:hover {
+  color: #667eea;
+}
+
+.dark-mode .card-title {
+  color: #fff; /* Texto blanco para el título */
+}
+
+.dark-mode .card-text {
+  color: #ddd; /* Un gris claro para el texto */
+}
+/* Botón "Volver Arriba" */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  border: none;
+  padding: 15px;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+  z-index: 1050;
+}
+
+.back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.back-to-top:hover {
+  transform: scale(1.1);
+}
+
+
