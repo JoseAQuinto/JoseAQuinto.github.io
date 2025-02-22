@@ -107,6 +107,7 @@ body {
 
 /* Estilos de las Tarjetas */
 .project-card {
+  margin-top: 15px;
   border: none;
   border-radius: 12px;
   background: #fff;
@@ -234,4 +235,35 @@ body {
   transform: scale(1.1);
 }
 
+.title2{
+  font-family: 'Montserrat', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    border-bottom: 3px solid #818181;
+    padding-bottom: 10px;
+}
+
+.dark-mode .title2{
+  color: white;
+}
+
+.btnatras {
+  display: inline-block;
+  font-size: small;
+  padding: 12px 30px;
+  margin-top: 20px;
+  background-color: #a2a2a2;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-decoration: none;
+  border-radius: 50px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btnatras:hover {
+  background-color: #2980b9;
+  transform: translateY(-3px);
+}
 

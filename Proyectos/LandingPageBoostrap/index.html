@@ -60,12 +60,44 @@ footer a {
     text-decoration: none;
 }
 
+/* Estado expandido (acordeón) */
+.accordion-button:not(.collapsed) {
+  background-color: #e8e8e8;
+  color: #000;
+  border-bottom: 1px solid #e0e0e0;
+}
 
+#acordeon {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+  .btnatras-fixed {
+    position: fixed;
+    top: 50%; /* Distancia desde la parte superior */
+    left: 20px; /* Distancia desde la izquierda (puedes usar right: 20px para colocarlo a la derecha) */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #63bffcc3;
+    color: #fff;
+    opacity: 95%;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .btnatras-fixed:hover {
+    background-color: #58a4d6;
+    transform: translateY(-3px);
+  }
         
     </style>
 </head>
 
 <body>
+    <a href="../../Principal/presentacionProyectos.html" class="btnatras-fixed">Volver</a>
 
 <!-- Menú de Navegación -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">

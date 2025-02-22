@@ -8,6 +8,28 @@ html, body {
     font-family: 'Roboto Slab', serif;
 }
 
+.btnatras-fixed {
+    position: fixed;
+    top: 50%; /* Distancia desde la parte superior */
+    left: 20px; /* Distancia desde la izquierda (puedes usar right: 20px para colocarlo a la derecha) */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #63bffcc3;
+    color: #fff;
+    opacity: 95%;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .btnatras-fixed:hover {
+    background-color: #58a4d6;
+    transform: translateY(-3px);
+  }
+
 
 body {
     background-image: url(../Imagenes/FondoRestaurante.jpg);
