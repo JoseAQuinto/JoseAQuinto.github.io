@@ -1,0 +1,251 @@
+body {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    margin: 0;
+    background-color: #f5f5f5;
+    text-align: center;
+    transition: 1s ease-in-out;
+}
+
+.cajaprincipal {
+    padding: 20px;
+    transition: 1s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+/** Menu **/
+
+#menu-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    font-size: 24px;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    z-index: 1000;
+    transition: 1s ease-in-out;
+}
+
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100vh;
+    background-color: #222;
+    color: white;
+    padding-top: 60px;
+    transform: translateX(-100%);
+    transition: transform 1s ease-in-out;
+}
+
+#sidebar.active {
+    transform: translateX(0);
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    padding: 15px;
+}
+
+nav ul li a {
+    color:white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    transition: background 0.6s;
+}
+
+nav ul li a:hover {
+    background: #444;
+}
+
+
+
+
+
+h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #342a2a;
+    text-align: center;
+    position: relative;
+    text-transform: uppercase;
+    animation: glitch 1s 1;
+}
+
+/* Glitch con duplicado de capas */
+h1::before, h1::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.8;
+}
+
+h1::before {
+    color: #ff00ff;
+    transform: translate(-2px, -2px);
+    clip-path: inset(0 0 50% 0);
+}
+
+h1::after {
+    color: #00ffff;
+    transform: translate(2px, 2px);
+    clip-path: inset(50% 0 0 0);
+}
+
+/* Animación glitch */
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(2px, -2px); }
+    60% { transform: translate(-2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+
+
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+caption {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 10px;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+th {
+    background: #007bff;
+    color: white;
+    text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+tr:hover {
+    background: #dfe6f1;
+    transition: 0.3s;
+}
+
+.haganado {
+    background-color: #158360;
+}
+
+.junglarandom {
+    background-color: #5f8cf6;
+}
+
+.fecha {
+    background-color: #676767;
+}
+
+.estad {
+    background-color: brown;
+}
+
+.ultimafila {
+    border-bottom: 1px solid black ;
+}
+
+section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    gap: 10px;
+}
+
+section img {
+    width: 400px;
+    margin: 15px;
+}
+
+section p {
+    text-align: justify;
+}
+
+@media (max-width: 900px) {
+    section {
+        display: flex;
+        flex-direction: column;
+    }
+    section img {
+        width: 50%;
+    }
+}
+
+footer {
+    box-sizing: border-box;
+    padding: 20px 40px 30px 40px;
+    width: 100%;
+    background-color: #4e4e4e;
+    margin-top: 40px;
+    color: white;
+}
+
+
+
+/** Ranked simulator **/
+
+#ranked-simulator {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 40px auto;
+    padding: 20px;
+    background: #222;
+    color: white;
+    border-radius: 10px;
+    max-width: 600px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#simulador-btn {
+    background: #e52e71;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s ease-in-out;
+}
+
+#simulador-btn:hover {
+    background: #ff8a00;
+}
+
+#resultado-partida {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-top: 35px;
+    color: #ffcc00;
+}
