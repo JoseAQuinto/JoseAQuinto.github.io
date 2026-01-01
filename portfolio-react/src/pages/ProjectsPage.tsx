@@ -312,19 +312,37 @@ function BackToTop() {
 }
 
 /* ---------- Icon helper (blindado) ---------- */
-function Icon({ size = 16, viewBox = "0 0 24 24", className = "", children, ...props }) {
+import type { ReactNode, SVGProps } from "react";
+
+type IconProps = SVGProps<SVGSVGElement> & {
+  size?: number;
+  viewBox?: string;
+  className?: string;
+  children?: ReactNode;
+};
+
+function Icon({
+  size = 16,
+  viewBox = "0 0 24 24",
+  className = "",
+  children,
+  ...props
+}: IconProps) {
   return (
     <svg
+      width={size}
+      height={size}
       viewBox={viewBox}
-      style={{ width: size, height: size }} // gana a CSS global (incluso si toca svg)
-      className={`inline-block flex-shrink-0 ${className}`}
-      aria-hidden="true"
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       {children}
     </svg>
   );
 }
+
 
 /* ---------- Icons ---------- */
 function ArrowLeftIcon({ size = 16, ...props }) {
