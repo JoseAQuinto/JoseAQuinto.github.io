@@ -50,9 +50,11 @@ export default function ProjectsPage() {
     : "inline-flex items-center gap-2 rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-800 shadow-sm hover:bg-zinc-50 hover:shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300";
 
   return (
-    <div className="min-h-screen bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
+<div className="min-h-screen bg-zinc-100 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
+
       {/* Top bar */}
-      <div className="sticky top-0 z-50 border-b border-zinc-200/60 bg-white/80 backdrop-blur dark:border-zinc-800/60 dark:bg-zinc-950/70">
+     <div className="sticky top-0 z-50 border-b border-zinc-200/60 bg-zinc-100/80 backdrop-blur dark:border-zinc-800/60 dark:bg-zinc-950/70">
+
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           <a href="/index.html" className={topLinkClass}>
             <ArrowLeftIcon size={16} />
@@ -73,90 +75,118 @@ export default function ProjectsPage() {
       </div>
 
       {/* Hero (gradient clean, sin imagen) */}
-      <header className="relative overflow-hidden">
-        {/* Fondo */}
-        <div className="absolute inset-0">
-          <div className="h-full w-full bg-gradient-to-b from-zinc-900 via-zinc-900 to-zinc-50 dark:to-zinc-950" />
-          {/* halos */}
-          <div className="absolute -top-24 left-1/2 h-80 w-[44rem] -translate-x-1/2 rounded-full bg-indigo-500/20 blur-3xl" />
-          <div className="absolute top-20 left-10 h-64 w-64 rounded-full bg-fuchsia-500/15 blur-3xl" />
-          <div className="absolute top-32 right-10 h-64 w-64 rounded-full bg-emerald-500/15 blur-3xl" />
-          {/* patrón sutil */}
-          <div
-            className="absolute inset-0 opacity-[0.10]"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 1px 1px, rgba(255,255,255,.35) 1px, transparent 0)",
-              backgroundSize: "18px 18px",
-            }}
-          />
+      {/* Hero (gradient clean, sin imagen) */}
+<header className="relative overflow-hidden">
+  {/* Fondo */}
+  <div className="absolute inset-0">
+    <div className="h-full w-full bg-gradient-to-b from-zinc-100 via-zinc-100 to-zinc-200 dark:from-zinc-950 dark:via-zinc-950 dark:to-zinc-950" />
+
+
+    {/* halos */}
+    <div className="absolute -top-24 left-1/2 h-80 w-[44rem] -translate-x-1/2 rounded-full bg-indigo-500/20 blur-3xl" />
+    <div className="absolute top-20 left-10 h-64 w-64 rounded-full bg-fuchsia-500/15 blur-3xl" />
+    <div className="absolute top-32 right-10 h-64 w-64 rounded-full bg-emerald-500/15 blur-3xl" />
+
+    {/* patrón sutil */}
+    <div
+      className="absolute inset-0 opacity-[0.10]"
+      style={{
+        backgroundImage:
+          "radial-gradient(circle at 1px 1px, rgba(255,255,255,.35) 1px, transparent 0)",
+        backgroundSize: "18px 18px",
+      }}
+    />
+  </div>
+
+  {/* Contenido */}
+  <div className="relative">
+    <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
+      <div className="max-w-2xl">
+        {/* Badge */}
+        <p className="
+          mb-4 inline-flex items-center gap-2 rounded-full
+          bg-zinc-900/5 px-3 py-1 text-xs font-semibold text-zinc-800
+          ring-1 ring-zinc-300
+          dark:bg-white/10 dark:text-white dark:ring-white/15
+        ">
+          <SparkleIcon size={16} />
+          Full-stack developer
+        </p>
+
+        {/* Título */}
+        <h1 className="text-3xl font-extrabold tracking-tight text-zinc-900 sm:text-5xl dark:text-white">
+          Portafolio de Jose
+        </h1>
+
+        {/* Descripción */}
+        <p className="mt-4 text-base leading-relaxed text-zinc-600 sm:text-lg dark:text-white/80">
+          Proyectos centrados en UI limpia, responsive y detalles. Código simple, resultado profesional.
+        </p>
+
+        {/* Botones */}
+        <div className="mt-7 flex flex-wrap items-center gap-3">
+          <a
+            href="#projects"
+           className="inline-flex items-center gap-2 rounded-2xl bg-zinc-50 px-5 py-2.5 text-sm font-extrabold text-zinc-900 shadow-sm hover:shadow"
+
+          >
+            Ver proyectos
+            <ChevronDownIcon size={16} />
+          </a>
+
+          <a
+            href="https://www.linkedin.com/in/jose-%C3%A1ngel-quinto-ferr%C3%A1ndez-34b2121a0/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="
+              inline-flex items-center gap-2 rounded-2xl px-5 py-2.5 text-sm font-extrabold
+              border border-zinc-300 bg-white text-zinc-800 hover:bg-zinc-50
+              dark:border-white/15 dark:bg-white/10 dark:text-white dark:hover:bg-white/15
+            "
+          >
+            <LinkedinIcon size={16} />
+            LinkedIn
+          </a>
+
+          <a
+            href="https://github.com/JoseAQuinto/JoseAQuinto.github.io"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="
+              inline-flex items-center gap-2 rounded-2xl px-5 py-2.5 text-sm font-extrabold
+              border border-zinc-300 bg-white text-zinc-800 hover:bg-zinc-50
+              dark:border-white/15 dark:bg-white/10 dark:text-white dark:hover:bg-white/15
+            "
+          >
+            <GithubIcon size={16} />
+            GitHub
+          </a>
         </div>
 
-        {/* Contenido */}
-        <div className="relative">
-          <div className="mx-auto max-w-6xl px-4 py-14 sm:py-20">
-            <div className="max-w-2xl">
-              <p className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white ring-1 ring-white/15">
-                <SparkleIcon size={16} />
-                Full-stack developer
-              </p>
-
-              <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-5xl">
-                Portafolio de Jose
-              </h1>
-
-              <p className="mt-4 text-base leading-relaxed text-white/80 sm:text-lg">
-                Proyectos centrados en UI limpia, responsive y detalles. Código simple, resultado profesional.
-              </p>
-
-              <div className="mt-7 flex flex-wrap items-center gap-3">
-                <a
-                  href="#projects"
-                  className="inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-2.5 text-sm font-extrabold text-zinc-900 shadow-sm hover:shadow"
-                >
-                  Ver proyectos
-                  <ChevronDownIcon size={16} />
-                </a>
-
-                <a
-                  href="https://www.linkedin.com/in/jose-%C3%A1ngel-quinto-ferr%C3%A1ndez-34b2121a0/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-5 py-2.5 text-sm font-extrabold text-white backdrop-blur hover:bg-white/15"
-                >
-                  <LinkedinIcon size={16} />
-                  LinkedIn
-                </a>
-
-                <a
-                  href="https://github.com/JoseAQuinto/JoseAQuinto.github.io"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-5 py-2.5 text-sm font-extrabold text-white backdrop-blur hover:bg-white/15"
-                >
-                  <GithubIcon size={16} />
-                  GitHub
-                </a>
-              </div>
-
-              {/* mini “chips” tech */}
-              <div className="mt-7 flex flex-wrap gap-2">
-                {["React", "TypeScript", "Tailwind", "PostgreSQL", ".NET"].map((t) => (
-                  <span
-                    key={t}
-                    className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white/90 ring-1 ring-white/10"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* separador */}
-          <div className="h-10 bg-gradient-to-b from-transparent to-zinc-50 dark:to-zinc-950" />
+        {/* Chips */}
+        <div className="mt-7 flex flex-wrap gap-2">
+          {["React", "TypeScript", "Tailwind", "PostgreSQL", ".NET"].map((t) => (
+            <span
+              key={t}
+              className="
+                rounded-full px-3 py-1 text-xs font-semibold
+                bg-zinc-900/5 text-zinc-800 ring-1 ring-zinc-300
+                dark:bg-white/10 dark:text-white/90 dark:ring-white/10
+              "
+            >
+              {t}
+            </span>
+          ))}
         </div>
-      </header>
+      </div>
+    </div>
+
+    {/* separador */}
+    <div className="h-12 bg-gradient-to-b from-transparent to-zinc-100 dark:to-zinc-950" />
+
+  </div>
+</header>
+
 
       {/* Content */}
       <main id="projects" className="mx-auto max-w-6xl px-4 py-12">
@@ -263,7 +293,7 @@ export default function ProjectsPage() {
                 aria-label="LinkedIn"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-xl border border-zinc-200 bg-white p-2 text-zinc-700 shadow-sm hover:shadow dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200"
+                className="inline-flex items-center justify-center rounded-xl border border-zinc-200 bg-zinc-50 p-2 text-zinc-700 shadow-sm hover:shadow dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200"
               >
                 <LinkedinIcon size={20} />
               </a>
@@ -272,7 +302,7 @@ export default function ProjectsPage() {
                 aria-label="GitHub"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-xl border border-zinc-200 bg-white p-2 text-zinc-700 shadow-sm hover:shadow dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200"
+                className="inline-flex items-center justify-center rounded-xl border border-zinc-200 bg-zinc-50 p-2 text-zinc-700 shadow-sm hover:shadow dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200"
               >
                 <GithubIcon size={20} />
               </a>
@@ -311,7 +341,7 @@ function BackToTop() {
   );
 }
 
-/* ---------- Icon helper (blindado) ---------- */
+/* ---------- Icon helper ---------- */
 import type { ReactNode, SVGProps } from "react";
 
 type IconProps = SVGProps<SVGSVGElement> & {

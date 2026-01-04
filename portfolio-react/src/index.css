@@ -12,3 +12,21 @@ body {
 body {
   margin: 0;
 }
+
+a {
+  text-decoration: none !important;
+  color: #18181b !important;
+  /* zinc-900 */
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #3f3f46;
+  /* zinc-700 */
+}
+
+a:focus-visible {
+  outline: none;
+  color: #2563eb;
+  /* blue-600 */
+}
