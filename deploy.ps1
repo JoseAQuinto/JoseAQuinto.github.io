@@ -1,5 +1,5 @@
-# PARA USAR, ".\deploy.ps1" desde la carpeta JoseAQuinto.github.io
-
+# PARA USAR, desdepowershell ".\deploy.ps1" desde la carpeta JoseAQuinto.github.io
+# si no funciona ejecutar 1 a 1
 
 # Build del proyecto React
 cd portfolio-react
