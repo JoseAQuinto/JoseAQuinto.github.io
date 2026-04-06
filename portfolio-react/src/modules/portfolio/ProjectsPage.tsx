@@ -193,13 +193,19 @@ export default function ProjectsPage() {
                   }`}
                 style={{ transitionDelay: "400ms" }}
               >
-                <a
-                  href="#about"
-                  className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-zinc-900 to-zinc-800 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-zinc-900/20 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-zinc-900/30 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 dark:from-white dark:to-zinc-100 dark:text-zinc-900 dark:shadow-white/10 dark:hover:shadow-white/20"
+                <button
+                  type="button"
+                  onClick={() => {
+                    document.getElementById("about")?.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                    });
+                  }}
+                  className="inline-flex items-center gap-2 !rounded-2xl bg-gradient-to-r from-zinc-900 to-zinc-800 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-zinc-900/20 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-zinc-900/30 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 dark:from-white dark:to-zinc-100 dark:text-zinc-900 dark:shadow-white/10 dark:hover:shadow-white/20"
                 >
                   {t.aboutTitle}
                   <ChevronDownIcon size={16} />
-                </a>
+                </button>
 
                 <a
                   href="https://www.linkedin.com/in/jose-%C3%A1ngel-quinto-ferr%C3%A1ndez-34b2121a0/"
