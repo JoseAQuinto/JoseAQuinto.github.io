@@ -116,7 +116,7 @@ export default function ProjectsPage() {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
           <Link
             to="/"
-            className="group inline-flex items-center gap-2 ..."
+            className="group inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-zinc-700 transition-all hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 dark:text-zinc-200 dark:hover:bg-zinc-800/60 dark:focus-visible:ring-zinc-600"
           >
             <ArrowLeftIcon size={16} className="transition-transform group-hover:-translate-x-0.5" />
             {t.backButton}
