@@ -10,10 +10,7 @@ import {
 } from '@heroicons/react/24/outline';
 
 import { operationsOverviewService } from './operationsOverviewService';
-import type {
-  DateRangeFilter,
-  ResourceRankingItem,
-} from './operationsOverview.types';
+import type { DateRangeFilter, ResourceRankingItem } from './operationsOverview.types';
 import {
   buildCategoryChartOptions,
   buildResourceComparisonOptions,
@@ -21,6 +18,8 @@ import {
   getDateFilterLabel,
   toInputDate,
 } from './operationsOverview.utils';
+
+/* ── Date range modal ─────────────────────────────────────────────── */
 
 function DateRangeModal({
   initialFrom,
@@ -37,64 +36,66 @@ function DateRangeModal({
   const [to, setTo] = useState(initialTo ?? '');
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4">
-      <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl">
-        <div className="mb-5 flex items-center justify-between">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-sm">
+      <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white shadow-2xl">
+        {/* Modal header */}
+        <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
           <div>
-            <h3 className="text-lg font-semibold text-slate-900">Filter by date</h3>
-            <p className="mt-1 text-sm text-slate-500">
+            <h3 className="text-[15px] font-bold text-slate-900">Filter by date</h3>
+            <p className="mt-0.5 text-xs text-slate-400">
               Apply a custom range to reload dashboard metrics.
             </p>
           </div>
-
           <button
             onClick={onCancel}
-            className="rounded-lg p-2 text-slate-500 hover:bg-slate-100"
+            className="rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
           >
-            <XMarkIcon className="h-5 w-5" />
+            <XMarkIcon className="h-4.5 w-4.5" />
           </button>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div className="flex flex-col">
-            <label className="text-xs font-semibold uppercase tracking-wide text-slate-600">
+        {/* Inputs */}
+        <div className="grid grid-cols-1 gap-4 p-6 sm:grid-cols-2">
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">
               From
             </label>
             <input
               type="date"
               value={from}
               onChange={(e) => setFrom(e.target.value)}
-              className="mt-1 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-800 outline-none transition focus:border-slate-400"
+              className="h-10 rounded-lg border border-slate-200 bg-slate-50 px-3 text-sm text-slate-800 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
             />
           </div>
 
-          <div className="flex flex-col">
-            <label className="text-xs font-semibold uppercase tracking-wide text-slate-600">
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">
               To
             </label>
             <input
               type="date"
               value={to}
               onChange={(e) => setTo(e.target.value)}
-              className="mt-1 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-800 outline-none transition focus:border-slate-400"
+              className="h-10 rounded-lg border border-slate-200 bg-slate-50 px-3 text-sm text-slate-800 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
             />
           </div>
         </div>
 
-        <div className="mt-6 flex justify-end gap-2">
+        {/* Actions */}
+        <div className="flex justify-end gap-2 border-t border-slate-100 px-6 py-4">
           <button
             type="button"
             onClick={onCancel}
-            className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="flex h-10 items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 active:scale-[0.97]"
           >
             Cancel
           </button>
-
           <button
             type="button"
             onClick={() => onApply(from || undefined, to || undefined)}
-            className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
+            className="flex h-10 items-center gap-2 rounded-lg bg-slate-900 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-[0.97]"
           >
+            <FunnelIcon className="h-4 w-4" />
             Apply filters
           </button>
         </div>
@@ -102,6 +103,34 @@ function DateRangeModal({
     </div>
   );
 }
+
+/* ── KPI card ─────────────────────────────────────────────────────── */
+
+function KpiCard({
+  icon,
+  iconBg,
+  iconColor,
+  value,
+  label,
+}: {
+  icon: React.ReactNode;
+  iconBg: string;
+  iconColor: string;
+  value: React.ReactNode;
+  label: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className={`mb-4 flex h-11 w-11 items-center justify-center rounded-xl ${iconBg}`}>
+        <span className={iconColor}>{icon}</span>
+      </div>
+      <div className="text-3xl font-bold tracking-tight text-slate-900">{value}</div>
+      <div className="mt-1.5 text-sm font-medium text-slate-500">{label}</div>
+    </div>
+  );
+}
+
+/* ── Main page ────────────────────────────────────────────────────── */
 
 function OperationsOverviewPage() {
   const [totalDurationMinutes, setTotalDurationMinutes] = useState(0);
@@ -117,13 +146,12 @@ function OperationsOverviewPage() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const filterLabel = useMemo(() => getDateFilterLabel(dateFilter), [dateFilter]);
+  const hasActiveFilter = !!(dateFilter.from || dateFilter.to);
 
   const loadDashboardData = async (filter?: DateRangeFilter) => {
     try {
       setIsLoading(true);
-
       const data = await operationsOverviewService.getDashboard(filter);
-
       setTotalDurationMinutes(Number(data?.kpi?.totalDurationMinutes ?? 0));
       setIncidentCount(Number(data?.kpi?.incidentCount ?? 0));
       setAverageDurationMinutes(Number(data?.kpi?.averageDurationMinutes ?? 0));
@@ -149,34 +177,35 @@ function OperationsOverviewPage() {
     await loadDashboardData(nextFilter);
   };
 
+  const clearFilter = async () => {
+    setDateFilter({});
+    await loadDashboardData();
+  };
+
   useEffect(() => {
     const init = async () => {
       try {
         const savedFilters = await operationsOverviewService.getSavedFilters();
-
         if (savedFilters?.from || savedFilters?.to) {
           const initialFilter: DateRangeFilter = {
             from: toInputDate(savedFilters.from),
             to: toInputDate(savedFilters.to),
           };
-
           setDateFilter(initialFilter);
           await loadDashboardData(initialFilter);
           return;
         }
-
         await loadDashboardData();
       } catch (error) {
         console.error('Failed to initialize operations overview:', error);
         await loadDashboardData();
       }
     };
-
     init();
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4 text-slate-800 md:p-6">
+    <div className="min-h-screen bg-[#f8fafc] pb-12 font-sans text-slate-800">
       {isFilterOpen && (
         <DateRangeModal
           initialFrom={dateFilter.from}
@@ -189,144 +218,154 @@ function OperationsOverviewPage() {
         />
       )}
 
-      <div className="mx-auto max-w-7xl">
-        <div className="mb-6 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          <div>
-            <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
+      {/* ── Header ── */}
+      <header className="sticky top-0 z-20 border-b border-slate-200/80 bg-white/90 backdrop-blur-sm">
+        <div className="mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-6">
+          <div className="flex items-center gap-3">
+            <span className="flex h-7 w-1 rounded-full bg-gradient-to-b from-indigo-500 to-violet-600" />
+            <h1 className="text-[15px] font-bold tracking-tight text-slate-900">
               Operations Overview
             </h1>
-            <p className="mt-1 text-sm text-slate-500">
-              Interactive front-end demo with mock data and simulated API requests.
-            </p>
+          </div>
+          <span className="rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600">
+            Dashboard
+          </span>
+        </div>
+      </header>
+
+      <main className="mx-auto max-w-screen-2xl space-y-5 p-6">
+
+        {/* ── Toolbar ── */}
+        <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div className="border-b border-slate-100 px-6 py-4">
+            <h2 className="text-[13px] font-semibold uppercase tracking-widest text-slate-400">
+              Filters
+            </h2>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <div className="flex min-w-0 items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100">
-                <FunnelIcon className="h-5 w-5 text-slate-600" />
-              </div>
+          <div className="flex flex-wrap items-center justify-between gap-3 p-6">
+            {/* Active filter badge */}
+            <div className="flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
+              <span className="text-sm text-slate-500">Active filter:</span>
+              <span className="text-sm font-semibold text-slate-900">{filterLabel}</span>
+            </div>
 
-              <div className="min-w-0">
-                <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">
-                  Active filter
-                </div>
-                <div className="truncate text-sm font-medium text-slate-700">{filterLabel}</div>
-              </div>
+            {/* Action buttons */}
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                onClick={() => loadDashboardData(dateFilter)}
+                disabled={isLoading}
+                className="flex h-10 items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <ArrowPathIcon className={`h-4 w-4 shrink-0 ${isLoading ? 'animate-spin' : ''}`} />
+                Refresh
+              </button>
 
-              {(dateFilter.from || dateFilter.to) && (
+              {hasActiveFilter && (
                 <button
-                  onClick={async () => {
-                    setDateFilter({});
-                    await loadDashboardData();
-                  }}
-                  className="rounded-xl border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50"
+                  onClick={clearFilter}
+                  disabled={isLoading}
+                  className="flex h-10 items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50"
                 >
+                  <XMarkIcon className="h-4 w-4 shrink-0" />
                   Clear
                 </button>
               )}
-            </div>
-
-            <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
-              <button
-                onClick={() => loadDashboardData(dateFilter)}
-                className="rounded-xl p-2 text-slate-600 hover:bg-slate-50"
-                title="Refresh data"
-              >
-                <ArrowPathIcon className={`h-5 w-5 ${isLoading ? 'animate-spin' : ''}`} />
-              </button>
 
               <button
                 onClick={() => setIsFilterOpen(true)}
-                className="rounded-xl p-2 text-slate-600 hover:bg-slate-50"
-                title="Open filters"
+                className="flex h-10 items-center gap-2 rounded-lg bg-slate-900 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-[0.97]"
               >
-                <FunnelIcon className="h-5 w-5" />
+                <FunnelIcon className="h-4 w-4 shrink-0" />
+                Set date range
               </button>
             </div>
           </div>
-        </div>
+        </section>
 
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.7fr_1fr]">
-          <div className="flex flex-col gap-6">
+        {/* ── Main grid ── */}
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+
+          {/* Left column — KPIs + Category chart */}
+          <div className="flex flex-col gap-5 lg:col-span-2">
+
+            {/* KPI cards */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-              <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50">
-                  <ClockIcon className="h-6 w-6 text-emerald-500" />
-                </div>
-                <div className="text-4xl font-bold tracking-tight text-slate-900">
-                  {totalDurationMinutes}
-                </div>
-                <div className="mt-2 text-sm font-medium text-slate-500">
-                  Total duration (minutes)
-                </div>
-              </div>
-
-              <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-50">
-                  <ChartBarIcon className="h-6 w-6 text-rose-500" />
-                </div>
-                <div className="text-4xl font-bold tracking-tight text-slate-900">
-                  {incidentCount}
-                </div>
-                <div className="mt-2 text-sm font-medium text-slate-500">
-                  Total incidents
-                </div>
-              </div>
-
-              <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-50">
-                  <ClockIcon className="h-6 w-6 text-amber-500" />
-                </div>
-                <div className="text-4xl font-bold tracking-tight text-slate-900">
-                  {averageDurationMinutes}
-                </div>
-                <div className="mt-2 text-sm font-medium text-slate-500">
-                  Average duration
-                </div>
-              </div>
+              <KpiCard
+                icon={<ClockIcon className="h-5 w-5" />}
+                iconBg="bg-emerald-50"
+                iconColor="text-emerald-500"
+                value={formatMinutes(totalDurationMinutes)}
+                label="Total duration"
+              />
+              <KpiCard
+                icon={<ChartBarIcon className="h-5 w-5" />}
+                iconBg="bg-rose-50"
+                iconColor="text-rose-500"
+                value={incidentCount}
+                label="Total incidents"
+              />
+              <KpiCard
+                icon={<ClockIcon className="h-5 w-5" />}
+                iconBg="bg-amber-50"
+                iconColor="text-amber-500"
+                value={formatMinutes(averageDurationMinutes)}
+                label="Average duration"
+              />
             </div>
 
-            <div className="min-h-[420px] rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <div className="mb-4">
-                <h2 className="text-base font-semibold text-slate-900">Category Breakdown</h2>
-                <p className="mt-1 text-sm text-slate-500">
-                  Mock distribution of tracked minutes by category.
+            {/* Category breakdown chart */}
+            <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+              <div className="border-b border-slate-100 px-6 py-4">
+                <h2 className="font-bold text-slate-900">Category Breakdown</h2>
+                <p className="mt-0.5 text-xs text-slate-400">
+                  Distribution of tracked minutes by category.
                 </p>
               </div>
-
-              <div className="h-[320px]">
-                <HighchartsReact
-                  highcharts={Highcharts}
-                  options={categoryChartOptions}
-                  containerProps={{ style: { height: '100%' } }}
-                />
+              <div className="p-6">
+                <div className="h-[320px]">
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={categoryChartOptions}
+                    containerProps={{ style: { height: '100%' } }}
+                  />
+                </div>
               </div>
-            </div>
+            </section>
           </div>
 
-          <div className="flex flex-col gap-6">
-            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-              <div className="border-b border-slate-200 px-5 py-4">
-                <h2 className="text-base font-semibold text-slate-900">Top Resources</h2>
-                <p className="mt-1 text-sm text-slate-500">
-                  Ranking generated from mock analytics data.
+          {/* Right column — Ranking + Resource comparison */}
+          <div className="flex flex-col gap-5">
+
+            {/* Top resources table */}
+            <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+              <div className="border-b border-slate-100 px-6 py-4">
+                <h2 className="font-bold text-slate-900">Top Resources</h2>
+                <p className="mt-0.5 text-xs text-slate-400">
+                  Ranked by total downtime minutes.
                 </p>
               </div>
 
               <div className="overflow-x-auto">
-                <table className="w-full table-fixed text-left text-sm text-slate-600">
-                  <thead className="bg-slate-50 text-slate-700">
-                    <tr>
-                      <th className="px-4 py-3 font-semibold">Resource</th>
-                      <th className="px-4 py-3 font-semibold">Duration</th>
-                      <th className="px-4 py-3 font-semibold">Reason</th>
+                <table className="w-full text-left text-sm">
+                  <thead>
+                    <tr className="border-b border-slate-100 bg-slate-50">
+                      <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                        Resource
+                      </th>
+                      <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                        Duration
+                      </th>
+                      <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                        Reason
+                      </th>
                     </tr>
                   </thead>
-
                   <tbody>
                     {ranking.length === 0 ? (
                       <tr>
-                        <td colSpan={3} className="px-4 py-8 text-center text-slate-500">
+                        <td colSpan={3} className="px-5 py-10 text-center text-sm text-slate-400">
                           No data available
                         </td>
                       </tr>
@@ -334,36 +373,43 @@ function OperationsOverviewPage() {
                       ranking.map((item, index) => (
                         <tr
                           key={`${item.resourceName}-${index}`}
-                          className="border-t border-slate-100"
+                          className="border-t border-slate-100 transition hover:bg-slate-50/60"
                         >
-                          <td className="px-4 py-4 font-medium text-slate-800">
-                            {item.resourceName}
+                          <td className="px-5 py-3.5">
+                            <div className="flex items-center gap-2">
+                              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-slate-100 text-[10px] font-bold text-slate-500">
+                                {index + 1}
+                              </span>
+                              <span className="font-medium text-slate-800">{item.resourceName}</span>
+                            </div>
                           </td>
-                          <td className="px-4 py-4">
+                          <td className="px-5 py-3.5 text-slate-600">
                             {formatMinutes(item.downtimeMinutes)}
                           </td>
-                          <td className="px-4 py-4">{item.primaryReason}</td>
+                          <td className="px-5 py-3.5 text-slate-500">{item.primaryReason}</td>
                         </tr>
                       ))
                     )}
                   </tbody>
                 </table>
               </div>
-            </div>
+            </section>
 
-            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <div className="mb-4">
-                <h2 className="text-base font-semibold text-slate-900">Resource Comparison</h2>
-                <p className="mt-1 text-sm text-slate-500">
-                  Example chart for comparative performance.
+            {/* Resource comparison chart */}
+            <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+              <div className="border-b border-slate-100 px-6 py-4">
+                <h2 className="font-bold text-slate-900">Resource Comparison</h2>
+                <p className="mt-0.5 text-xs text-slate-400">
+                  Comparative performance across resources.
                 </p>
               </div>
-
-              <HighchartsReact highcharts={Highcharts} options={resourceChartOptions} />
-            </div>
+              <div className="p-6">
+                <HighchartsReact highcharts={Highcharts} options={resourceChartOptions} />
+              </div>
+            </section>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

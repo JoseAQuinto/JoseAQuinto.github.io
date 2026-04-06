@@ -14,7 +14,7 @@ export default function AppPortfolioDemo() {
 
           <nav className="flex items-center gap-2">
             <NavLink
-              to=""
+              to="/portfolio-demo"
               end
               className={({ isActive }) =>
                 `rounded-lg px-4 py-2 text-sm font-medium transition ${
@@ -28,7 +28,7 @@ export default function AppPortfolioDemo() {
             </NavLink>
 
             <NavLink
-              to="performance"
+              to="/portfolio-demo/performance"
               className={({ isActive }) =>
                 `rounded-lg px-4 py-2 text-sm font-medium transition ${
                   isActive
