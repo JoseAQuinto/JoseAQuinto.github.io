@@ -1,5 +1,5 @@
 import { simulateRequest } from "../apiClient";
-import { Order } from "../../types/order";
+import type { Order } from "../../types/order";
 
 export async function getOrders(): Promise<Order[]> {
   const data: Order[] = [
