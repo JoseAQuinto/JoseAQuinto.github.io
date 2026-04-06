@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { ReactNode, SVGProps } from "react";
+import { Link } from "react-router-dom";
 
 const content = {
   es: {
@@ -113,13 +114,13 @@ export default function ProjectsPage() {
     <div className="min-h-screen bg-white text-zinc-900 transition-colors duration-300 dark:bg-zinc-950 dark:text-zinc-100">
       <nav className="sticky top-0 z-50 border-b border-zinc-200/80 bg-white/90 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 dark:border-zinc-800/80 dark:bg-zinc-950/90 dark:supports-[backdrop-filter]:bg-zinc-950/80">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
-          <a
-            href="/index.html"
-            className="group inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-zinc-700 transition-all hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 dark:text-zinc-200 dark:hover:bg-zinc-800/60 dark:focus-visible:ring-zinc-600"
+          <Link
+            to="/"
+            className="group inline-flex items-center gap-2 ..."
           >
             <ArrowLeftIcon size={16} className="transition-transform group-hover:-translate-x-0.5" />
             {t.backButton}
-          </a>
+          </Link>
 
           <div className="flex items-center gap-2">
             <button
@@ -155,9 +156,8 @@ export default function ProjectsPage() {
           <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24 lg:py-28">
             <div className="max-w-3xl">
               <div
-                className={`mb-5 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-50 to-purple-50 px-4 py-1.5 text-xs font-semibold text-indigo-900 ring-1 ring-inset ring-indigo-200/50 transition-all duration-300 dark:from-indigo-950/50 dark:to-purple-950/50 dark:text-indigo-100 dark:ring-indigo-500/30 ${
-                  mounted ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
-                }`}
+                className={`mb-5 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-50 to-purple-50 px-4 py-1.5 text-xs font-semibold text-indigo-900 ring-1 ring-inset ring-indigo-200/50 transition-all duration-300 dark:from-indigo-950/50 dark:to-purple-950/50 dark:text-indigo-100 dark:ring-indigo-500/30 ${mounted ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
+                  }`}
                 style={{ transitionDelay: "100ms" }}
               >
                 <SparkleIcon size={14} className="animate-pulse" />
@@ -165,36 +165,32 @@ export default function ProjectsPage() {
               </div>
 
               <h1
-                className={`text-4xl font-black tracking-tight text-zinc-900 transition-all duration-500 sm:text-6xl lg:text-7xl dark:text-white ${
-                  mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-                }`}
+                className={`text-4xl font-black tracking-tight text-zinc-900 transition-all duration-500 sm:text-6xl lg:text-7xl dark:text-white ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+                  }`}
                 style={{ transitionDelay: "200ms" }}
               >
                 {t.title}
               </h1>
 
               <p
-                className={`mt-4 text-xl font-semibold text-zinc-700 transition-all duration-500 sm:text-2xl dark:text-zinc-200 ${
-                  mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-                }`}
+                className={`mt-4 text-xl font-semibold text-zinc-700 transition-all duration-500 sm:text-2xl dark:text-zinc-200 ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+                  }`}
                 style={{ transitionDelay: "250ms" }}
               >
                 {t.subtitle}
               </p>
 
               <p
-                className={`mt-4 text-base leading-relaxed text-zinc-600 transition-all duration-500 sm:text-lg dark:text-zinc-400 ${
-                  mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-                }`}
+                className={`mt-4 text-base leading-relaxed text-zinc-600 transition-all duration-500 sm:text-lg dark:text-zinc-400 ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+                  }`}
                 style={{ transitionDelay: "300ms" }}
               >
                 {t.intro}
               </p>
 
               <div
-                className={`mt-8 flex flex-wrap items-center gap-3 transition-all duration-500 ${
-                  mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-                }`}
+                className={`mt-8 flex flex-wrap items-center gap-3 transition-all duration-500 ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+                  }`}
                 style={{ transitionDelay: "400ms" }}
               >
                 <a
@@ -227,9 +223,8 @@ export default function ProjectsPage() {
               </div>
 
               <div
-                className={`mt-8 flex flex-wrap gap-2.5 transition-all duration-500 ${
-                  mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-                }`}
+                className={`mt-8 flex flex-wrap gap-2.5 transition-all duration-500 ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+                  }`}
                 style={{ transitionDelay: "500ms" }}
               >
                 {["React", "TypeScript", "Tailwind", ".NET", "PostgreSQL", "Entity Framework"].map(
@@ -294,9 +289,8 @@ export default function ProjectsPage() {
             {t.projects.map((project, index) => (
               <article
                 key={project.id}
-                className={`group rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:hover:shadow-2xl dark:hover:shadow-black/20 ${
-                  mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-                }`}
+                className={`group rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:hover:shadow-2xl dark:hover:shadow-black/20 ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+                  }`}
                 style={{ transitionDelay: `${550 + index * 100}ms` }}
               >
                 <div className="mb-4 flex items-start justify-between gap-4">
@@ -326,13 +320,13 @@ export default function ProjectsPage() {
                 </div>
 
                 <div className="mt-6">
-                  <a
-                    href={project.href}
+                  <Link
+                    to={project.href}
                     className="inline-flex items-center gap-2 rounded-xl bg-zinc-900 px-4 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-zinc-800 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200"
                   >
                     {project.cta}
                     <ArrowRightIcon size={16} />
-                  </a>
+                  </Link>
                 </div>
               </article>
             ))}
@@ -391,9 +385,8 @@ function BackToTop() {
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       type="button"
       aria-label="Volver arriba"
-      className={`fixed bottom-6 right-6 z-50 inline-flex items-center justify-center rounded-2xl border border-zinc-200 bg-white p-3 text-zinc-800 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:shadow-2xl dark:shadow-black/30 ${
-        show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0"
-      }`}
+      className={`fixed bottom-6 right-6 z-50 inline-flex items-center justify-center rounded-2xl border border-zinc-200 bg-white p-3 text-zinc-800 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:shadow-2xl dark:shadow-black/30 ${show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0"
+        }`}
     >
       <ArrowUpIcon size={20} />
     </button>
