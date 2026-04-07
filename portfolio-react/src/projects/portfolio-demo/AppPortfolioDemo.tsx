@@ -1,6 +1,8 @@
 import { NavLink, Route, Routes } from "react-router-dom";
 import OperationsOverviewPage from "./modules/operations-overview/OperationsOverviewPage";
 import PerformanceAnalyticsPage from "./modules/performance-analytics/PerformanceAnalyticsPage";
+import MobileOrdersListPage from "./modules/mobile-orders/MobileOrdersListPage";
+import MobileOrderDetailPage from "./modules/mobile-orders/MobileOrderDetailPage";
 
 export default function AppPortfolioDemo() {
   return (
@@ -14,7 +16,7 @@ export default function AppPortfolioDemo() {
 
           <nav className="flex items-center gap-2">
             <NavLink
-              to="/portfolio-demo"
+              to=""
               end
               className={({ isActive }) =>
                 `rounded-lg px-4 py-2 text-sm font-medium transition ${
@@ -28,7 +30,7 @@ export default function AppPortfolioDemo() {
             </NavLink>
 
             <NavLink
-              to="/portfolio-demo/performance"
+              to="performance"
               className={({ isActive }) =>
                 `rounded-lg px-4 py-2 text-sm font-medium transition ${
                   isActive
@@ -39,6 +41,19 @@ export default function AppPortfolioDemo() {
             >
               Performance
             </NavLink>
+
+            <NavLink
+              to="mobile-orders"
+              className={({ isActive }) =>
+                `rounded-lg px-4 py-2 text-sm font-medium transition ${
+                  isActive
+                    ? "bg-slate-900 text-white"
+                    : "text-slate-700 hover:bg-slate-100"
+                }`
+              }
+            >
+              Mobile Orders
+            </NavLink>
           </nav>
         </div>
       </header>
@@ -47,6 +62,8 @@ export default function AppPortfolioDemo() {
         <Routes>
           <Route index element={<OperationsOverviewPage />} />
           <Route path="performance" element={<PerformanceAnalyticsPage />} />
+          <Route path="mobile-orders" element={<MobileOrdersListPage />} />
+          <Route path="mobile-orders/:id" element={<MobileOrderDetailPage />} />
         </Routes>
       </main>
     </div>
