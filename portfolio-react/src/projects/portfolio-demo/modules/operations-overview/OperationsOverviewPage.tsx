@@ -1,23 +1,24 @@
-import { useEffect, useMemo, useState } from 'react';
-import Highcharts from 'highcharts';
-import { HighchartsReact } from 'highcharts-react-official';
+import { useEffect, useMemo, useState } from "react";
+import Highcharts from "highcharts";
+import { HighchartsReact } from "highcharts-react-official";
 import {
   ArrowPathIcon,
   ChartBarIcon,
   ClockIcon,
   FunnelIcon,
   XMarkIcon,
-} from '@heroicons/react/24/outline';
+} from "@heroicons/react/24/outline";
 
-import { operationsOverviewService } from './operationsOverviewService';
-import type { DateRangeFilter, ResourceRankingItem } from './operationsOverview.types';
+import { operationsOverviewService } from "./operationsOverviewService";
+import type { DateRangeFilter, ResourceRankingItem } from "./operationsOverview.types";
 import {
   buildCategoryChartOptions,
   buildResourceComparisonOptions,
   formatMinutes,
   getDateFilterLabel,
   toInputDate,
-} from './operationsOverview.utils';
+} from "./operationsOverview.utils";
+import { useLanguage } from "../../../../translations/LanguageContext";
 
 /* ── Date range modal ─────────────────────────────────────────────── */
 
@@ -32,19 +33,19 @@ function DateRangeModal({
   onApply: (from?: string, to?: string) => void;
   onCancel: () => void;
 }) {
-  const [from, setFrom] = useState(initialFrom ?? '');
-  const [to, setTo] = useState(initialTo ?? '');
+  const { t } = useLanguage();
+  const pageT = t.portfolioDemo.operationsOverview;
+
+  const [from, setFrom] = useState(initialFrom ?? "");
+  const [to, setTo] = useState(initialTo ?? "");
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-sm">
       <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white shadow-2xl">
-        {/* Modal header */}
         <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
           <div>
-            <h3 className="text-[15px] font-bold text-slate-900">Filter by date</h3>
-            <p className="mt-0.5 text-xs text-slate-400">
-              Apply a custom range to reload dashboard metrics.
-            </p>
+            <h3 className="text-[15px] font-bold text-slate-900">{pageT.modal.title}</h3>
+            <p className="mt-0.5 text-xs text-slate-400">{pageT.modal.subtitle}</p>
           </div>
           <button
             onClick={onCancel}
@@ -54,11 +55,10 @@ function DateRangeModal({
           </button>
         </div>
 
-        {/* Inputs */}
         <div className="grid grid-cols-1 gap-4 p-6 sm:grid-cols-2">
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-              From
+              {pageT.modal.from}
             </label>
             <input
               type="date"
@@ -70,7 +70,7 @@ function DateRangeModal({
 
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-              To
+              {pageT.modal.to}
             </label>
             <input
               type="date"
@@ -81,14 +81,13 @@ function DateRangeModal({
           </div>
         </div>
 
-        {/* Actions */}
         <div className="flex justify-end gap-2 border-t border-slate-100 px-6 py-4">
           <button
             type="button"
             onClick={onCancel}
             className="flex h-10 items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 active:scale-[0.97]"
           >
-            Cancel
+            {pageT.modal.cancel}
           </button>
           <button
             type="button"
@@ -96,7 +95,7 @@ function DateRangeModal({
             className="flex h-10 items-center gap-2 rounded-lg bg-slate-900 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-[0.97]"
           >
             <FunnelIcon className="h-4 w-4" />
-            Apply filters
+            {pageT.modal.apply}
           </button>
         </div>
       </div>
@@ -133,6 +132,9 @@ function KpiCard({
 /* ── Main page ────────────────────────────────────────────────────── */
 
 function OperationsOverviewPage() {
+  const { t, language } = useLanguage();
+  const pageT = t.portfolioDemo.operationsOverview;
+
   const [totalDurationMinutes, setTotalDurationMinutes] = useState(0);
   const [incidentCount, setIncidentCount] = useState(0);
   const [averageDurationMinutes, setAverageDurationMinutes] = useState(0);
@@ -145,7 +147,10 @@ function OperationsOverviewPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const filterLabel = useMemo(() => getDateFilterLabel(dateFilter), [dateFilter]);
+  const filterLabel = useMemo(
+    () => getDateFilterLabel(dateFilter, language),
+    [dateFilter, language]
+  );
   const hasActiveFilter = !!(dateFilter.from || dateFilter.to);
 
   const loadDashboardData = async (filter?: DateRangeFilter) => {
@@ -156,16 +161,20 @@ function OperationsOverviewPage() {
       setIncidentCount(Number(data?.kpi?.incidentCount ?? 0));
       setAverageDurationMinutes(Number(data?.kpi?.averageDurationMinutes ?? 0));
       setRanking(Array.isArray(data?.ranking) ? data.ranking : []);
-      setCategoryChartOptions(buildCategoryChartOptions(data?.categoryBreakdown ?? []));
-      setResourceChartOptions(buildResourceComparisonOptions(data?.resourceComparison ?? []));
+      setCategoryChartOptions(
+        buildCategoryChartOptions(data?.categoryBreakdown ?? [], language)
+      );
+      setResourceChartOptions(
+        buildResourceComparisonOptions(data?.resourceComparison ?? [], language)
+      );
     } catch (error) {
-      console.error('Failed to load operations overview:', error);
+      console.error("Failed to load operations overview:", error);
       setTotalDurationMinutes(0);
       setIncidentCount(0);
       setAverageDurationMinutes(0);
       setRanking([]);
-      setCategoryChartOptions(buildCategoryChartOptions([]));
-      setResourceChartOptions(buildResourceComparisonOptions([]));
+      setCategoryChartOptions(buildCategoryChartOptions([], language));
+      setResourceChartOptions(buildResourceComparisonOptions([], language));
     } finally {
       setIsLoading(false);
     }
@@ -197,12 +206,12 @@ function OperationsOverviewPage() {
         }
         await loadDashboardData();
       } catch (error) {
-        console.error('Failed to initialize operations overview:', error);
+        console.error("Failed to initialize operations overview:", error);
         await loadDashboardData();
       }
     };
     init();
-  }, []);
+  }, [language]);
 
   return (
     <div className="min-h-screen bg-[#f8fafc] pb-12 font-sans text-slate-800">
@@ -218,48 +227,43 @@ function OperationsOverviewPage() {
         />
       )}
 
-      {/* ── Header ── */}
       <header className="sticky top-0 z-20 border-b border-slate-200/80 bg-white/90 backdrop-blur-sm">
         <div className="mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-6">
           <div className="flex items-center gap-3">
             <span className="flex h-7 w-1 rounded-full bg-gradient-to-b from-indigo-500 to-violet-600" />
             <h1 className="text-[15px] font-bold tracking-tight text-slate-900">
-              Operations Overview
+              {pageT.headerTitle}
             </h1>
           </div>
           <span className="rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600">
-            Dashboard
+            {pageT.dashboardBadge}
           </span>
         </div>
       </header>
 
       <main className="mx-auto max-w-screen-2xl space-y-5 p-6">
-
-        {/* ── Toolbar ── */}
         <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
           <div className="border-b border-slate-100 px-6 py-4">
             <h2 className="text-[13px] font-semibold uppercase tracking-widest text-slate-400">
-              Filters
+              {pageT.filtersTitle}
             </h2>
           </div>
 
           <div className="flex flex-wrap items-center justify-between gap-3 p-6">
-            {/* Active filter badge */}
             <div className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
-              <span className="text-sm text-slate-500">Active filter:</span>
+              <span className="text-sm text-slate-500">{pageT.activeFilterLabel}</span>
               <span className="text-sm font-semibold text-slate-900">{filterLabel}</span>
             </div>
 
-            {/* Action buttons */}
             <div className="flex flex-wrap items-center gap-2">
               <button
                 onClick={() => loadDashboardData(dateFilter)}
                 disabled={isLoading}
                 className="flex h-10 items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50"
               >
-                <ArrowPathIcon className={`h-4 w-4 shrink-0 ${isLoading ? 'animate-spin' : ''}`} />
-                Refresh
+                <ArrowPathIcon className={`h-4 w-4 shrink-0 ${isLoading ? "animate-spin" : ""}`} />
+                {pageT.refresh}
               </button>
 
               {hasActiveFilter && (
@@ -269,7 +273,7 @@ function OperationsOverviewPage() {
                   className="flex h-10 items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   <XMarkIcon className="h-4 w-4 shrink-0" />
-                  Clear
+                  {pageT.clear}
                 </button>
               )}
 
@@ -278,49 +282,43 @@ function OperationsOverviewPage() {
                 className="flex h-10 items-center gap-2 rounded-lg bg-slate-900 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-[0.97]"
               >
                 <FunnelIcon className="h-4 w-4 shrink-0" />
-                Set date range
+                {pageT.setDateRange}
               </button>
             </div>
           </div>
         </section>
 
-        {/* ── Main grid ── */}
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
-
-          {/* Left column — KPIs + Category chart */}
           <div className="flex flex-col gap-5 lg:col-span-2">
-
-            {/* KPI cards */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
               <KpiCard
                 icon={<ClockIcon className="h-5 w-5" />}
                 iconBg="bg-emerald-50"
                 iconColor="text-emerald-500"
                 value={formatMinutes(totalDurationMinutes)}
-                label="Total duration"
+                label={pageT.kpis.totalDuration}
               />
               <KpiCard
                 icon={<ChartBarIcon className="h-5 w-5" />}
                 iconBg="bg-rose-50"
                 iconColor="text-rose-500"
                 value={incidentCount}
-                label="Total incidents"
+                label={pageT.kpis.totalIncidents}
               />
               <KpiCard
                 icon={<ClockIcon className="h-5 w-5" />}
                 iconBg="bg-amber-50"
                 iconColor="text-amber-500"
                 value={formatMinutes(averageDurationMinutes)}
-                label="Average duration"
+                label={pageT.kpis.averageDuration}
               />
             </div>
 
-            {/* Category breakdown chart */}
             <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
               <div className="border-b border-slate-100 px-6 py-4">
-                <h2 className="font-bold text-slate-900">Category Breakdown</h2>
+                <h2 className="font-bold text-slate-900">{pageT.categoryBreakdown.title}</h2>
                 <p className="mt-0.5 text-xs text-slate-400">
-                  Distribution of tracked minutes by category.
+                  {pageT.categoryBreakdown.subtitle}
                 </p>
               </div>
               <div className="p-6">
@@ -328,23 +326,18 @@ function OperationsOverviewPage() {
                   <HighchartsReact
                     highcharts={Highcharts}
                     options={categoryChartOptions}
-                    containerProps={{ style: { height: '100%' } }}
+                    containerProps={{ style: { height: "100%" } }}
                   />
                 </div>
               </div>
             </section>
           </div>
 
-          {/* Right column — Ranking + Resource comparison */}
           <div className="flex flex-col gap-5">
-
-            {/* Top resources table */}
             <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
               <div className="border-b border-slate-100 px-6 py-4">
-                <h2 className="font-bold text-slate-900">Top Resources</h2>
-                <p className="mt-0.5 text-xs text-slate-400">
-                  Ranked by total downtime minutes.
-                </p>
+                <h2 className="font-bold text-slate-900">{pageT.topResources.title}</h2>
+                <p className="mt-0.5 text-xs text-slate-400">{pageT.topResources.subtitle}</p>
               </div>
 
               <div className="overflow-x-auto">
@@ -352,13 +345,13 @@ function OperationsOverviewPage() {
                   <thead>
                     <tr className="border-b border-slate-100 bg-slate-50">
                       <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
-                        Resource
+                        {pageT.topResources.columns.resource}
                       </th>
                       <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
-                        Duration
+                        {pageT.topResources.columns.duration}
                       </th>
                       <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
-                        Reason
+                        {pageT.topResources.columns.reason}
                       </th>
                     </tr>
                   </thead>
@@ -366,7 +359,7 @@ function OperationsOverviewPage() {
                     {ranking.length === 0 ? (
                       <tr>
                         <td colSpan={3} className="px-5 py-10 text-center text-sm text-slate-400">
-                          No data available
+                          {pageT.topResources.noData}
                         </td>
                       </tr>
                     ) : (
@@ -395,12 +388,11 @@ function OperationsOverviewPage() {
               </div>
             </section>
 
-            {/* Resource comparison chart */}
             <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
               <div className="border-b border-slate-100 px-6 py-4">
-                <h2 className="font-bold text-slate-900">Resource Comparison</h2>
+                <h2 className="font-bold text-slate-900">{pageT.resourceComparison.title}</h2>
                 <p className="mt-0.5 text-xs text-slate-400">
-                  Comparative performance across resources.
+                  {pageT.resourceComparison.subtitle}
                 </p>
               </div>
               <div className="p-6">

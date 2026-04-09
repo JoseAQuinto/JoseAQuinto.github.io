@@ -1,7 +1,6 @@
 export type SupportStatusType =
     | "active"
-    | "waiting"
-    | "critical"
+    | "paused"
     | "offline";
 
 export type SupportKpi = {

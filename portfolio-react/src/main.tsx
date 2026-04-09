@@ -14,10 +14,14 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 // Tus estilos
 import "./styles/estilos2.css";
 
+import { LanguageProvider } from "./translations/LanguageContext";
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <HashRouter>
-      <App />
-    </HashRouter>
+    <LanguageProvider>
+      <HashRouter>
+        <App />
+      </HashRouter>
+    </LanguageProvider>
   </StrictMode>
 );

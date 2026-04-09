@@ -31,11 +31,10 @@ import {
     parseLocalDateTime,
     getCaseProgress,
     clampPercent,
-    formatLongDate,
-    formatNowTime,
     getDayBounds,
     isToday,
 } from "./productionMonitoring.utils";
+import { useLanguage } from "../../../../translations/LanguageContext";
 
 type TimelineSegment = {
     name: string;
@@ -52,7 +51,13 @@ type TimelineSegment = {
 
 const buildStateTimelineSeries = (
     timelineStates: SupportTimelineState[],
-    selectedDate: string
+    selectedDate: string,
+    labels: {
+        noActivity: string;
+        offline: string;
+        active: string;
+        paused: string;
+    }
 ): Highcharts.SeriesOptionsType[] => {
     const { start: dayStart, end: dayEndRaw } = getDayBounds(selectedDate);
     const visibleEnd = isToday(selectedDate) ? new Date() : dayEndRaw;
@@ -62,6 +67,12 @@ const buildStateTimelineSeries = (
         const bTime = parseLocalDateTime(b.startTime)?.getTime() ?? 0;
         return aTime - bTime;
     });
+
+    const labelMap: Record<string, string> = {
+        offline: labels.offline,
+        active: labels.active,
+        paused: labels.paused,
+    };
 
     const segments: TimelineSegment[] = [];
     let currentHour = 0;
@@ -88,9 +99,9 @@ const buildStateTimelineSeries = (
 
         if (startHour > currentHour) {
             segments.push({
-                name: "Sin actividad",
+                name: labels.noActivity,
                 y: startHour - currentHour,
-                color: "#f1f5f9",
+                color: "#f5f5f5",
                 showInLegend: false,
             });
         }
@@ -100,7 +111,7 @@ const buildStateTimelineSeries = (
         const isFirstLegend = !shownLegendKeys.has(legendKey);
 
         segments.push({
-            name: STATUS_LABELS[visualType],
+            name: labelMap[visualType] ?? visualType,
             y: duration,
             color: STATUS_COLORS[visualType],
             legendKey,
@@ -116,9 +127,9 @@ const buildStateTimelineSeries = (
 
     if (currentHour < visibleTotalHours) {
         segments.push({
-            name: "Sin actividad",
+            name: labels.noActivity,
             y: visibleTotalHours - currentHour,
-            color: "#f1f5f9",
+            color: "#f5f5f5",
             showInLegend: false,
         });
     }
@@ -136,7 +147,11 @@ const buildStateTimelineSeries = (
 
 const buildCasesTimelineSeries = (
     cases: SupportCase[],
-    selectedDate: string
+    selectedDate: string,
+    labels: {
+        noCase: string;
+    },
+    locale: string
 ): Highcharts.SeriesOptionsType[] => {
     const { start: dayStart, end: dayEnd } = getDayBounds(selectedDate);
 
@@ -178,9 +193,9 @@ const buildCasesTimelineSeries = (
 
         if (startHour > currentHour) {
             segments.push({
-                name: "Sin caso",
+                name: labels.noCase,
                 y: startHour - currentHour,
-                color: "#f8fafc",
+                color: "#fafafa",
                 showInLegend: false,
             });
         }
@@ -195,11 +210,11 @@ const buildCasesTimelineSeries = (
             showInLegend: true,
             caseId: item.id,
             channel: item.channelName,
-            startLabel: visibleStart.toLocaleTimeString("es-ES", {
+            startLabel: visibleStart.toLocaleTimeString(locale, {
                 hour: "2-digit",
                 minute: "2-digit",
             }),
-            endLabel: visibleEnd.toLocaleTimeString("es-ES", {
+            endLabel: visibleEnd.toLocaleTimeString(locale, {
                 hour: "2-digit",
                 minute: "2-digit",
             }),
@@ -210,9 +225,9 @@ const buildCasesTimelineSeries = (
 
     if (currentHour < 24) {
         segments.push({
-            name: "Sin caso",
+            name: labels.noCase,
             y: 24 - currentHour,
-            color: "#f8fafc",
+            color: "#fafafa",
             showInLegend: false,
         });
     }
@@ -241,7 +256,13 @@ const buildCasesTimelineSeries = (
 const buildBarTimelineOptions = (
     title: string,
     category: string,
-    series: Highcharts.SeriesOptionsType[]
+    series: Highcharts.SeriesOptionsType[],
+    labels: {
+        caseLabel: string;
+        channelLabel: string;
+        scheduleLabel: string;
+        noData: string;
+    }
 ): Highcharts.Options => ({
     chart: {
         type: "bar",
@@ -264,28 +285,30 @@ const buildBarTimelineOptions = (
                 const val = this.value as number;
                 return `${val < 10 ? "0" : ""}${val}:00`;
             },
-            style: { color: "#94a3b8", fontWeight: "bold" },
+            style: { color: "#9ca3af", fontWeight: "bold" },
         },
-        gridLineWidth: 1.5,
-        gridLineColor: "#cbd5e1",
+        gridLineWidth: 1,
+        gridLineColor: "#e5e7eb",
         gridZIndex: 5,
     },
     legend: {
         enabled: true,
         verticalAlign: "top",
         align: "right",
-        itemStyle: { fontSize: "10px", color: "#64748b" },
+        itemStyle: { fontSize: "11px", color: "#6b7280" },
     },
     tooltip: {
-        headerFormat: `<span style="font-size: 10px">${title}</span><br/>`,
+        headerFormat: `<span style="font-size: 11px">${title}</span><br/>`,
         pointFormatter: function () {
             const custom = (this.options as any).custom ?? {};
             const lines = [`<b>${this.series.name}</b>: ${this.y?.toFixed(2)} h`];
 
-            if (custom.caseId) lines.push(`Caso: ${custom.caseId}`);
-            if (custom.channel) lines.push(`Canal: ${custom.channel}`);
+            if (custom.caseId) lines.push(`${labels.caseLabel}: ${custom.caseId}`);
+            if (custom.channel) lines.push(`${labels.channelLabel}: ${custom.channel}`);
             if (custom.startLabel || custom.endLabel) {
-                lines.push(`Tramo: ${custom.startLabel ?? "--:--"} - ${custom.endLabel ?? "--:--"}`);
+                lines.push(
+                    `${labels.scheduleLabel}: ${custom.startLabel ?? "--:--"} - ${custom.endLabel ?? "--:--"}`
+                );
             }
 
             return lines.join("<br/>");
@@ -312,11 +335,11 @@ const InfoTooltip = ({
 }) => {
     return (
         <div className={`group relative ${className}`}>
-            <div className="flex h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-400 shadow-sm transition-colors hover:border-blue-200 hover:text-blue-600">
+            <div className="flex h-7 w-7 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-400 shadow-sm transition-colors hover:border-blue-400 hover:text-blue-600">
                 <InformationCircleIcon className="h-4 w-4" />
             </div>
 
-            <div className="pointer-events-none absolute left-0 top-9 z-50 w-80 max-w-[90vw] whitespace-pre-line rounded-2xl border border-slate-200 bg-white p-3 text-left text-xs leading-5 text-slate-600 opacity-0 shadow-xl transition-all duration-200 group-hover:opacity-100">
+            <div className="pointer-events-none absolute right-0 top-9 z-50 w-80 max-w-[90vw] whitespace-pre-line rounded-xl border border-gray-200 bg-white p-3 text-left text-xs leading-5 text-gray-600 opacity-0 shadow-lg transition-all duration-200 group-hover:opacity-100">
                 {text}
             </div>
         </div>
@@ -324,13 +347,15 @@ const InfoTooltip = ({
 };
 
 const ProductionMonitoringPage: React.FC = () => {
+    const { t, language } = useLanguage();
+    const pageT = t.portfolioDemo.productionMonitoring;
+    const locale = language === "es" ? "es-ES" : "en-GB";
+
     const [loading, setLoading] = useState(true);
     const [summary, setSummary] = useState<SupportSummary | null>(null);
     const [cases, setCases] = useState<SupportCase[]>([]);
     const [timelineStates, setTimelineStates] = useState<SupportTimelineState[]>([]);
-    const [selectedDate, setSelectedDate] = useState(
-        new Date().toISOString().split("T")[0]
-    );
+    const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0]);
     const [showCasesTimeline, setShowCasesTimeline] = useState(false);
 
     const dateInputRef = useRef<HTMLInputElement>(null);
@@ -339,10 +364,7 @@ const ProductionMonitoringPage: React.FC = () => {
         try {
             setLoading(true);
 
-            const data = await supportOperationsService.getMonitoringData(
-                1,
-                selectedDate
-            );
+            const data = await supportOperationsService.getMonitoringData(1, selectedDate);
 
             setSummary(data.summary);
             setCases(data.cases);
@@ -356,9 +378,14 @@ const ProductionMonitoringPage: React.FC = () => {
         void loadData();
     }, [selectedDate]);
 
+    const localizedStatusLabels: Record<SupportStatusType, string> = {
+        offline: pageT.statusLabels.offline,
+        active: pageT.statusLabels.active,
+        paused: pageT.statusLabels.paused,
+    };
+
     const currentStatusType: SupportStatusType = summary?.status ?? "offline";
-    const currentStatusStyles = STATUS_PILL_STYLES[currentStatusType];
-    const currentStatusLabel = STATUS_LABELS[currentStatusType];
+    const currentStatusLabel = localizedStatusLabels[currentStatusType];
 
     const activeCase = useMemo(() => {
         const active = cases.find((item) => item.status === "active");
@@ -381,51 +408,75 @@ const ProductionMonitoringPage: React.FC = () => {
     }, [summary]);
 
     const timelineOptions = useMemo<Highcharts.Options>(() => {
-        const stateSeries = buildStateTimelineSeries(timelineStates, selectedDate);
+        const stateSeries = buildStateTimelineSeries(timelineStates, selectedDate, {
+            noActivity: pageT.timeline.noActivity,
+            offline: pageT.statusLabels.offline,
+            active: pageT.statusLabels.active,
+            paused: pageT.statusLabels.paused,
+        });
 
         return buildBarTimelineOptions(
-            "Actividad del equipo",
-            "Estados",
+            pageT.timeline.teamActivity,
+            pageT.timeline.statesCategory,
             stateSeries.length > 0
                 ? stateSeries
                 : [
                     {
                         type: "bar",
-                        name: "Sin datos",
+                        name: pageT.timeline.noData,
                         data: [24],
-                        color: "#f1f5f9",
+                        color: "#f5f5f5",
                         showInLegend: false,
                     },
-                ]
+                ],
+            {
+                caseLabel: pageT.caseList.caseLabel,
+                channelLabel: pageT.caseList.channelLabel,
+                scheduleLabel: pageT.caseList.scheduleLabel,
+                noData: pageT.timeline.noData,
+            }
         );
-    }, [timelineStates, selectedDate]);
+    }, [timelineStates, selectedDate, pageT]);
 
     const casesTimelineOptions = useMemo<Highcharts.Options>(() => {
-        const caseSeries = buildCasesTimelineSeries(cases, selectedDate);
+        const caseSeries = buildCasesTimelineSeries(
+            cases,
+            selectedDate,
+            {
+                noCase: pageT.timeline.noCase,
+            },
+            locale
+        );
 
         return buildBarTimelineOptions(
-            "Casos por franja",
-            "Casos",
+            pageT.timeline.casesByTime,
+            pageT.timeline.casesCategory,
             caseSeries.length > 0
                 ? caseSeries
                 : [
                     {
                         type: "bar",
-                        name: "Sin caso",
+                        name: pageT.timeline.noCase,
                         data: [24],
-                        color: "#f8fafc",
+                        color: "#fafafa",
                         showInLegend: false,
                     },
-                ]
+                ],
+            {
+                caseLabel: pageT.caseList.caseLabel,
+                channelLabel: pageT.caseList.channelLabel,
+                scheduleLabel: pageT.caseList.scheduleLabel,
+                noData: pageT.timeline.noData,
+            }
         );
-    }, [cases, selectedDate]);
+    }, [cases, selectedDate, locale, pageT]);
 
     const mainSlaOptions = useMemo<Highcharts.Options>(() => {
         return {
             chart: {
                 type: "pie",
                 backgroundColor: "transparent",
-                height: 360,
+                height: 320,
                 events: {
                     render: function () {
                         const chart = this;
@@ -450,7 +501,7 @@ const ProductionMonitoringPage: React.FC = () => {
                         (chart as any).targetLine = (chart.renderer as any)
                             .path(["M", x1, y1, "L", x2, y2])
                             .attr({
-                                stroke: "#0f172a",
+                                stroke: "#1f2937",
                                 "stroke-width": 3,
                                 zIndex: 10,
                             })
@@ -459,9 +510,9 @@ const ProductionMonitoringPage: React.FC = () => {
                 },
             },
             title: {
-                text: `<div style="text-align:center"><span style="font-size:48px; font-weight:bold; color:#0f172a">${Math.round(
+                text: `<div style="text-align:center"><span style="font-size:48px; font-weight:700; color:#1f2937">${Math.round(
                     mainKpis.sla
-                )}%</span><br/><span style="font-size:14px; color:#64748b; font-weight:bold">SLA GLOBAL</span></div>`,
+                )}%</span><br/><span style="font-size:13px; color:#6b7280; font-weight:600">${pageT.mainPanel.globalSla.toUpperCase()}</span></div>`,
                 align: "center",
                 verticalAlign: "middle",
                 useHTML: true,
@@ -485,71 +536,84 @@ const ProductionMonitoringPage: React.FC = () => {
                     data: [
                         {
                             y: Math.round(mainKpis.sla),
-                            color: Math.round(mainKpis.sla) >= 85 ? "#10b981" : "#3b82f6",
+                            color: Math.round(mainKpis.sla) >= 85 ? "#059669" : "#3b82f6",
                         },
                         {
                             y: 100 - Math.round(mainKpis.sla),
-                            color: "#f1f5f9",
+                            color: "#e5e7eb",
                         },
                     ],
                 },
             ],
             credits: { enabled: false },
         };
-    }, [mainKpis]);
+    }, [mainKpis, pageT.mainPanel.globalSla]);
+
+    const formatLongDateLocal = (value: string) => {
+        const date = new Date(`${value}T00:00:00`);
+        if (Number.isNaN(date.getTime())) return value;
+        return date.toLocaleDateString(locale, {
+            weekday: "long",
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+        });
+    };
+
+    const formatNowTimeLocal = () =>
+        new Date().toLocaleTimeString(locale, {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
 
     if (loading) {
         return (
-            <div className="flex h-[80vh] items-center justify-center">
-                <div className="h-12 w-12 animate-spin rounded-full border-4 border-blue-500 border-t-transparent" />
+            <div className="flex h-screen w-full items-center justify-center bg-gray-50">
+                <div className="flex flex-col items-center gap-3">
+                    <div className="h-12 w-12 animate-spin rounded-full border-4 border-blue-200 border-t-blue-600" />
+                    <p className="text-sm font-medium text-gray-600">{pageT.loading}</p>
+                </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-[#f8fafc] px-4 py-6 sm:px-6 lg:px-8 xl:px-10">
-            <div className="mx-auto w-full max-w-[1800px]">
-                <div className="sticky top-0 z-10 mb-8 flex flex-col gap-5 bg-[#f8fafc]/85 py-2 backdrop-blur-md lg:flex-row lg:items-center lg:justify-between">
-                    <div className="flex items-start gap-4 sm:items-center sm:gap-5">
-                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 shadow-sm">
-                            <Cog6ToothIcon className="h-5 w-5" />
-                        </div>
+        <div className="min-h-screen bg-gray-50">
+            <header className="sticky top-0 z-40 border-b border-gray-200 bg-white/95 backdrop-blur-sm transition-shadow duration-300 shadow-sm">
+                <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-center gap-4 min-w-0">
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-600 shadow-sm">
+                                <Cog6ToothIcon className="h-5 w-5" />
+                            </div>
 
-                        <div className="min-w-0">
-                            <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:gap-4">
-                                <h1 className="truncate text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
-                                    {summary?.teamName ?? "Centro de Soporte"}
+                            <div className="min-w-0 flex-1">
+                                <h1 className="truncate text-xl font-bold text-gray-900 sm:text-2xl">
+                                    {summary?.teamName ?? pageT.header.supportCenter}
                                 </h1>
 
-                                <div
-                                    className={`flex w-fit items-center gap-2 rounded-full border px-3 py-1 shadow-sm ${currentStatusStyles.container} ${currentStatusType === "active" ? "animate-pulse" : ""}`}
-                                >
-                                    <div className={`h-2 w-2 rounded-full ${currentStatusStyles.dot}`} />
-                                    <span
-                                        className={`text-[10px] font-black uppercase tracking-widest ${currentStatusStyles.text}`}
-                                    >
-                                        {currentStatusLabel}
+                                <div className="mt-1 flex items-center gap-3 flex-wrap">
+                                    <span className="flex items-center gap-1.5 text-xs font-semibold text-gray-500">
+                                        <CalendarIcon className="h-4 w-4 flex-shrink-0" />
+                                        {isToday(selectedDate) ? pageT.header.today : pageT.header.historical}
                                     </span>
+
+                                    <div
+                                        className={`flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-semibold ${currentStatusType === "active"
+                                            ? "animate-pulse bg-emerald-50 text-emerald-700 border border-emerald-200"
+                                            : "bg-gray-100 text-gray-600 border border-gray-200"
+                                            }`}
+                                    >
+                                        <div className={`h-2 w-2 rounded-full ${currentStatusType === "active" ? "bg-emerald-500" : "bg-gray-400"}`} />
+                                        {currentStatusLabel}
+                                    </div>
                                 </div>
                             </div>
-
-                            <div className="mt-2 flex flex-wrap items-center gap-3">
-                                <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-500">
-                                    <CalendarIcon className="h-4 w-4" />
-                                    {isToday(selectedDate) ? "Actual" : "Histórico"}
-                                </span>
-                                <div className="h-1 w-1 rounded-full bg-slate-300" />
-                                <span className="rounded-full border border-blue-100 bg-blue-50 px-2.5 py-0.5 text-xs font-bold uppercase tracking-widest text-blue-600">
-                                    Support Desk
-                                </span>
-                            </div>
                         </div>
-                    </div>
 
-                    <div className="flex justify-start lg:justify-end">
-                        <div className="flex flex-col items-start gap-1 lg:items-end">
+                        <div className="flex flex-col items-end gap-2 sm:gap-1">
                             <div
-                                className="group relative flex cursor-pointer items-center justify-end"
+                                className="group relative cursor-pointer"
                                 onClick={() => {
                                     if (dateInputRef.current) {
                                         if (typeof (dateInputRef.current as any).showPicker === "function") {
@@ -568,249 +632,255 @@ const ProductionMonitoringPage: React.FC = () => {
                                     className="pointer-events-none absolute inset-0 cursor-pointer opacity-0"
                                 />
 
-                                <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-2 shadow-sm ring-offset-2 transition-colors group-hover:border-blue-400 group-hover:ring-2 group-hover:ring-blue-100">
-                                    <CalendarIcon className="h-5 w-5 text-blue-600" />
-                                    <span className="text-sm font-bold text-slate-700">
-                                        {formatLongDate(selectedDate)}
-                                    </span>
+                                <div className="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm transition-all group-hover:border-blue-400 group-hover:ring-2 group-hover:ring-blue-100">
+                                    <CalendarIcon className="h-4 w-4 text-blue-600 flex-shrink-0" />
+                                    <span className="whitespace-nowrap">{formatLongDateLocal(selectedDate)}</span>
                                 </div>
                             </div>
 
-                            <div className="mt-0.5 flex items-center gap-1.5 text-slate-400 lg:pr-2">
-                                <ClockIcon className="h-4 w-4" />
-                                <span className="tabular-nums text-xs font-medium">
-                                    {formatNowTime()}
-                                </span>
+                            <div className="flex items-center gap-1 text-xs text-gray-500">
+                                <ClockIcon className="h-4 w-4 flex-shrink-0" />
+                                <span className="tabular-nums font-medium">{formatNowTimeLocal()}</span>
                             </div>
                         </div>
                     </div>
                 </div>
+            </header>
 
-                <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="relative mb-8 overflow-visible rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"
-                >
-                    <div className="mb-4 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-                        <div className="flex items-center gap-2.5">
-                            <h2 className="flex items-center gap-2.5 text-lg font-bold text-slate-800">
-                                <div className="h-6 w-1 rounded-full bg-blue-600" />
-                                Actividad Diaria
-                            </h2>
+            <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+                <section className="mb-8">
+                    <div className="rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-sm">
+                        <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                            <div className="flex items-center gap-2.5">
+                                <div className="h-1 w-5 rounded-full bg-blue-600" />
+                                <h2 className="text-lg font-bold text-gray-900">{pageT.timeline.dailyActivity}</h2>
+                                <InfoTooltip
+                                    text={
+                                        pageT.timeline.tooltipMain
+                                    }
+                                />
+                            </div>
 
-                            <InfoTooltip
-                                text={
-                                    "Muestra el comportamiento operativo del equipo en la fecha seleccionada.\n\n" +
-                                    "- La barra principal resume los estados de atención.\n\n" +
-                                    "- El desglose por casos representa los tramos temporales dedicados a cada incidencia."
-                                }
-                            />
+                            <button
+                                onClick={() => setShowCasesTimeline(!showCasesTimeline)}
+                                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all ${showCasesTimeline
+                                    ? "bg-blue-600 text-white shadow-md hover:bg-blue-700"
+                                    : "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                                    }`}
+                            >
+                                <QueueListIcon className="h-4 w-4" />
+                                {showCasesTimeline ? pageT.timeline.hide : pageT.timeline.breakdownBy} {pageT.timeline.cases}
+                            </button>
                         </div>
 
-                        <button
-                            onClick={() => setShowCasesTimeline(!showCasesTimeline)}
-                            className={`flex w-fit items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-bold transition-all ${showCasesTimeline
-                                    ? "border-blue-600 bg-blue-600 text-white shadow-lg shadow-blue-200"
-                                    : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
-                                }`}
-                        >
-                            <QueueListIcon className="h-4 w-4" />
-                            {showCasesTimeline ? "Ocultar Casos" : "Desglosar por Casos"}
-                        </button>
-                    </div>
+                        <div className="space-y-4">
+                            <div className="h-[120px] overflow-hidden rounded-lg border border-gray-100 bg-gray-50">
+                                <HighchartsReact highcharts={Highcharts} options={timelineOptions} />
+                            </div>
 
-                    <div className="space-y-2">
-                        <div className="h-[120px]">
-                            <HighchartsReact highcharts={Highcharts} options={timelineOptions} />
+                            <AnimatePresence initial={false}>
+                                {showCasesTimeline && (
+                                    <motion.div
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: "auto", opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        transition={{ duration: 0.2 }}
+                                        className="overflow-hidden"
+                                    >
+                                        <div className="h-[120px] overflow-hidden rounded-lg border border-gray-100 bg-gray-50">
+                                            <HighchartsReact
+                                                highcharts={Highcharts}
+                                                options={casesTimelineOptions}
+                                            />
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
-
-                        <AnimatePresence initial={false}>
-                            {showCasesTimeline && (
-                                <motion.div
-                                    initial={{ height: 0, opacity: 0 }}
-                                    animate={{ height: "auto", opacity: 1 }}
-                                    exit={{ height: 0, opacity: 0 }}
-                                    className="overflow-hidden border-t border-slate-100 pt-4"
-                                >
-                                    <div className="h-[120px]">
-                                        <HighchartsReact
-                                            highcharts={Highcharts}
-                                            options={casesTimelineOptions}
-                                        />
-                                    </div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
                     </div>
-                </motion.div>
+                </section>
 
-                <div className="grid grid-cols-1 gap-8 xl:grid-cols-12">
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="space-y-8 xl:col-span-4"
-                    >
-                        <div className="flex min-h-[620px] flex-col overflow-visible rounded-3xl border border-slate-200 bg-white shadow-sm">
-                            <div className="border-b border-slate-100 bg-slate-50/30 p-6">
-                                <div className="flex items-start justify-between gap-4">
+                <div className="grid gap-8 lg:grid-cols-3">
+                    <section className="lg:col-span-1">
+                        <div className="flex h-full flex-col rounded-xl border border-gray-200 bg-white shadow-sm">
+                            <div className="border-b border-gray-200 bg-gray-50/50 px-5 py-4 sm:px-6">
+                                <div className="flex items-start justify-between gap-3">
                                     <div>
-                                        <h3 className="flex items-center gap-2 text-lg font-bold text-slate-800">
-                                            <QueueListIcon className="h-5 w-5 text-slate-500" />
-                                            Casos del día
+                                        <h3 className="flex items-center gap-2 text-base font-bold text-gray-900 sm:text-lg">
+                                            <QueueListIcon className="h-5 w-5 text-gray-400" />
+                                            {pageT.caseList.title}
                                         </h3>
-                                        <p className="mt-0.5 text-xs font-semibold tracking-wide text-slate-400">
-                                            RESUMEN DE ATENCIÓN
+                                        <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-gray-500">
+                                            {pageT.caseList.subtitle}
                                         </p>
                                     </div>
 
                                     <InfoTooltip
-                                        text="Lista los casos asociados al día seleccionado junto con sus indicadores principales."
+                                        text={pageT.caseList.tooltip}
                                     />
                                 </div>
                             </div>
 
-                            <div className="custom-scrollbar flex-1 overflow-auto p-4">
-                                <div className="space-y-4">
+                            <div className="custom-scrollbar flex-1 overflow-auto p-4 sm:p-5">
+                                <div className="space-y-3">
                                     {cases.length > 0 ? (
                                         cases.map((item) => (
-                                            <CaseListItem key={item.id} supportCase={item} />
+                                            <CaseListItem
+                                                key={item.id}
+                                                supportCase={item}
+                                                labels={pageT.caseList}
+                                                locale={locale}
+                                            />
                                         ))
                                     ) : (
-                                        <div className="py-20 text-center">
-                                            <CircleStackIcon className="mx-auto mb-3 h-10 w-10 text-slate-200" />
-                                            <p className="font-medium text-slate-400">
-                                                No hay casos registrados para este día
+                                        <div className="flex flex-col items-center justify-center py-16 text-center">
+                                            <CircleStackIcon className="mb-3 h-10 w-10 text-gray-300" />
+                                            <p className="text-sm font-medium text-gray-500">
+                                                {pageT.caseList.empty}
                                             </p>
                                         </div>
                                     )}
                                 </div>
                             </div>
                         </div>
-                    </motion.div>
+                    </section>
 
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="space-y-8 xl:col-span-8"
-                    >
-                        <div className="relative flex min-h-[620px] flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-                            <div className="relative z-10 border-b border-slate-50 bg-white p-6 sm:p-8">
-                                <div className="flex flex-col gap-8">
-                                    <div className="flex flex-col gap-6 2xl:flex-row 2xl:items-start 2xl:justify-between">
-                                        <div className="min-w-0 flex-1">
-                                            <div className="mb-3 flex items-start justify-between gap-4">
-                                                <div className="min-w-0">
-                                                    <p className="mb-2 text-[10px] font-black uppercase tracking-[0.25em] text-blue-600">
-                                                        Atención en curso
-                                                    </p>
+                    <section className="lg:col-span-2">
+                        <div className="flex h-full flex-col rounded-xl border border-gray-200 bg-white shadow-sm">
+                            <div className="border-b border-gray-200 px-5 py-6 sm:px-6">
+                                <div className="mb-5 flex items-start justify-between gap-4">
+                                    <div className="min-w-0 flex-1">
+                                        <p className="mb-2 text-xs font-bold uppercase tracking-widest text-blue-600">
+                                            {pageT.mainPanel.currentAttention}
+                                        </p>
 
-                                                    <h3 className="truncate text-2xl font-black tracking-tight text-slate-900 sm:text-3xl">
-                                                        {summary?.activeCaseTitle || "SIN CASO ACTIVO"}
-                                                    </h3>
+                                        <h3 className="truncate text-2xl font-bold text-gray-900 sm:text-3xl">
+                                            {summary?.activeCaseTitle || pageT.mainPanel.noCase}
+                                        </h3>
 
-                                                    <p className="mt-1 text-sm font-bold uppercase tracking-wider text-slate-500">
-                                                        {summary?.activeChannelName || "Sin canal asignado"}
-                                                    </p>
-                                                </div>
+                                        <p className="mt-2 text-sm font-semibold uppercase tracking-wide text-gray-600">
+                                            {summary?.activeChannelName || pageT.mainPanel.noChannel}
+                                        </p>
+                                    </div>
 
-                                                <InfoTooltip
-                                                    text="Bloque central con el caso activo, el canal actual y los indicadores principales del equipo."
-                                                />
-                                            </div>
+                                    <InfoTooltip
+                                        text={pageT.mainPanel.tooltip}
+                                    />
+                                </div>
+
+                                <div className="grid gap-3 sm:grid-cols-3">
+                                    <TopMetricCard
+                                        icon={<ClockIcon className="h-4 w-4 text-amber-600" />}
+                                        label={pageT.mainPanel.handover}
+                                        value={minutesToHHmm(summary?.handoverMinutes ?? 0)}
+                                    />
+                                    <TopMetricCard
+                                        icon={<BoltIcon className="h-4 w-4 text-blue-600" />}
+                                        label={pageT.mainPanel.activeAttention}
+                                        value={minutesToHHmm(summary?.activeAttentionMinutes ?? 0)}
+                                    />
+                                    <TopMetricCard
+                                        icon={<CircleStackIcon className="h-4 w-4 text-emerald-600" />}
+                                        label={pageT.mainPanel.tickets}
+                                        value={`${summary?.resolvedTickets ?? 0} / ${summary?.targetTickets ?? 0}`}
+                                        progress={activeCaseProgress}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="flex-1 p-5 sm:p-6">
+                                <div className="space-y-4">
+                                    <div className="grid gap-4 lg:grid-cols-2">
+                                        <div className="flex h-[280px] items-center justify-center rounded-lg border border-gray-200 bg-gray-50/30">
+                                            <HighchartsReact highcharts={Highcharts} options={mainSlaOptions} />
+                                        </div>
+
+                                        <div className="space-y-3">
+                                            <SubKPICard
+                                                icon={<ClockIcon className="h-5 w-5" />}
+                                                label={pageT.kpis.firstResponse}
+                                                value={mainKpis.firstResponse}
+                                                tone="blue"
+                                                tooltip={pageT.kpis.firstResponseTooltip}
+                                                labels={{
+                                                    onTarget: pageT.kpis.onTarget,
+                                                    belowTarget: pageT.kpis.belowTarget,
+                                                }}
+                                            />
+                                            <SubKPICard
+                                                icon={<BoltIcon className="h-5 w-5" />}
+                                                label={pageT.kpis.resolution}
+                                                value={mainKpis.resolution}
+                                                tone="amber"
+                                                tooltip={pageT.kpis.resolutionTooltip}
+                                                labels={{
+                                                    onTarget: pageT.kpis.onTarget,
+                                                    belowTarget: pageT.kpis.belowTarget,
+                                                }}
+                                            />
+                                            <SubKPICard
+                                                icon={<CheckBadgeIcon className="h-5 w-5" />}
+                                                label={pageT.kpis.satisfaction}
+                                                value={mainKpis.satisfaction}
+                                                tone="emerald"
+                                                tooltip={pageT.kpis.satisfactionTooltip}
+                                                labels={{
+                                                    onTarget: pageT.kpis.onTarget,
+                                                    belowTarget: pageT.kpis.belowTarget,
+                                                }}
+                                            />
                                         </div>
                                     </div>
 
-                                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-3 2xl:gap-5">
-                                        <TopMetricCard
-                                            icon={<ClockIcon className="h-4 w-4 text-amber-500" />}
-                                            label="Traspaso"
-                                            value={minutesToHHmm(summary?.handoverMinutes ?? 0)}
-                                            suffix="h:mm"
+                                    <div className="grid gap-3 sm:grid-cols-3 border-t border-gray-200 pt-4">
+                                        <QuickStateCard
+                                            icon={<PlayIcon className="h-4 w-4" />}
+                                            title={pageT.quickCards.activeCase}
+                                            value={summary?.activeCaseTitle || "--"}
+                                            tone="blue"
                                         />
-                                        <TopMetricCard
-                                            icon={<BoltIcon className="h-4 w-4 text-blue-500" />}
-                                            label="Atención activa"
-                                            value={minutesToHHmm(summary?.activeAttentionMinutes ?? 0)}
-                                            suffix="h:mm"
+                                        <QuickStateCard
+                                            icon={<ExclamationTriangleIcon className="h-4 w-4" />}
+                                            title={pageT.quickCards.status}
+                                            value={currentStatusLabel}
+                                            tone="amber"
                                         />
-                                        <TopMetricCard
-                                            icon={<CircleStackIcon className="h-4 w-4 text-emerald-500" />}
-                                            label="Tickets resueltos"
-                                            value={`${summary?.resolvedTickets ?? 0}`}
-                                            suffix={`/ ${summary?.targetTickets ?? 0}`}
-                                            progress={activeCaseProgress}
-                                            progressColor="bg-emerald-500"
+                                        <QuickStateCard
+                                            icon={<CircleStackIcon className="h-4 w-4" />}
+                                            title={pageT.quickCards.target}
+                                            value={`${summary?.targetTickets ?? 0}`}
+                                            tone="emerald"
                                         />
                                     </div>
                                 </div>
                             </div>
-
-                            <div className="flex flex-1 flex-col justify-center bg-slate-50/30 p-6 sm:p-8">
-                                <div className="grid grid-cols-1 items-center gap-8 2xl:grid-cols-5 2xl:gap-10">
-                                    <div className="relative flex h-[320px] w-full items-center justify-center 2xl:col-span-2">
-                                        <HighchartsReact highcharts={Highcharts} options={mainSlaOptions} />
-                                    </div>
-
-                                    <div className="space-y-4 2xl:col-span-3">
-                                        <SubKPICard
-                                            icon={<ClockIcon className="h-5 w-5" />}
-                                            label="Primera respuesta"
-                                            value={mainKpis.firstResponse}
-                                            color="from-rose-500 to-rose-400"
-                                            tooltip="Porcentaje de casos atendidos dentro del tiempo objetivo inicial."
-                                        />
-                                        <SubKPICard
-                                            icon={<BoltIcon className="h-5 w-5" />}
-                                            label="Resolución"
-                                            value={mainKpis.resolution}
-                                            color="from-amber-500 to-amber-400"
-                                            tooltip="Porcentaje de casos cerrados correctamente dentro del objetivo."
-                                        />
-                                        <SubKPICard
-                                            icon={<CheckBadgeIcon className="h-5 w-5" />}
-                                            label="Satisfacción"
-                                            value={mainKpis.satisfaction}
-                                            color="from-emerald-500 to-emerald-400"
-                                            tooltip="Valoración media de satisfacción del usuario final."
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="border-t border-slate-100 bg-white px-6 py-5 sm:px-8">
-                                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-3">
-                                    <QuickStateCard
-                                        icon={<PlayIcon className="h-5 w-5" />}
-                                        title="Caso activo"
-                                        value={summary?.activeCaseTitle || "--"}
-                                        tone="blue"
-                                    />
-                                    <QuickStateCard
-                                        icon={<ExclamationTriangleIcon className="h-5 w-5" />}
-                                        title="Estado actual"
-                                        value={currentStatusLabel}
-                                        tone="amber"
-                                    />
-                                    <QuickStateCard
-                                        icon={<CircleStackIcon className="h-5 w-5" />}
-                                        title="Objetivo diario"
-                                        value={`${summary?.targetTickets ?? 0} tickets`}
-                                        tone="emerald"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="pointer-events-none absolute -right-40 -top-40 h-80 w-80 rounded-full bg-blue-500/5 blur-[100px]" />
-                            <div className="pointer-events-none absolute -bottom-30 -left-30 h-60 w-60 rounded-full bg-emerald-500/5 blur-[80px]" />
                         </div>
-                    </motion.div>
+                    </section>
                 </div>
-            </div>
+            </main>
         </div>
     );
 };
 
-const CaseListItem = ({ supportCase }: { supportCase: SupportCase }) => {
+const CaseListItem = ({
+    supportCase,
+    labels,
+    locale,
+}: {
+    supportCase: SupportCase;
+    labels: {
+        active: string;
+        resolved: string;
+        queued: string;
+        inLabel: string;
+        outLabel: string;
+        slaShort: string;
+        firstResponseShort: string;
+        resolutionShort: string;
+        satisfactionShort: string;
+    };
+    locale: string;
+}) => {
     const isActive = supportCase.status === "active";
     const isResolved = supportCase.status === "resolved";
     const progress = getCaseProgress(supportCase);
@@ -819,7 +889,7 @@ const CaseListItem = ({ supportCase }: { supportCase: SupportCase }) => {
         const date = parseLocalDateTime(ts);
         if (!date) return "--:--";
 
-        return date.toLocaleTimeString("es-ES", {
+        return date.toLocaleTimeString(locale, {
             hour: "2-digit",
             minute: "2-digit",
         });
@@ -827,76 +897,72 @@ const CaseListItem = ({ supportCase }: { supportCase: SupportCase }) => {
 
     return (
         <div
-            className={`group rounded-2xl border p-4 transition-all hover:shadow-md ${isActive ? "border-blue-200 bg-blue-50/40" : "border-slate-100 bg-white"
+            className={`rounded-lg border p-3 transition-colors ${isActive
+                ? "border-blue-200 bg-blue-50"
+                : "border-gray-200 bg-white hover:bg-gray-50"
                 }`}
         >
-            <div className="mb-3 flex items-start justify-between gap-3">
-                <div className="min-w-0">
-                    <h4 className="truncate text-sm font-bold uppercase text-slate-800 transition-colors group-hover:text-blue-700">
+            <div className="mb-2 flex items-start justify-between gap-2">
+                <div className="min-w-0 flex-1">
+                    <h4 className="truncate text-sm font-bold text-gray-900">
                         {supportCase.caseTitle}
                     </h4>
-                    <p className="mt-0.5 truncate text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                    <p className="mt-0.5 truncate text-xs font-semibold text-gray-500">
                         {supportCase.channelName}
                     </p>
                 </div>
 
                 {isActive ? (
-                    <span className="flex shrink-0 items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-black uppercase text-emerald-700">
+                    <span className="flex shrink-0 items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-bold text-emerald-700">
                         <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
-                        activo
+                        {labels.active}
                     </span>
                 ) : isResolved ? (
-                    <span className="shrink-0 rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-black uppercase text-slate-500">
-                        Resuelto
+                    <span className="shrink-0 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-bold text-gray-600">
+                        {labels.resolved}
                     </span>
                 ) : (
-                    <span className="shrink-0 rounded-full bg-slate-50 px-2 py-0.5 text-[10px] font-black uppercase italic text-slate-300">
-                        En cola
+                    <span className="shrink-0 rounded-full bg-gray-50 px-2 py-0.5 text-xs font-semibold text-gray-500">
+                        {labels.queued}
                     </span>
                 )}
             </div>
 
-            <div className="mb-4 flex flex-wrap items-center gap-4 text-[10px] font-bold text-slate-500">
+            <div className="mb-3 flex flex-wrap gap-2 text-xs font-semibold text-gray-500">
                 <div className="flex items-center gap-1">
-                    <ClockIcon className="h-3 w-3 text-slate-300" />
-                    <span>
-                        In: <span className="text-slate-700">{formatTime(supportCase.startTime)}</span>
-                    </span>
+                    <ClockIcon className="h-3 w-3" />
+                    <span>{labels.inLabel}: <span className="text-gray-700">{formatTime(supportCase.startTime)}</span></span>
                 </div>
                 <div className="flex items-center gap-1">
-                    <div className="h-0.5 w-2 bg-slate-200" />
-                    <span>
-                        Out: <span className="text-slate-700">{formatTime(supportCase.endTime)}</span>
-                    </span>
+                    <span className="text-gray-300">→</span>
+                    <span>{labels.outLabel}: <span className="text-gray-700">{formatTime(supportCase.endTime)}</span></span>
                 </div>
             </div>
 
-            <div className="mb-4 grid grid-cols-4 gap-2">
-                <MiniIndicator label="SLA" value={supportCase.sla} color="text-blue-600 bg-blue-50" />
-                <MiniIndicator label="1ª resp" value={supportCase.firstResponse} color="text-rose-600 bg-rose-50" />
-                <MiniIndicator label="Resol" value={supportCase.resolution} color="text-amber-600 bg-amber-50" />
-                <MiniIndicator label="Sat" value={supportCase.satisfaction} color="text-emerald-600 bg-emerald-50" />
+            <div className="mb-3 grid grid-cols-4 gap-2">
+                <MiniIndicator label={labels.slaShort} value={supportCase.sla} color="text-blue-600 bg-blue-50" />
+                <MiniIndicator label={labels.firstResponseShort} value={supportCase.firstResponse} color="text-red-600 bg-red-50" />
+                <MiniIndicator label={labels.resolutionShort} value={supportCase.resolution} color="text-amber-600 bg-amber-50" />
+                <MiniIndicator label={labels.satisfactionShort} value={supportCase.satisfaction} color="text-emerald-600 bg-emerald-50" />
             </div>
 
-            <div className="space-y-3">
-                <div className="flex items-center justify-between text-[10px] font-black">
-                    <span className="tracking-tight text-slate-400">
+            <div className="space-y-2">
+                <div className="flex items-center justify-between text-xs font-bold">
+                    <span className="text-gray-600">
                         {supportCase.resolvedTickets}{" "}
-                        <span className="text-[10px] font-medium opacity-50">/ {supportCase.targetTickets}</span>
+                        <span className="font-normal opacity-60">/ {supportCase.targetTickets}</span>
                     </span>
-                    <span className={isActive ? "font-extrabold text-blue-600" : "text-slate-500"}>
+                    <span className={isActive ? "text-blue-600" : "text-gray-600"}>
                         {Math.round(progress)}%
                     </span>
                 </div>
 
-                <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-gray-200">
                     <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${progress}%` }}
-                        className={`h-full rounded-full ${isActive
-                                ? "bg-blue-600 shadow-[0_0_10px_rgba(37,99,235,0.3)]"
-                                : "bg-slate-300"
-                            }`}
+                        transition={{ duration: 0.5 }}
+                        className={`h-full rounded-full ${isActive ? "bg-blue-600" : "bg-gray-400"}`}
                     />
                 </div>
             </div>
@@ -914,12 +980,12 @@ const MiniIndicator = ({
     color: string;
 }) => (
     <div
-        className={`flex flex-col items-center justify-center rounded-lg border border-transparent py-1 transition-colors hover:border-current/10 ${color}`}
+        className={`flex flex-col items-center justify-center rounded-md border border-transparent py-1 transition-colors ${color}`}
     >
-        <span className="mb-0.5 text-[8px] font-black uppercase leading-none tracking-tighter opacity-70">
+        <span className="text-[8px] font-bold uppercase leading-none opacity-60">
             {label}
         </span>
-        <span className="text-[10px] font-black leading-none">{Math.round(value)}%</span>
+        <span className="text-xs font-bold leading-none">{Math.round(value)}%</span>
     </div>
 );
 
@@ -927,40 +993,33 @@ const TopMetricCard = ({
     icon,
     label,
     value,
-    suffix,
     progress,
-    progressColor = "bg-emerald-500",
 }: {
     icon: React.ReactNode;
     label: string;
     value: string;
-    suffix?: string;
     progress?: number;
-    progressColor?: string;
 }) => (
-    <div className="rounded-2xl border border-slate-100 bg-slate-50/70 p-4 transition-all hover:bg-white hover:shadow-sm">
-        <span className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
+    <div className="rounded-lg border border-gray-200 bg-gray-50 p-3 transition-colors hover:bg-white hover:border-gray-300">
+        <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-gray-600">
             {icon}
             {label}
         </span>
 
-        <div className="mt-2 flex items-end gap-2">
-            <span className="text-2xl font-black tracking-tighter text-slate-800">{value}</span>
-            {suffix ? (
-                <span className="pb-0.5 text-[10px] font-bold uppercase text-slate-400">{suffix}</span>
-            ) : null}
-        </div>
+        <div className="mt-2 text-2xl font-bold text-gray-900">{value}</div>
 
-        {typeof progress === "number" ? (
-            <div className="mt-3">
-                <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
-                    <div
-                        className={`h-full transition-all duration-1000 ${progressColor}`}
-                        style={{ width: `${Math.max(0, Math.min(100, progress))}%` }}
+        {typeof progress === "number" && (
+            <div className="mt-2">
+                <div className="h-1 w-full overflow-hidden rounded-full bg-gray-200">
+                    <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${Math.max(0, Math.min(100, progress))}%` }}
+                        transition={{ duration: 0.6 }}
+                        className="h-full rounded-full bg-emerald-500"
                     />
                 </div>
             </div>
-        ) : null}
+        )}
     </div>
 );
 
@@ -968,40 +1027,83 @@ const SubKPICard = ({
     icon,
     label,
     value,
-    color,
+    tone,
     tooltip,
+    labels,
 }: {
     icon: React.ReactNode;
     label: string;
     value: number;
-    color: string;
+    tone: "blue" | "amber" | "emerald";
     tooltip?: string;
-}) => (
-    <div
-        className="group flex items-center gap-4 rounded-2xl border border-slate-100 bg-slate-50 p-4 transition-all hover:bg-white hover:shadow-md"
-        title={tooltip}
-    >
+    labels: {
+        onTarget: string;
+        belowTarget: string;
+    };
+}) => {
+    const toneStyles = {
+        blue: {
+            iconWrap: "bg-blue-50 text-blue-600 border-blue-200",
+            badge: "bg-blue-50 text-blue-700 border-blue-200",
+            bar: "bg-blue-600",
+        },
+        amber: {
+            iconWrap: "bg-amber-50 text-amber-600 border-amber-200",
+            badge: "bg-amber-50 text-amber-700 border-amber-200",
+            bar: "bg-amber-500",
+        },
+        emerald: {
+            iconWrap: "bg-emerald-50 text-emerald-600 border-emerald-200",
+            badge: "bg-emerald-50 text-emerald-700 border-emerald-200",
+            bar: "bg-emerald-600",
+        },
+    };
+
+    const styles = toneStyles[tone];
+    const safeValue = Math.max(0, Math.min(100, value));
+
+    return (
         <div
-            className={`flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${color} text-white shadow-lg`}
+            className="rounded-lg border border-gray-200 bg-white p-4 transition-all hover:border-gray-300 hover:shadow-sm"
+            title={tooltip}
         >
-            {icon}
-        </div>
-        <div className="flex-1">
-            <span className="block text-[10px] font-black uppercase tracking-widest text-slate-400">
-                {label}
-            </span>
-            <div className="flex items-end justify-between gap-4">
-                <span className="text-xl font-black text-slate-900">{Math.round(value)}%</span>
-                <div className="mb-2 h-1.5 w-24 max-w-[40%] overflow-hidden rounded-full bg-slate-200 sm:w-32">
-                    <div
-                        className={`h-full bg-gradient-to-r ${color}`}
-                        style={{ width: `${Math.max(0, Math.min(100, value))}%` }}
-                    />
+            <div className="flex items-start gap-3">
+                <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border ${styles.iconWrap}`}>
+                    {icon}
+                </div>
+
+                <div className="min-w-0 flex-1">
+                    <div className="mb-3 flex items-start justify-between gap-2">
+                        <div className="min-w-0">
+                            <p className="text-xs font-bold uppercase tracking-wider text-gray-500">
+                                {label}
+                            </p>
+                        </div>
+
+                        <div className={`shrink-0 rounded-full border px-2 py-0.5 text-xs font-bold ${styles.badge}`}>
+                            {Math.round(safeValue)}%
+                        </div>
+                    </div>
+
+                    <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
+                        <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${safeValue}%` }}
+                            transition={{ duration: 0.6 }}
+                            className={`h-full rounded-full ${styles.bar}`}
+                        />
+                    </div>
+
+                    <div className="mt-2 flex items-center justify-between text-xs text-gray-600">
+                        <span>
+                            {safeValue >= 85 ? labels.onTarget : labels.belowTarget}
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-);
+    );
+};
 
 const QuickStateCard = ({
     icon,
@@ -1015,20 +1117,20 @@ const QuickStateCard = ({
     tone: "blue" | "amber" | "emerald";
 }) => {
     const tones = {
-        blue: "bg-blue-50 text-blue-600 border-blue-100",
-        amber: "bg-amber-50 text-amber-600 border-amber-100",
-        emerald: "bg-emerald-50 text-emerald-600 border-emerald-100",
+        blue: "bg-blue-50 text-blue-600 border-blue-200",
+        amber: "bg-amber-50 text-amber-600 border-amber-200",
+        emerald: "bg-emerald-50 text-emerald-600 border-emerald-200",
     };
 
     return (
-        <div className={`rounded-2xl border p-4 ${tones[tone]}`}>
-            <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-white/70">
+        <div className={`rounded-lg border p-3 transition-all hover:shadow-sm ${tones[tone]}`}>
+            <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-md bg-white/50">
                 {icon}
             </div>
-            <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-70">
+            <p className="text-xs font-bold uppercase tracking-wider opacity-75">
                 {title}
             </p>
-            <p className="mt-1 text-sm font-black tracking-tight text-slate-800">
+            <p className="mt-1 truncate text-sm font-bold text-gray-900">
                 {value}
             </p>
         </div>

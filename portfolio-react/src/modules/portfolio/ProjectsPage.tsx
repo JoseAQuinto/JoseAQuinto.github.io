@@ -1,131 +1,28 @@
 import { useEffect, useState } from "react";
 import type { ReactNode, SVGProps } from "react";
 import { Link } from "react-router-dom";
-
-const content = {
-  es: {
-    backButton: "Volver atrás",
-    badge: "Full-stack Developer",
-    title: "Jose Ángel Quinto",
-    subtitle: "Junior Full-Stack con foco en React",
-    intro:
-      "1 año de experiencia desarrollando aplicaciones empresariales en entornos profesionales. Especializado en React y backend con .NET.",
-    aboutTitle: "Sobre mí",
-    experience: [
-      {
-        title: "Experiencia Actual",
-        description:
-          "Trabajo en una consultora tecnológica desarrollando aplicaciones empresariales (ERP, SGA y MES). Participo en todo el ciclo: desde el diseño de base de datos hasta la interfaz de usuario.",
-      },
-      {
-        title: "Stack Frontend",
-        description:
-          "React con hooks, Context API, TypeScript y Tailwind. Desarrollo componentes complejos como modales, tablas dinámicas y formularios, conectando con APIs REST propias.",
-      },
-      {
-        title: "Stack Backend",
-        description:
-          ".NET con Entity Framework, PostgreSQL (joins, migraciones), DTOs y validaciones de negocio. Experiencia en diseño de endpoints REST y flujos de autenticación.",
-      },
-      {
-        title: "Enfoque Profesional",
-        description:
-          "Busco un rol junior/early-mid centrado en React, con oportunidades para crecer en backend y arquitectura. Me adapto rápido a nuevas tecnologías y entornos de negocio.",
-      },
-    ],
-    projectsTitle: "Proyectos",
-    projectsSubtitle:
-      "Una selección de demos y proyectos donde muestro estructura, componentes reutilizables e interfaces conectadas a datos mock o APIs.",
-    projects: [
-      {
-        id: "portfolio-demo",
-        title: "Portfolio Demo",
-        description:
-          "Aplicación demo con módulos interactivos de operaciones y analítica. Incluye navegación interna, componentes reutilizables, tipado con TypeScript y servicios mock.",
-        href: "/portfolio-demo",
-        cta: "Ver demo",
-        tags: ["React", "TypeScript", "Tailwind", "Mock API"],
-      },
-    ],
-    footer: "Jose Ángel Quinto Ferrández · Portafolio",
-  },
-  en: {
-    backButton: "Go back",
-    badge: "Full-stack Developer",
-    title: "Jose Ángel Quinto",
-    subtitle: "Junior Full-Stack focused on React",
-    intro:
-      "1 year of experience building enterprise applications in professional environments. Specialized in React and backend with .NET.",
-    aboutTitle: "About me",
-    experience: [
-      {
-        title: "Current Experience",
-        description:
-          "Working at a technology consultancy developing enterprise applications (ERP, WMS and MES). I participate in the full cycle: from database design to user interfaces.",
-      },
-      {
-        title: "Frontend Stack",
-        description:
-          "React with hooks, Context API, TypeScript and Tailwind. Building complex components like modals, dynamic tables and forms, connecting to in-house REST APIs.",
-      },
-      {
-        title: "Backend Stack",
-        description:
-          ".NET with Entity Framework, PostgreSQL (joins, migrations), DTOs and business validations. Experience designing REST endpoints and authentication flows.",
-      },
-      {
-        title: "Professional Focus",
-        description:
-          "Looking for a junior/early-mid role focused on React, with opportunities to grow in backend and architecture. I adapt quickly to new technologies and business environments.",
-      },
-    ],
-    projectsTitle: "Projects",
-    projectsSubtitle:
-      "A selection of demos and projects where I showcase structure, reusable components and interfaces connected to mock data or APIs.",
-    projects: [
-      {
-        id: "portfolio-demo",
-        title: "Portfolio Demo",
-        description:
-          "Demo application with interactive operations and analytics modules. Includes internal navigation, reusable components, TypeScript typing and mock services.",
-        href: "/portfolio-demo",
-        cta: "View demo",
-        tags: ["React", "TypeScript", "Tailwind", "Mock API"],
-      },
-    ],
-    footer: "Jose Ángel Quinto Ferrández · Portfolio",
-  },
-} as const;
-
-type Language = keyof typeof content;
+import { useLanguage } from "../../translations/LanguageContext";
 
 export default function ProjectsPage() {
   const [mounted, setMounted] = useState<boolean>(false);
-  const [language, setLanguage] = useState<Language>("es");
+  const { language, toggleLanguage, t } = useLanguage();
+
+  const page = t.projectsPage;
+  const common = t.common;
 
   useEffect(() => {
     const tmr = window.setTimeout(() => setMounted(true), 40);
     return () => window.clearTimeout(tmr);
   }, []);
 
-  const t = content[language];
-
   return (
     <div className="min-h-screen bg-white text-zinc-900 transition-colors duration-300 dark:bg-zinc-950 dark:text-zinc-100">
       <nav className="sticky top-0 z-50 border-b border-zinc-200/80 bg-white/90 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 dark:border-zinc-800/80 dark:bg-zinc-950/90 dark:supports-[backdrop-filter]:bg-zinc-950/80">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
-          <Link
-            to="/"
-            className="group inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-zinc-700 transition-all hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 dark:text-zinc-200 dark:hover:bg-zinc-800/60 dark:focus-visible:ring-zinc-600"
-          >
-            <ArrowLeftIcon size={16} className="transition-transform group-hover:-translate-x-0.5" />
-            {t.backButton}
-          </Link>
-
+        <div className="mx-auto flex max-w-6xl items-center justify-end px-4 py-3 sm:px-6">
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setLanguage((lang) => (lang === "es" ? "en" : "es"))}
-              aria-label="Cambiar idioma"
+              onClick={toggleLanguage}
+              aria-label={common.changeLanguageAriaLabel}
               type="button"
               className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-800 shadow-sm transition-all hover:bg-zinc-50 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800 dark:hover:border-zinc-600 dark:focus-visible:ring-zinc-600"
             >
@@ -156,41 +53,46 @@ export default function ProjectsPage() {
           <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24 lg:py-28">
             <div className="max-w-3xl">
               <div
-                className={`mb-5 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-50 to-purple-50 px-4 py-1.5 text-xs font-semibold text-indigo-900 ring-1 ring-inset ring-indigo-200/50 transition-all duration-300 dark:from-indigo-950/50 dark:to-purple-950/50 dark:text-indigo-100 dark:ring-indigo-500/30 ${mounted ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
-                  }`}
+                className={`mb-5 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-50 to-purple-50 px-4 py-1.5 text-xs font-semibold text-indigo-900 ring-1 ring-inset ring-indigo-200/50 transition-all duration-300 dark:from-indigo-950/50 dark:to-purple-950/50 dark:text-indigo-100 dark:ring-indigo-500/30 ${
+                  mounted ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
+                }`}
                 style={{ transitionDelay: "100ms" }}
               >
                 <SparkleIcon size={14} className="animate-pulse" />
-                {t.badge}
+                {page.badge}
               </div>
 
               <h1
-                className={`text-4xl font-black tracking-tight text-zinc-900 transition-all duration-500 sm:text-6xl lg:text-7xl dark:text-white ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-                  }`}
+                className={`text-4xl font-black tracking-tight text-zinc-900 transition-all duration-500 sm:text-6xl lg:text-7xl dark:text-white ${
+                  mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+                }`}
                 style={{ transitionDelay: "200ms" }}
               >
-                {t.title}
+                {page.title}
               </h1>
 
               <p
-                className={`mt-4 text-xl font-semibold text-zinc-700 transition-all duration-500 sm:text-2xl dark:text-zinc-200 ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-                  }`}
+                className={`mt-4 text-xl font-semibold text-zinc-700 transition-all duration-500 sm:text-2xl dark:text-zinc-200 ${
+                  mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+                }`}
                 style={{ transitionDelay: "250ms" }}
               >
-                {t.subtitle}
+                {page.subtitle}
               </p>
 
               <p
-                className={`mt-4 text-base leading-relaxed text-zinc-600 transition-all duration-500 sm:text-lg dark:text-zinc-400 ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-                  }`}
+                className={`mt-4 text-base leading-relaxed text-zinc-600 transition-all duration-500 sm:text-lg dark:text-zinc-400 ${
+                  mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+                }`}
                 style={{ transitionDelay: "300ms" }}
               >
-                {t.intro}
+                {page.intro}
               </p>
 
               <div
-                className={`mt-8 flex flex-wrap items-center gap-3 transition-all duration-500 ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-                  }`}
+                className={`mt-8 flex flex-wrap items-center gap-3 transition-all duration-500 ${
+                  mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+                }`}
                 style={{ transitionDelay: "400ms" }}
               >
                 <button
@@ -203,7 +105,7 @@ export default function ProjectsPage() {
                   }}
                   className="inline-flex items-center gap-2 !rounded-2xl bg-gradient-to-r from-zinc-900 to-zinc-800 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-zinc-900/20 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-zinc-900/30 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 dark:from-white dark:to-zinc-100 dark:text-zinc-900 dark:shadow-white/10 dark:hover:shadow-white/20"
                 >
-                  {t.aboutTitle}
+                  {page.aboutTitle}
                   <ChevronDownIcon size={16} />
                 </button>
 
@@ -229,20 +131,19 @@ export default function ProjectsPage() {
               </div>
 
               <div
-                className={`mt-8 flex flex-wrap gap-2.5 transition-all duration-500 ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-                  }`}
+                className={`mt-8 flex flex-wrap gap-2.5 transition-all duration-500 ${
+                  mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+                }`}
                 style={{ transitionDelay: "500ms" }}
               >
-                {["React", "TypeScript", "Tailwind", ".NET", "PostgreSQL", "Entity Framework"].map(
-                  (tech) => (
-                    <span
-                      key={tech}
-                      className="rounded-full bg-zinc-100 px-4 py-1.5 text-xs font-semibold text-zinc-700 ring-1 ring-inset ring-zinc-200 transition-all hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:ring-zinc-700 dark:hover:bg-zinc-700"
-                    >
-                      {tech}
-                    </span>
-                  )
-                )}
+                {page.techStack.map((tech) => (
+                  <span
+                    key={tech}
+                    className="rounded-full bg-zinc-100 px-4 py-1.5 text-xs font-semibold text-zinc-700 ring-1 ring-inset ring-zinc-200 transition-all hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:ring-zinc-700 dark:hover:bg-zinc-700"
+                  >
+                    {tech}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
@@ -255,18 +156,20 @@ export default function ProjectsPage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="mb-12">
             <h2 className="text-3xl font-black tracking-tight text-zinc-900 sm:text-4xl dark:text-white">
-              {t.aboutTitle}
+              {page.aboutTitle}
             </h2>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
-            {t.experience.map((item, index) => (
+            {page.experience.map((item, index) => (
               <article
                 key={index}
                 className="group rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:hover:shadow-2xl dark:hover:shadow-black/20"
               >
                 <div className="mb-3 flex items-start justify-between">
-                  <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50">{item.title}</h3>
+                  <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50">
+                    {item.title}
+                  </h3>
                   <div className="rounded-lg bg-gradient-to-br from-indigo-500/10 to-purple-500/10 p-2 dark:from-indigo-500/20 dark:to-purple-500/20">
                     <CodeIcon size={20} className="text-indigo-600 dark:text-indigo-400" />
                   </div>
@@ -284,19 +187,20 @@ export default function ProjectsPage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="mb-10">
             <h2 className="text-3xl font-black tracking-tight text-zinc-900 sm:text-4xl dark:text-white">
-              {t.projectsTitle}
+              {page.projectsTitle}
             </h2>
             <p className="mt-3 text-base text-zinc-600 dark:text-zinc-400">
-              {t.projectsSubtitle}
+              {page.projectsSubtitle}
             </p>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {t.projects.map((project, index) => (
+            {page.projects.map((project, index) => (
               <article
                 key={project.id}
-                className={`group rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:hover:shadow-2xl dark:hover:shadow-black/20 ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-                  }`}
+                className={`group rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:hover:shadow-2xl dark:hover:shadow-black/20 ${
+                  mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+                }`}
                 style={{ transitionDelay: `${550 + index * 100}ms` }}
               >
                 <div className="mb-4 flex items-start justify-between gap-4">
@@ -340,13 +244,13 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      <BackToTop />
+      <BackToTop ariaLabel={common.backToTop} />
 
       <footer className="border-t border-zinc-200 bg-white py-12 dark:border-zinc-800 dark:bg-zinc-950">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
             <p className="text-center text-sm text-zinc-600 dark:text-zinc-400 sm:text-left">
-              © {new Date().getFullYear()} {t.footer}
+              © {new Date().getFullYear()} {page.footer}
             </p>
 
             <div className="flex items-center gap-3">
@@ -376,7 +280,7 @@ export default function ProjectsPage() {
   );
 }
 
-function BackToTop() {
+function BackToTop({ ariaLabel }: { ariaLabel: string }) {
   const [show, setShow] = useState<boolean>(false);
 
   useEffect(() => {
@@ -390,9 +294,10 @@ function BackToTop() {
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       type="button"
-      aria-label="Volver arriba"
-      className={`fixed bottom-6 right-6 z-50 inline-flex items-center justify-center rounded-2xl border border-zinc-200 bg-white p-3 text-zinc-800 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:shadow-2xl dark:shadow-black/30 ${show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0"
-        }`}
+      aria-label={ariaLabel}
+      className={`fixed bottom-6 right-6 z-50 inline-flex items-center justify-center rounded-2xl border border-zinc-200 bg-white p-3 text-zinc-800 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:shadow-2xl dark:shadow-black/30 ${
+        show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0"
+      }`}
     >
       <ArrowUpIcon size={20} />
     </button>
@@ -425,27 +330,6 @@ function Icon({
     >
       {children}
     </svg>
-  );
-}
-
-function ArrowLeftIcon({
-  size = 16,
-  className = "",
-  ...props
-}: { size?: number; className?: string } & SVGProps<SVGSVGElement>) {
-  return (
-    <Icon
-      size={size}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      {...props}
-    >
-      <path d="M15 18l-6-6 6-6" />
-    </Icon>
   );
 }
 

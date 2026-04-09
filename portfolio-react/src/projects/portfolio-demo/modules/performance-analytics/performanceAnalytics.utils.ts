@@ -1,10 +1,12 @@
-export const formatDateLabel = (date?: string) => {
+import type { Language } from "../../../../translations/types";
+
+export const formatDateLabel = (date?: string, language: Language = "en") => {
   if (!date) return "-";
 
   const parsed = new Date(date);
   if (Number.isNaN(parsed.getTime())) return date;
 
-  return parsed.toLocaleDateString("en-GB");
+  return parsed.toLocaleDateString(language === "es" ? "es-ES" : "en-GB");
 };
 
 export const clampPercentage = (value: number) => {
