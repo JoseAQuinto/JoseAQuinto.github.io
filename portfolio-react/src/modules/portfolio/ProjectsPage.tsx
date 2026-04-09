@@ -16,15 +16,15 @@ export default function ProjectsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-zinc-900 transition-colors duration-300 dark:bg-zinc-950 dark:text-zinc-100">
-      <nav className="sticky top-0 z-50 border-b border-zinc-200/80 bg-white/90 backdrop-blur-md supports-[backdrop-filter]:bg-white/80 dark:border-zinc-800/80 dark:bg-zinc-950/90 dark:supports-[backdrop-filter]:bg-zinc-950/80">
+    <div className="min-h-screen bg-white text-zinc-900 transition-colors duration-300">
+      <nav className="sticky top-0 z-50 border-b border-zinc-200 bg-white/90 backdrop-blur-md supports-[backdrop-filter]:bg-white/80">
         <div className="mx-auto flex max-w-6xl items-center justify-end px-4 py-3 sm:px-6">
           <div className="flex items-center gap-2">
             <button
               onClick={toggleLanguage}
               aria-label={common.changeLanguageAriaLabel}
               type="button"
-              className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-800 shadow-sm transition-all hover:bg-zinc-50 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800 dark:hover:border-zinc-600 dark:focus-visible:ring-zinc-600"
+              className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-900 shadow-sm transition-all duration-200 hover:bg-zinc-50 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2"
             >
               <GlobeIcon size={16} />
               {language === "es" ? "EN" : "ES"}
@@ -35,12 +35,12 @@ export default function ProjectsPage() {
 
       <header className="relative overflow-hidden">
         <div className="absolute inset-0">
-          <div className="h-full w-full bg-gradient-to-br from-zinc-50 via-white to-zinc-100 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950" />
-          <div className="absolute -top-32 left-1/2 h-96 w-[50rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-pink-500/20 blur-3xl dark:from-indigo-500/10 dark:via-purple-500/10 dark:to-pink-500/10" />
-          <div className="absolute top-24 left-12 h-72 w-72 rounded-full bg-fuchsia-500/15 blur-3xl dark:bg-fuchsia-500/10" />
-          <div className="absolute top-40 right-12 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl dark:bg-emerald-500/10" />
+          <div className="h-full w-full bg-gradient-to-br from-zinc-50 via-white to-zinc-100" />
+          <div className="absolute -top-32 left-1/2 h-96 w-[50rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-pink-500/20 blur-3xl" />
+          <div className="absolute left-12 top-24 h-72 w-72 rounded-full bg-fuchsia-500/15 blur-3xl" />
+          <div className="absolute right-12 top-40 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl" />
           <div
-            className="absolute inset-0 opacity-[0.08] dark:opacity-[0.04]"
+            className="absolute inset-0 opacity-[0.08]"
             style={{
               backgroundImage:
                 "radial-gradient(circle at 1px 1px, rgb(113 113 122) 1px, transparent 0)",
@@ -53,7 +53,7 @@ export default function ProjectsPage() {
           <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24 lg:py-28">
             <div className="max-w-3xl">
               <div
-                className={`mb-5 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-50 to-purple-50 px-4 py-1.5 text-xs font-semibold text-indigo-900 ring-1 ring-inset ring-indigo-200/50 transition-all duration-300 dark:from-indigo-950/50 dark:to-purple-950/50 dark:text-indigo-100 dark:ring-indigo-500/30 ${
+                className={`mb-5 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-50 to-purple-50 px-4 py-1.5 text-xs font-semibold text-indigo-900 ring-1 ring-inset ring-indigo-200/50 transition-all duration-300 ${
                   mounted ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
                 }`}
                 style={{ transitionDelay: "100ms" }}
@@ -63,7 +63,7 @@ export default function ProjectsPage() {
               </div>
 
               <h1
-                className={`text-4xl font-black tracking-tight text-zinc-900 transition-all duration-500 sm:text-6xl lg:text-7xl dark:text-white ${
+                className={`text-4xl font-black tracking-tight text-zinc-900 transition-all duration-500 sm:text-6xl lg:text-7xl ${
                   mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
                 }`}
                 style={{ transitionDelay: "200ms" }}
@@ -72,7 +72,7 @@ export default function ProjectsPage() {
               </h1>
 
               <p
-                className={`mt-4 text-xl font-semibold text-zinc-700 transition-all duration-500 sm:text-2xl dark:text-zinc-200 ${
+                className={`mt-4 text-xl font-semibold text-zinc-700 transition-all duration-500 sm:text-2xl ${
                   mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
                 }`}
                 style={{ transitionDelay: "250ms" }}
@@ -81,7 +81,7 @@ export default function ProjectsPage() {
               </p>
 
               <p
-                className={`mt-4 text-base leading-relaxed text-zinc-600 transition-all duration-500 sm:text-lg dark:text-zinc-400 ${
+                className={`mt-4 text-base leading-relaxed text-zinc-600 transition-all duration-500 sm:text-lg ${
                   mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
                 }`}
                 style={{ transitionDelay: "300ms" }}
@@ -103,7 +103,7 @@ export default function ProjectsPage() {
                       block: "start",
                     });
                   }}
-                  className="inline-flex items-center gap-2 !rounded-2xl bg-gradient-to-r from-zinc-900 to-zinc-800 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-zinc-900/20 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-zinc-900/30 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 dark:from-white dark:to-zinc-100 dark:text-zinc-900 dark:shadow-white/10 dark:hover:shadow-white/20"
+                  className="inline-flex items-center gap-2 rounded-2xl border border-zinc-200 bg-white px-6 py-3 text-sm font-bold text-zinc-900 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-zinc-50 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2"
                 >
                   {page.aboutTitle}
                   <ChevronDownIcon size={16} />
@@ -113,7 +113,7 @@ export default function ProjectsPage() {
                   href="https://www.linkedin.com/in/jose-%C3%A1ngel-quinto-ferr%C3%A1ndez-34b2121a0/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-2xl border border-zinc-200 bg-white px-6 py-3 text-sm font-bold text-zinc-800 shadow-sm transition-all duration-200 hover:border-zinc-300 hover:bg-zinc-50 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-zinc-600 dark:hover:bg-zinc-800"
+                  className="inline-flex items-center gap-2 rounded-2xl border border-zinc-200 bg-white px-6 py-3 text-sm font-bold text-zinc-900 shadow-sm transition-all duration-200 hover:border-zinc-300 hover:bg-zinc-50 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2"
                 >
                   <LinkedinIcon size={16} />
                   LinkedIn
@@ -123,7 +123,7 @@ export default function ProjectsPage() {
                   href="https://github.com/JoseAQuinto/JoseAQuinto.github.io"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-2xl border border-zinc-200 bg-white px-6 py-3 text-sm font-bold text-zinc-800 shadow-sm transition-all duration-200 hover:border-zinc-300 hover:bg-zinc-50 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-zinc-600 dark:hover:bg-zinc-800"
+                  className="inline-flex items-center gap-2 rounded-2xl border border-zinc-200 bg-white px-6 py-3 text-sm font-bold text-zinc-900 shadow-sm transition-all duration-200 hover:border-zinc-300 hover:bg-zinc-50 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2"
                 >
                   <GithubIcon size={16} />
                   GitHub
@@ -139,7 +139,7 @@ export default function ProjectsPage() {
                 {page.techStack.map((tech) => (
                   <span
                     key={tech}
-                    className="rounded-full bg-zinc-100 px-4 py-1.5 text-xs font-semibold text-zinc-700 ring-1 ring-inset ring-zinc-200 transition-all hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:ring-zinc-700 dark:hover:bg-zinc-700"
+                    className="rounded-full bg-zinc-100 px-4 py-1.5 text-xs font-semibold text-zinc-700 ring-1 ring-inset ring-zinc-200 transition-all hover:bg-zinc-200"
                   >
                     {tech}
                   </span>
@@ -148,14 +148,14 @@ export default function ProjectsPage() {
             </div>
           </div>
 
-          <div className="h-16 bg-gradient-to-b from-transparent via-transparent to-white dark:to-zinc-950" />
+          <div className="h-16 bg-gradient-to-b from-transparent via-transparent to-white" />
         </div>
       </header>
 
-      <section id="about" className="bg-white py-20 dark:bg-zinc-950">
+      <section id="about" className="bg-white py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="mb-12">
-            <h2 className="text-3xl font-black tracking-tight text-zinc-900 sm:text-4xl dark:text-white">
+            <h2 className="text-3xl font-black tracking-tight text-zinc-900 sm:text-4xl">
               {page.aboutTitle}
             </h2>
           </div>
@@ -164,57 +164,49 @@ export default function ProjectsPage() {
             {page.experience.map((item, index) => (
               <article
                 key={index}
-                className="group rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:hover:shadow-2xl dark:hover:shadow-black/20"
+                className="group rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
               >
-                <div className="mb-3 flex items-start justify-between">
-                  <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50">
-                    {item.title}
-                  </h3>
-                  <div className="rounded-lg bg-gradient-to-br from-indigo-500/10 to-purple-500/10 p-2 dark:from-indigo-500/20 dark:to-purple-500/20">
-                    <CodeIcon size={20} className="text-indigo-600 dark:text-indigo-400" />
+                <div className="mb-3 flex items-start justify-between gap-4">
+                  <h3 className="text-lg font-bold text-zinc-900">{item.title}</h3>
+                  <div className="rounded-lg bg-gradient-to-br from-indigo-500/10 to-purple-500/10 p-2">
+                    <CodeIcon size={20} className="text-indigo-600" />
                   </div>
                 </div>
-                <p className="leading-relaxed text-zinc-600 dark:text-zinc-400">
-                  {item.description}
-                </p>
+                <p className="leading-relaxed text-zinc-600">{item.description}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="projects" className="bg-zinc-50 py-20 dark:bg-zinc-900/50">
+      <section id="projects" className="bg-zinc-50 py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="mb-10">
-            <h2 className="text-3xl font-black tracking-tight text-zinc-900 sm:text-4xl dark:text-white">
+            <h2 className="text-3xl font-black tracking-tight text-zinc-900 sm:text-4xl">
               {page.projectsTitle}
             </h2>
-            <p className="mt-3 text-base text-zinc-600 dark:text-zinc-400">
-              {page.projectsSubtitle}
-            </p>
+            <p className="mt-3 text-base text-zinc-600">{page.projectsSubtitle}</p>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {page.projects.map((project, index) => (
               <article
                 key={project.id}
-                className={`group rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:hover:shadow-2xl dark:hover:shadow-black/20 ${
+                className={`group rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
                   mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
                 }`}
                 style={{ transitionDelay: `${550 + index * 100}ms` }}
               >
                 <div className="mb-4 flex items-start justify-between gap-4">
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-50">
-                      {project.title}
-                    </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                    <h3 className="text-xl font-bold text-zinc-900">{project.title}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-zinc-600">
                       {project.description}
                     </p>
                   </div>
 
-                  <div className="rounded-2xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 p-3 dark:from-indigo-500/20 dark:to-purple-500/20">
-                    <FolderIcon size={22} className="text-indigo-600 dark:text-indigo-400" />
+                  <div className="rounded-2xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 p-3">
+                    <FolderIcon size={22} className="text-indigo-600" />
                   </div>
                 </div>
 
@@ -222,7 +214,7 @@ export default function ProjectsPage() {
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full bg-zinc-100 px-3 py-1 text-xs font-semibold text-zinc-700 ring-1 ring-inset ring-zinc-200 dark:bg-zinc-800 dark:text-zinc-200 dark:ring-zinc-700"
+                      className="rounded-full bg-zinc-100 px-3 py-1 text-xs font-semibold text-zinc-700 ring-1 ring-inset ring-zinc-200"
                     >
                       {tag}
                     </span>
@@ -232,7 +224,7 @@ export default function ProjectsPage() {
                 <div className="mt-6">
                   <Link
                     to={project.href}
-                    className="inline-flex items-center gap-2 rounded-xl bg-zinc-900 px-4 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-zinc-800 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200"
+                    className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 bg-white px-4 py-2.5 text-sm font-bold text-zinc-900 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-zinc-50 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2"
                   >
                     {project.cta}
                     <ArrowRightIcon size={16} />
@@ -246,10 +238,10 @@ export default function ProjectsPage() {
 
       <BackToTop ariaLabel={common.backToTop} />
 
-      <footer className="border-t border-zinc-200 bg-white py-12 dark:border-zinc-800 dark:bg-zinc-950">
+      <footer className="border-t border-zinc-200 bg-white py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-            <p className="text-center text-sm text-zinc-600 dark:text-zinc-400 sm:text-left">
+            <p className="text-center text-sm text-zinc-600 sm:text-left">
               © {new Date().getFullYear()} {page.footer}
             </p>
 
@@ -259,7 +251,7 @@ export default function ProjectsPage() {
                 aria-label="LinkedIn"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-xl border border-zinc-200 bg-white p-2.5 text-zinc-700 shadow-sm transition-all hover:border-zinc-300 hover:bg-zinc-50 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:border-zinc-600 dark:hover:bg-zinc-800"
+                className="inline-flex items-center justify-center rounded-xl border border-zinc-200 bg-white p-2.5 text-zinc-700 shadow-sm transition-all duration-200 hover:border-zinc-300 hover:bg-zinc-50 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400"
               >
                 <LinkedinIcon size={20} />
               </a>
@@ -268,7 +260,7 @@ export default function ProjectsPage() {
                 aria-label="GitHub"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-xl border border-zinc-200 bg-white p-2.5 text-zinc-700 shadow-sm transition-all hover:border-zinc-300 hover:bg-zinc-50 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:border-zinc-600 dark:hover:bg-zinc-800"
+                className="inline-flex items-center justify-center rounded-xl border border-zinc-200 bg-white p-2.5 text-zinc-700 shadow-sm transition-all duration-200 hover:border-zinc-300 hover:bg-zinc-50 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400"
               >
                 <GithubIcon size={20} />
               </a>
@@ -287,6 +279,7 @@ function BackToTop({ ariaLabel }: { ariaLabel: string }) {
     const onScroll = () => setShow(window.scrollY > 400);
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
+
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -295,7 +288,7 @@ function BackToTop({ ariaLabel }: { ariaLabel: string }) {
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       type="button"
       aria-label={ariaLabel}
-      className={`fixed bottom-6 right-6 z-50 inline-flex items-center justify-center rounded-2xl border border-zinc-200 bg-white p-3 text-zinc-800 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:shadow-2xl dark:shadow-black/30 ${
+      className={`fixed bottom-6 right-6 z-50 inline-flex items-center justify-center rounded-2xl border border-zinc-200 bg-white p-3 text-zinc-900 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:bg-zinc-50 hover:shadow-xl active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 ${
         show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0"
       }`}
     >
@@ -460,7 +453,8 @@ function GlobeIcon({
       {...props}
     >
       <circle cx="12" cy="12" r="10" />
-      <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+      <path d="M2 12h20" />
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
     </Icon>
   );
 }

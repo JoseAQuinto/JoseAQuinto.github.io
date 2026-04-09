@@ -14,10 +14,12 @@ export default function MobileDeviceFrame({
       <div
         className="
           relative w-full max-w-[430px]
+          h-[820px]
           rounded-[2.5rem]
           border-[10px] border-slate-900
           bg-slate-900
           shadow-[0_25px_80px_rgba(15,23,42,0.35)]
+          overflow-hidden
         "
       >
         {/* Cámara / isla superior */}
@@ -31,14 +33,17 @@ export default function MobileDeviceFrame({
         <div className="pointer-events-none absolute -right-[12px] top-36 h-20 w-[4px] rounded-full bg-slate-700" />
 
         {/* Pantalla */}
-        <div
-          className="
-            relative overflow-hidden rounded-[2rem]
-            bg-slate-100
-            min-h-[780px]
-          "
-        >
-          {children}
+        <div className="relative h-full rounded-[2rem] bg-slate-100">
+          <div
+            className="
+              h-full overflow-y-auto rounded-[2rem]
+              [scrollbar-width:none]
+              [-ms-overflow-style:none]
+              [&::-webkit-scrollbar]:hidden
+            "
+          >
+            {children}
+          </div>
         </div>
       </div>
     </div>

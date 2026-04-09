@@ -23,7 +23,7 @@ function Header() {
           <button
             onClick={() => navigate("/")}
             type="button"
-            className="group inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-zinc-700 transition-all hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2"
+            className="group inline-flex items-center gap-2 rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-900 shadow-sm transition-all hover:bg-zinc-50 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2"
           >
             <ArrowLeftIcon className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
             {common.back}
@@ -41,8 +41,10 @@ function Header() {
               to="/portfolio-demo"
               end
               className={({ isActive }) =>
-                `rounded-xl px-4 py-2 text-sm font-semibold transition ${
-                  isActive ? "bg-zinc-900 text-white" : "text-zinc-700 hover:bg-zinc-100"
+                `rounded-xl border px-4 py-2 text-sm font-semibold transition ${
+                  isActive
+                    ? "border-zinc-300 bg-white text-zinc-900 shadow-sm"
+                    : "border-transparent bg-transparent text-zinc-700 hover:border-zinc-200 hover:bg-white hover:text-zinc-900"
                 }`
               }
             >
@@ -52,8 +54,10 @@ function Header() {
             <NavLink
               to="/portfolio-demo/performance"
               className={({ isActive }) =>
-                `rounded-xl px-4 py-2 text-sm font-semibold transition ${
-                  isActive ? "bg-zinc-900 text-white" : "text-zinc-700 hover:bg-zinc-100"
+                `rounded-xl border px-4 py-2 text-sm font-semibold transition ${
+                  isActive
+                    ? "border-zinc-300 bg-white text-zinc-900 shadow-sm"
+                    : "border-transparent bg-transparent text-zinc-700 hover:border-zinc-200 hover:bg-white hover:text-zinc-900"
                 }`
               }
             >
@@ -63,8 +67,10 @@ function Header() {
             <NavLink
               to="/portfolio-demo/mobile-orders"
               className={({ isActive }) =>
-                `rounded-xl px-4 py-2 text-sm font-semibold transition ${
-                  isActive ? "bg-zinc-900 text-white" : "text-zinc-700 hover:bg-zinc-100"
+                `rounded-xl border px-4 py-2 text-sm font-semibold transition ${
+                  isActive
+                    ? "border-zinc-300 bg-white text-zinc-900 shadow-sm"
+                    : "border-transparent bg-transparent text-zinc-700 hover:border-zinc-200 hover:bg-white hover:text-zinc-900"
                 }`
               }
             >
@@ -74,8 +80,10 @@ function Header() {
             <NavLink
               to="/portfolio-demo/production-monitoring"
               className={({ isActive }) =>
-                `rounded-xl px-4 py-2 text-sm font-semibold transition ${
-                  isActive ? "bg-zinc-900 text-white" : "text-zinc-700 hover:bg-zinc-100"
+                `rounded-xl border px-4 py-2 text-sm font-semibold transition ${
+                  isActive
+                    ? "border-zinc-300 bg-white text-zinc-900 shadow-sm"
+                    : "border-transparent bg-transparent text-zinc-700 hover:border-zinc-200 hover:bg-white hover:text-zinc-900"
                 }`
               }
             >
@@ -87,7 +95,7 @@ function Header() {
             onClick={toggleLanguage}
             aria-label={common.language}
             type="button"
-            className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-800 shadow-sm transition-all hover:bg-zinc-50 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2"
+            className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm font-semibold text-zinc-900 shadow-sm transition-all hover:bg-zinc-50 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2"
           >
             <GlobeAltIcon className="h-4 w-4" />
             {language === "es" ? "ES" : "EN"}
