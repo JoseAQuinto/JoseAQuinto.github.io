@@ -101,6 +101,9 @@ export const translations = {
 
                 descriptionTitle: "Descripción",
                 descriptionSubtitle: "Contenido editable más largo",
+                descriptionPlaceholder: "Describe los detalles de la orden...",
+
+                requiredField: "es obligatorio",
 
                 fields: {
                     orderCode: "Código de pedido",
@@ -228,6 +231,8 @@ export const translations = {
                     offline: "Sin actividad",
                     active: "Activo",
                     paused: "Pausado",
+                    waiting: "En espera",
+                    critical: "Crítico",
                 },
                 header: {
                     supportCenter: "Centro de Soporte",
@@ -398,6 +403,9 @@ export const translations = {
 
                 descriptionTitle: "Description",
                 descriptionSubtitle: "Longer editable content",
+                descriptionPlaceholder: "Describe the order details...",
+
+                requiredField: "is required",
 
                 fields: {
                     orderCode: "Order code",
@@ -525,6 +533,8 @@ export const translations = {
                     offline: "No activity",
                     active: "Active",
                     paused: "Paused",
+                    waiting: "Waiting",
+                    critical: "Critical",
                 },
                 header: {
                     supportCenter: "Support Center",
