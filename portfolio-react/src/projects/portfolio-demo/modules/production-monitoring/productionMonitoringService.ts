@@ -90,7 +90,7 @@ export const supportOperationsService = {
                 {
                     id: 2,
                     label: "En espera",
-                    type: "waiting",
+                    type: "offline",
                     startTime: `${date} 08:00:00`,
                     endTime: `${date} 08:15:00`,
                 },
@@ -104,7 +104,7 @@ export const supportOperationsService = {
                 {
                     id: 4,
                     label: "Escalado",
-                    type: "critical",
+                    type: "active",
                     startTime: `${date} 06:40:00`,
                     endTime: `${date} 07:00:00`,
                 },
