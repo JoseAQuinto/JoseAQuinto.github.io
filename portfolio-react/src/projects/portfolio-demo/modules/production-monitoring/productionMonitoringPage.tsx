@@ -24,8 +24,6 @@ import type {
 } from "./productionMonitoring.types";
 import {
     STATUS_COLORS,
-    STATUS_LABELS,
-    STATUS_PILL_STYLES,
     CASE_COLORS,
     minutesToHHmm,
     parseLocalDateTime,
