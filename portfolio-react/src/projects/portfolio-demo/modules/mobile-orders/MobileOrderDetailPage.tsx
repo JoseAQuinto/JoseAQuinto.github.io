@@ -308,7 +308,6 @@ function Field({
 }
 
 function CollapsibleSection({
-  id,
   title,
   subtitle,
   isExpanded,
