@@ -11,9 +11,6 @@ import "./index.css";
 // FontAwesome
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
-// Tus estilos
-import "./styles/estilos2.css";
-
 import { LanguageProvider } from "./translations/LanguageContext";
 
 createRoot(document.getElementById("root")!).render(

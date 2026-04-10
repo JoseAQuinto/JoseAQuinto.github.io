@@ -71,11 +71,10 @@ export default function ProjectsPage() {
                   onClick={() =>
                     document.getElementById(link.id)?.scrollIntoView({ behavior: "smooth", block: "start" })
                   }
-                  className={`text-xs tracking-[0.14em] uppercase transition-all duration-200 pb-0.5 ${
-                    activeSection === link.id
+                  className={`text-xs tracking-[0.14em] uppercase transition-all duration-200 pb-0.5 ${activeSection === link.id
                       ? "text-[#1a1a1a] border-b border-[#1a1a1a]"
                       : "text-[#888] hover:text-[#1a1a1a]"
-                  }`}
+                    }`}
                   style={{ fontFamily: "'Georgia', serif" }}
                 >
                   {link.label}
@@ -91,7 +90,7 @@ export default function ProjectsPage() {
               className="text-xs tracking-[0.14em] uppercase text-[#888] hover:text-[#1a1a1a] transition-colors"
               style={{ fontFamily: "'Georgia', serif" }}
             >
-              {language === "es" ? "EN" : "ES"}
+              {language === "es" ? "ES" : "EN"}
             </button>
           </div>
         </div>
@@ -123,9 +122,8 @@ export default function ProjectsPage() {
 
           {/* Main heading — large but measured */}
           <h1
-            className={`text-[clamp(2.4rem,7vw,5.5rem)] font-normal leading-[1.08] tracking-[-0.02em] text-[#1a1a1a] transition-all duration-1000 ${
-              mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
+            className={`text-[clamp(2.4rem,7vw,5.5rem)] font-normal leading-[1.08] tracking-[-0.02em] text-[#1a1a1a] transition-all duration-1000 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              }`}
             style={{ transitionDelay: "200ms", fontFamily: "'Georgia', 'Times New Roman', serif" }}
           >
             {page.title}
@@ -133,9 +131,8 @@ export default function ProjectsPage() {
 
           {/* Subtitle */}
           <p
-            className={`mt-5 text-lg text-[#444] font-normal leading-relaxed max-w-xl transition-all duration-700 ${
-              mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
+            className={`mt-5 text-lg text-[#444] font-normal leading-relaxed max-w-xl transition-all duration-700 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`}
             style={{ transitionDelay: "320ms", fontFamily: "'Georgia', serif" }}
           >
             {page.subtitle}
@@ -143,9 +140,8 @@ export default function ProjectsPage() {
 
           {/* Intro */}
           <p
-            className={`mt-4 max-w-lg text-sm leading-[1.85] text-[#666] transition-all duration-700 ${
-              mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
+            className={`mt-4 max-w-lg text-sm leading-[1.85] text-[#666] transition-all duration-700 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`}
             style={{ transitionDelay: "400ms", fontFamily: "'Georgia', serif" }}
           >
             {page.intro}
@@ -159,9 +155,8 @@ export default function ProjectsPage() {
 
           {/* CTAs + links — understated */}
           <div
-            className={`mt-8 flex flex-wrap items-center gap-6 transition-all duration-700 ${
-              mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
+            className={`mt-8 flex flex-wrap items-center gap-6 transition-all duration-700 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`}
             style={{ transitionDelay: "520ms" }}
           >
             <button
@@ -240,9 +235,8 @@ export default function ProjectsPage() {
 
         {/* Scroll indicator */}
         <div
-          className={`absolute bottom-8 right-8 flex flex-col items-center gap-2 transition-all duration-1000 ${
-            mounted ? "opacity-40" : "opacity-0"
-          }`}
+          className={`absolute bottom-8 right-8 flex flex-col items-center gap-2 transition-all duration-1000 ${mounted ? "opacity-40" : "opacity-0"
+            }`}
           style={{ transitionDelay: "1400ms" }}
         >
           <div className="h-10 w-px bg-gradient-to-b from-[#999] to-transparent" />
@@ -296,85 +290,116 @@ export default function ProjectsPage() {
       </section>
 
       {/* ── PROJECTS ── */}
-      <section id="projects" className="relative py-28 bg-[#f7f6f3]">
-        <div className="mx-auto max-w-5xl px-6 sm:px-8">
+      {/* ── PROJECTS ── */}
+      {/* ── PROJECTS ── */}
+      <section id="projects" className="relative py-32 bg-[#f7f6f3]">
+        <div className="mx-auto max-w-6xl px-6 sm:px-8">
+          {/* Header */}
+          <div className="mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div>
+              <span
+                className="inline-block text-[10px] tracking-[0.22em] uppercase text-[#8a8a8a]"
+                style={{ fontFamily: "'Georgia', serif" }}
+              >
+                Selected work
+              </span>
 
-          {/* Section header */}
-          <div className="mb-4 flex items-center gap-6">
-            <div className="h-px w-6 bg-[#999]" />
-            <h2
-              className="text-[10px] tracking-[0.22em] uppercase text-[#777]"
+              <h2
+                className="mt-3 text-[clamp(1.8rem,4vw,3.2rem)] font-normal leading-tight text-[#1a1a1a]"
+                style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}
+              >
+                {page.projectsTitle}
+              </h2>
+            </div>
+
+            <p
+              className="max-w-xl text-sm leading-[1.9] text-[#666]"
               style={{ fontFamily: "'Georgia', serif" }}
             >
-              {page.projectsTitle}
-            </h2>
+              {page.projectsSubtitle}
+            </p>
           </div>
 
-          <p
-            className="mb-16 text-sm text-[#999] pl-12"
-            style={{ fontFamily: "'Georgia', serif" }}
-          >
-            {page.projectsSubtitle}
-          </p>
-
-          {/* Projects list — editorial table style */}
-          <div className="divide-y divide-[#e0ddd8]">
+          {/* Projects grid */}
+          <div className="grid gap-5">
             {page.projects.map((project, index) => (
               <article
                 key={project.id}
-                className={`group py-8 transition-all duration-700 ${
-                  mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                }`}
-                style={{ transitionDelay: `${400 + index * 100}ms` }}
+                className={`group relative overflow-hidden rounded-[28px] border border-[#e6e1d9] bg-white/80 p-6 shadow-[0_1px_0_rgba(0,0,0,0.02)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-[#d5cec4] hover:bg-white hover:shadow-[0_18px_45px_rgba(0,0,0,0.06)] sm:p-8 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
+                  }`}
+                style={{ transitionDelay: `${220 + index * 90}ms` }}
               >
-                <div className="flex flex-col sm:flex-row sm:items-start gap-6">
+                {/* soft accent */}
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#d9d2c8] to-transparent opacity-70" />
+                <div className="absolute -right-16 -top-16 h-36 w-36 rounded-full bg-[#f3efe8] opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100" />
 
-                  {/* Index */}
-                  <span
-                    className="flex-shrink-0 w-10 text-[11px] tracking-[0.18em] text-[#bbb] tabular-nums pt-0.5"
-                    style={{ fontFamily: "'Georgia', serif" }}
-                  >
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-
-                  {/* Main content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-3 mb-3">
-                      <h3
-                        className="text-xl font-normal text-[#1a1a1a] group-hover:text-[#333] transition-colors"
+                <div className="relative flex h-full flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+                  {/* Left */}
+                  <div className="min-w-0 flex-1">
+                    <div className="mb-6 flex items-center gap-4">
+                      <span
+                        className="text-[0.95rem] leading-none text-[#c2bbb1]"
                         style={{ fontFamily: "'Georgia', serif" }}
                       >
-                        {project.title}
-                      </h3>
-
-                      {/* Tags */}
-                      <div className="flex flex-wrap gap-3">
-                        {project.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="text-[10px] tracking-[0.14em] uppercase text-[#999]"
-                            style={{ fontFamily: "'Georgia', serif" }}
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <div className="h-px w-10 bg-[#ddd6cd]" />
                     </div>
 
+                    <h3
+                      className="text-[1.45rem] font-normal leading-[1.2] text-[#1a1a1a] transition-colors duration-300 group-hover:text-[#000]"
+                      style={{ fontFamily: "'Georgia', serif" }}
+                    >
+                      {project.title}
+                    </h3>
+
                     <p
-                      className="text-sm leading-[1.85] text-[#666] max-w-xl mb-5"
+                      className="mt-4 max-w-2xl text-sm leading-[1.9] text-[#666]"
                       style={{ fontFamily: "'Georgia', serif" }}
                     >
                       {project.description}
                     </p>
 
+                    <div className="mt-7 flex flex-wrap gap-2.5">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="inline-flex items-center rounded-full border border-[#e7e2da] bg-[#faf8f4] px-3 py-1.5 text-[10px] tracking-[0.14em] uppercase text-[#7d776f]"
+                          style={{ fontFamily: "'Georgia', serif" }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Right */}
+                  <div className="flex w-full flex-col justify-between gap-8 lg:w-[180px] lg:items-end lg:self-stretch">
+                    <div className="flex items-center justify-between lg:w-full lg:flex-col lg:items-end lg:gap-3">
+                      <span
+                        className="text-[10px] tracking-[0.18em] uppercase text-[#9a948a]"
+                        style={{ fontFamily: "'Georgia', serif" }}
+                      >
+                        Project
+                      </span>
+                      <span
+                        className="text-xs text-[#b1aaa0]"
+                        style={{ fontFamily: "'Georgia', serif" }}
+                      >
+                        2026
+                      </span>
+                    </div>
+
                     <Link
                       to={project.href}
-                      className="inline-flex items-center gap-2 text-xs tracking-[0.14em] uppercase text-[#555] border-b border-[#bbb] pb-0.5 hover:text-[#1a1a1a] hover:border-[#1a1a1a] transition-colors focus-visible:outline-none"
+                      className="inline-flex items-center gap-2 self-start rounded-full border border-[#dad3ca] bg-[#f8f6f2] px-4 py-2.5 text-[11px] tracking-[0.14em] uppercase text-[#444] transition-all duration-300 hover:border-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-white lg:self-end focus-visible:outline-none"
                       style={{ fontFamily: "'Georgia', serif" }}
                     >
                       {project.cta}
-                      <ArrowRightIcon size={11} className="transition-transform duration-200 group-hover:translate-x-0.5" />
+                      <ArrowRightIcon
+                        size={11}
+                        className="transition-transform duration-300 group-hover:translate-x-0.5"
+                      />
                     </Link>
                   </div>
                 </div>
@@ -441,9 +466,8 @@ function BackToTop({ ariaLabel }: { ariaLabel: string }) {
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       type="button"
       aria-label={ariaLabel}
-      className={`fixed bottom-6 right-6 z-50 inline-flex items-center justify-center w-9 h-9 border border-[#ccc] bg-white text-[#666] shadow-sm transition-all duration-300 hover:border-[#999] hover:text-[#1a1a1a] active:scale-95 focus-visible:outline-none ${
-        show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
-      }`}
+      className={`fixed bottom-6 right-6 z-50 inline-flex items-center justify-center w-9 h-9 border border-[#ccc] bg-white text-[#666] shadow-sm transition-all duration-300 hover:border-[#999] hover:text-[#1a1a1a] active:scale-95 focus-visible:outline-none ${show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
+        }`}
     >
       <ArrowUpIcon size={14} />
     </button>
