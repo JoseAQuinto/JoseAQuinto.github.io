@@ -5,15 +5,13 @@ import type {
 
 export const STATUS_LABELS: Record<SupportStatusType, string> = {
     active: "Atendiendo",
-    waiting: "En espera",
-    critical: "Escalado",
+    paused: "En espera",
     offline: "Sin actividad",
 };
 
 export const STATUS_COLORS: Record<SupportStatusType, string> = {
     active: "#10b981",
-    waiting: "#f59e0b",
-    critical: "#ef4444",
+    paused: "#f59e0b",
     offline: "#94a3b8",
 };
 
@@ -26,15 +24,10 @@ export const STATUS_PILL_STYLES: Record<
         dot: "bg-emerald-500",
         text: "text-emerald-600",
     },
-    waiting: {
+    paused: {
         container: "bg-amber-50 border-amber-100",
         dot: "bg-amber-500",
         text: "text-amber-600",
-    },
-    critical: {
-        container: "bg-rose-50 border-rose-100",
-        dot: "bg-rose-500",
-        text: "text-rose-600",
     },
     offline: {
         container: "bg-slate-50 border-slate-100",

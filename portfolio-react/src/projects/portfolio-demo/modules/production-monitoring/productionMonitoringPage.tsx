@@ -47,6 +47,29 @@ type TimelineSegment = {
     endLabel?: string;
 };
 
+type BarTimelinePointCustom = {
+    caseId?: number;
+    channel?: string;
+    startLabel?: string;
+    endLabel?: string;
+};
+
+type BarTimelinePointOptions = Highcharts.PointOptionsObject & {
+    custom?: BarTimelinePointCustom;
+};
+
+type BarTimelineSeries = Highcharts.SeriesBarOptions & {
+    data: Array<number | BarTimelinePointOptions>;
+};
+
+type PieChartWithTargetLine = Highcharts.Chart & {
+    targetLine?: Highcharts.SVGElement;
+};
+
+type HTMLInputWithShowPicker = HTMLInputElement & {
+    showPicker?: () => void;
+};
+
 const buildStateTimelineSeries = (
     timelineStates: SupportTimelineState[],
     selectedDate: string,
@@ -56,7 +79,7 @@ const buildStateTimelineSeries = (
         active: string;
         paused: string;
     }
-): Highcharts.SeriesOptionsType[] => {
+): BarTimelineSeries[] => {
     const { start: dayStart, end: dayEndRaw } = getDayBounds(selectedDate);
     const visibleEnd = isToday(selectedDate) ? new Date() : dayEndRaw;
 
@@ -66,7 +89,7 @@ const buildStateTimelineSeries = (
         return aTime - bTime;
     });
 
-    const labelMap: Record<string, string> = {
+    const labelMap: Record<SupportStatusType, string> = {
         offline: labels.offline,
         active: labels.active,
         paused: labels.paused,
@@ -104,12 +127,12 @@ const buildStateTimelineSeries = (
             });
         }
 
-        const visualType = item.type ?? "offline";
+        const visualType: SupportStatusType = item.type ?? "offline";
         const legendKey = visualType;
         const isFirstLegend = !shownLegendKeys.has(legendKey);
 
         segments.push({
-            name: labelMap[visualType] ?? visualType,
+            name: labelMap[visualType],
             y: duration,
             color: STATUS_COLORS[visualType],
             legendKey,
@@ -132,7 +155,7 @@ const buildStateTimelineSeries = (
         });
     }
 
-    return [...segments].reverse().map((segment) => ({
+    return [...segments].reverse().map<BarTimelineSeries>((segment) => ({
         type: "bar",
         name: segment.name,
         data: [segment.y],
@@ -140,7 +163,7 @@ const buildStateTimelineSeries = (
         showInLegend: segment.showInLegend ?? false,
         id: segment.showInLegend ? segment.legendKey : undefined,
         linkedTo: segment.linkedTo,
-    })) as Highcharts.SeriesOptionsType[];
+    }));
 };
 
 const buildCasesTimelineSeries = (
@@ -150,7 +173,7 @@ const buildCasesTimelineSeries = (
         noCase: string;
     },
     locale: string
-): Highcharts.SeriesOptionsType[] => {
+): BarTimelineSeries[] => {
     const { start: dayStart, end: dayEnd } = getDayBounds(selectedDate);
 
     const casesWithDates = cases
@@ -230,7 +253,7 @@ const buildCasesTimelineSeries = (
         });
     }
 
-    return [...segments].reverse().map((segment) => ({
+    return [...segments].reverse().map<BarTimelineSeries>((segment) => ({
         type: "bar",
         name: segment.name,
         data: [
@@ -248,7 +271,7 @@ const buildCasesTimelineSeries = (
         showInLegend: segment.showInLegend ?? false,
         id: segment.showInLegend ? segment.legendKey : undefined,
         linkedTo: segment.linkedTo,
-    })) as Highcharts.SeriesOptionsType[];
+    }));
 };
 
 const buildBarTimelineOptions = (
@@ -280,7 +303,7 @@ const buildBarTimelineOptions = (
         tickInterval: 4,
         labels: {
             formatter: function () {
-                const val = this.value as number;
+                const val = Number(this.value);
                 return `${val < 10 ? "0" : ""}${val}:00`;
             },
             style: { color: "#9ca3af", fontWeight: "bold" },
@@ -297,15 +320,16 @@ const buildBarTimelineOptions = (
     },
     tooltip: {
         headerFormat: `<span style="font-size: 11px">${title}</span><br/>`,
-        pointFormatter: function () {
-            const custom = (this.options as any).custom ?? {};
-            const lines = [`<b>${this.series.name}</b>: ${this.y?.toFixed(2)} h`];
+        pointFormatter: function (this: Highcharts.Point) {
+            const pointOptions = this.options as BarTimelinePointOptions;
+            const custom = pointOptions.custom;
+            const lines = [`<b>${this.series.name}</b>: ${this.y?.toFixed(2) ?? "0.00"} h`];
 
-            if (custom.caseId) lines.push(`${labels.caseLabel}: ${custom.caseId}`);
-            if (custom.channel) lines.push(`${labels.channelLabel}: ${custom.channel}`);
-            if (custom.startLabel || custom.endLabel) {
+            if (custom?.caseId) lines.push(`${labels.caseLabel}: ${custom.caseId}`);
+            if (custom?.channel) lines.push(`${labels.channelLabel}: ${custom.channel}`);
+            if (custom?.startLabel || custom?.endLabel) {
                 lines.push(
-                    `${labels.scheduleLabel}: ${custom.startLabel ?? "--:--"} - ${custom.endLabel ?? "--:--"}`
+                    `${labels.scheduleLabel}: ${custom?.startLabel ?? "--:--"} - ${custom?.endLabel ?? "--:--"}`
                 );
             }
 
@@ -477,7 +501,7 @@ const ProductionMonitoringPage: React.FC = () => {
                 height: 320,
                 events: {
                     render: function () {
-                        const chart = this;
+                        const chart = this as PieChartWithTargetLine;
                         const target = 85;
                         const centerX = chart.plotLeft + chart.plotWidth / 2;
                         const centerY = chart.plotTop + chart.plotHeight * 0.65;
@@ -492,12 +516,15 @@ const ProductionMonitoringPage: React.FC = () => {
                         const x2 = centerX + (outerRadius + 10) * Math.cos(rad);
                         const y2 = centerY + (outerRadius + 10) * Math.sin(rad);
 
-                        if ((chart as any).targetLine) {
-                            (chart as any).targetLine.destroy();
-                        }
+                        const linePath: Highcharts.SVGPathArray = [
+                            ["M", x1, y1],
+                            ["L", x2, y2],
+                        ];
 
-                        (chart as any).targetLine = (chart.renderer as any)
-                            .path(["M", x1, y1, "L", x2, y2])
+                        chart.targetLine?.destroy();
+
+                        chart.targetLine = chart.renderer
+                            .path(linePath)
                             .attr({
                                 stroke: "#1f2937",
                                 "stroke-width": 3,
@@ -613,12 +640,13 @@ const ProductionMonitoringPage: React.FC = () => {
                             <div
                                 className="group relative cursor-pointer"
                                 onClick={() => {
-                                    if (dateInputRef.current) {
-                                        if (typeof (dateInputRef.current as any).showPicker === "function") {
-                                            (dateInputRef.current as any).showPicker();
-                                        } else {
-                                            dateInputRef.current.click();
-                                        }
+                                    const input = dateInputRef.current as HTMLInputWithShowPicker | null;
+                                    if (!input) return;
+
+                                    if (typeof input.showPicker === "function") {
+                                        input.showPicker();
+                                    } else {
+                                        input.click();
                                     }
                                 }}
                             >
