@@ -20,6 +20,26 @@ export const translations = {
                 "Una selección de demos y proyectos donde muestro estructura, componentes reutilizables e interfaces conectadas a datos mock o APIs.",
             footer: "Jose Ángel Quinto Ferrández · Portafolio",
 
+            heroAsideTitle: "Enfoque",
+            heroAsideText:
+                "Interfaces en React, arquitectura frontend y demos funcionales con intención real de producto.",
+            heroBottomNote:
+                "Interfaces minimalistas, demos reales y trabajo frontend con sensibilidad de producto.",
+
+            aboutSectionNote:
+                "Una selección de capacidades, forma de trabajo y enfoque técnico presentada con el mismo nivel de contención que el resto del portfolio.",
+            aboutDetailLabel: "Detalle",
+
+            projectsEyebrow: "Selected work",
+            projectMetaLabel: "Production Ready",
+            projectMetaSubLabel: "Demo funcional real",
+            projectYear: "2026",
+            projectSideDescription:
+                "UI cuidada, estructura real y un lenguaje visual sobrio alineado con trabajo de producto.",
+            projectFootnote: "Demo funcional de portfolio",
+
+            techStackTitle: "Stack",
+
             techStack: [
                 "React",
                 "TypeScript",
@@ -321,6 +341,26 @@ export const translations = {
             projectsSubtitle:
                 "A selection of demos and projects where I showcase structure, reusable components and interfaces connected to mock data or APIs.",
             footer: "Jose Ángel Quinto Ferrández · Portfolio",
+
+            heroAsideTitle: "Focus",
+            heroAsideText:
+                "React interfaces, frontend architecture and functional demos with real product intent.",
+            heroBottomNote:
+                "Minimal interfaces, real demos and frontend work with product sensibility.",
+
+            aboutSectionNote:
+                "A selection of capabilities, working style and technical focus presented with the same level of restraint as the rest of the portfolio.",
+            aboutDetailLabel: "Detail",
+
+            projectsEyebrow: "Selected work",
+            projectMetaLabel: "Production Ready",
+            projectMetaSubLabel: "Real functional demo",
+            projectYear: "2026",
+            projectSideDescription:
+                "Clean UI, real structure and a restrained visual language aligned with product work.",
+            projectFootnote: "Functional portfolio demo",
+
+            techStackTitle: "Stack",
 
             techStack: [
                 "React",
