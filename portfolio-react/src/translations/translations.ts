@@ -31,7 +31,7 @@ export const translations = {
             aboutDetailLabel: "Detalle",
 
             projectsEyebrow: "Selected work",
-            projectMetaLabel: "Production Ready",
+            projectMetaLabel: "Listo para producción",
             projectMetaSubLabel: "Demo funcional real",
             projectYear: "2026",
             projectSideDescription:
@@ -96,6 +96,16 @@ export const translations = {
                 productionMonitoring: "Seguimiento producción",
             },
 
+            introModal: {
+                title: "Antes de ver la demo",
+                description1:
+                    "Estas pantallas son ejemplos inspirados en interfaces y flujos en los que he trabajado durante mi experiencia profesional.",
+                description2:
+                    "Los datos, nombres, lógica concreta y parte de la estructura han sido adaptados o inventados para este portfolio. No representan exactamente el código ni la información real de la empresa, con el fin de respetar la confidencialidad y la propiedad intelectual.",
+                confirm: "Entendido",
+                close: "Cerrar modal",
+            },
+
             mobileOrdersList: {
                 title: "Pedidos",
                 subtitle: "Demo de lista móvil",
@@ -106,6 +116,7 @@ export const translations = {
                 selectClient: "Seleccionar cliente",
                 activeClientFilter: "Filtro de cliente activo",
                 filterSheetTitle: "Filtros de pedidos",
+                hideCompleted: "Ocultar completados",
             },
 
             mobileOrderDetail: {
@@ -418,6 +429,16 @@ export const translations = {
                 productionMonitoring: "Production Monitoring",
             },
 
+            introModal: {
+                title: "Before viewing the demo",
+                description1:
+                    "These screens are sample pages inspired by interfaces and workflows I worked on during my professional experience.",
+                description2:
+                    "The data, names, specific logic, and part of the structure have been adapted or fictionalized for this portfolio. They do not represent the exact code or real company information, in order to respect confidentiality and intellectual property.",
+                confirm: "Understood",
+                close: "Close modal",
+            },
+
             mobileOrdersList: {
                 title: "Orders",
                 subtitle: "Mobile list demo",
@@ -428,6 +449,7 @@ export const translations = {
                 selectClient: "Select client",
                 activeClientFilter: "Active client filter",
                 filterSheetTitle: "Order filters",
+                hideCompleted: "Hide completed",
             },
 
             mobileOrderDetail: {

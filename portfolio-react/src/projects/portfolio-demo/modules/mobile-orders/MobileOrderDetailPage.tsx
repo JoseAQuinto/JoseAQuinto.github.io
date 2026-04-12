@@ -6,6 +6,27 @@ import { mobileOrdersService } from "./mobileOrdersService";
 import type { MobileOrder, OrderStatus } from "./mobileOrders.types";
 import { useLanguage } from "../../../../translations/LanguageContext";
 
+import {
+  baseInputClass,
+  STATUS_STYLES,
+} from "./utils/mobileOrderDetail.constants";
+import {
+  getStatusOptions,
+  isOrderValid,
+  toggleSetItem,
+} from "./utils/mobileOrderDetail.helpers";
+import {
+  BackIcon,
+  ChevronIcon,
+  ClipboardIcon,
+  WarningIcon,
+} from "./utils/mobileOrderDetail.icons";
+
+type StatusOption = {
+  value: OrderStatus;
+  label: string;
+};
+
 export default function MobileOrderDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -13,11 +34,10 @@ export default function MobileOrderDetailPage() {
 
   const detailT = t.portfolioDemo.mobileOrderDetail;
 
-  const STATUS_OPTIONS: { value: OrderStatus; label: string }[] = [
-    { value: "Pending", label: detailT.statusOptions.pending },
-    { value: "In Progress", label: detailT.statusOptions.inProgress },
-    { value: "Completed", label: detailT.statusOptions.completed },
-  ];
+  const statusOptions: StatusOption[] = useMemo(
+    () => getStatusOptions(detailT),
+    [detailT]
+  );
 
   const [order, setOrder] = useState<MobileOrder | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -49,14 +69,7 @@ export default function MobileOrderDetailPage() {
   }, [id]);
 
   const canSave = useMemo(() => {
-    if (!order) return false;
-
-    return (
-      order.title.trim().length > 0 &&
-      order.clientName.trim().length > 0 &&
-      order.location.trim().length > 0 &&
-      order.description.trim().length > 0
-    );
+    return isOrderValid(order);
   }, [order]);
 
   const updateField = <K extends keyof MobileOrder>(
@@ -70,17 +83,7 @@ export default function MobileOrderDetailPage() {
   };
 
   const toggleSection = (sectionId: string) => {
-    setExpandedSections((prev) => {
-      const next = new Set(prev);
-
-      if (next.has(sectionId)) {
-        next.delete(sectionId);
-      } else {
-        next.add(sectionId);
-      }
-
-      return next;
-    });
+    setExpandedSections((prev) => toggleSetItem(prev, sectionId));
   };
 
   const handleSave = async () => {
@@ -97,18 +100,10 @@ export default function MobileOrderDetailPage() {
     }
   };
 
-  const ShellHeader = ({ children }: { children?: React.ReactNode }) => (
-    <div className="flex flex-col gap-2 p-3 sm:p-4">
-      <div className="flex items-center justify-between gap-2">
-        <button
-          className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 active:scale-95 active:bg-slate-100"
-          onClick={() => navigate(-1)}
-        >
-          ← {t.common.back}
-        </button>
-        {children}
-      </div>
-    </div>
+  const headerTitle = (
+    <h1 className="flex-1 text-center text-sm font-bold text-slate-900">
+      {isLoading || !order ? detailT.title : order.code}
+    </h1>
   );
 
   if (isLoading) {
@@ -116,10 +111,11 @@ export default function MobileOrderDetailPage() {
       <MobilePageShell
         fixedHeader
         header={
-          <ShellHeader>
-            <h1 className="flex-1 text-center text-sm font-bold text-slate-900">
-              {detailT.title}
-            </h1>
+          <ShellHeader
+            onBack={() => navigate(-1)}
+            backLabel={t.common.back}
+            centerContent={headerTitle}
+          >
             <div className="w-[60px]" />
           </ShellHeader>
         }
@@ -141,16 +137,19 @@ export default function MobileOrderDetailPage() {
       <MobilePageShell
         fixedHeader
         header={
-          <ShellHeader>
-            <h1 className="flex-1 text-center text-sm font-bold text-slate-900">
-              {detailT.title}
-            </h1>
+          <ShellHeader
+            onBack={() => navigate(-1)}
+            backLabel={t.common.back}
+            centerContent={headerTitle}
+          >
             <div className="w-[60px]" />
           </ShellHeader>
         }
       >
         <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
-          <p className="text-2xl">📋</p>
+          <div className="flex justify-center">
+            <ClipboardIcon className="h-8 w-8 text-slate-400" />
+          </div>
           <p className="mt-2 text-sm font-medium text-slate-500">
             {detailT.notFound}
           </p>
@@ -165,12 +164,7 @@ export default function MobileOrderDetailPage() {
       header={
         <div className="flex flex-col gap-2 border-b border-slate-100 p-3 sm:p-4">
           <div className="flex items-center justify-between gap-2">
-            <button
-              className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 active:scale-95"
-              onClick={() => navigate(-1)}
-            >
-              ← {t.common.back}
-            </button>
+            <BackButton label={t.common.back} onClick={() => navigate(-1)} />
 
             <button
               onClick={handleSave}
@@ -192,8 +186,13 @@ export default function MobileOrderDetailPage() {
 
           {!canSave && order.title.trim().length === 0 && (
             <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-medium text-amber-700">
-              ⚠️ {detailT.fields.title}{" "}
-              {detailT.requiredField ?? "es obligatorio"}
+              <div className="flex items-center gap-2">
+                <WarningIcon className="h-4 w-4 shrink-0" />
+                <span>
+                  {detailT.fields.title}{" "}
+                  {detailT.requiredField ?? "es obligatorio"}
+                </span>
+              </div>
             </div>
           )}
         </div>
@@ -217,15 +216,26 @@ export default function MobileOrderDetailPage() {
           <div className="space-y-3">
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <Field label={detailT.fields.orderCode}>
-                <Input value={order.code} onChange={(v) => updateField("code", v)} />
+                <Input
+                  value={order.code}
+                  onChange={(v) => updateField("code", v)}
+                />
               </Field>
+
               <Field label={detailT.fields.date}>
-                <Input type="date" value={order.date} onChange={(v) => updateField("date", v)} />
+                <Input
+                  type="date"
+                  value={order.date}
+                  onChange={(v) => updateField("date", v)}
+                />
               </Field>
             </div>
 
             <Field label={detailT.fields.title}>
-              <Input value={order.title} onChange={(v) => updateField("title", v)} />
+              <Input
+                value={order.title}
+                onChange={(v) => updateField("title", v)}
+              />
             </Field>
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -235,6 +245,7 @@ export default function MobileOrderDetailPage() {
                   onChange={(v) => updateField("clientName", v)}
                 />
               </Field>
+
               <Field label={detailT.fields.location}>
                 <Input
                   value={order.location}
@@ -246,12 +257,14 @@ export default function MobileOrderDetailPage() {
             <Field label={detailT.fields.status}>
               <select
                 value={order.status}
-                onChange={(e) => updateField("status", e.target.value as OrderStatus)}
-                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+                onChange={(e) =>
+                  updateField("status", e.target.value as OrderStatus)
+                }
+                className={baseInputClass}
               >
-                {STATUS_OPTIONS.map((s) => (
-                  <option key={s.value} value={s.value}>
-                    {s.label}
+                {statusOptions.map((status: StatusOption) => (
+                  <option key={status.value} value={status.value}>
+                    {status.label}
                   </option>
                 ))}
               </select>
@@ -269,7 +282,7 @@ export default function MobileOrderDetailPage() {
             value={order.description}
             onChange={(e) => updateField("description", e.target.value)}
             rows={6}
-            className="w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm leading-relaxed text-slate-800 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+            className={`${baseInputClass} resize-none leading-relaxed`}
             placeholder={
               detailT.descriptionPlaceholder ??
               "Describe los detalles de la orden..."
@@ -287,6 +300,47 @@ export default function MobileOrderDetailPage() {
   );
 }
 
+function ShellHeader({
+  onBack,
+  backLabel,
+  centerContent,
+  children,
+}: {
+  onBack: () => void;
+  backLabel: string;
+  centerContent?: React.ReactNode;
+  children?: React.ReactNode;
+}) {
+  return (
+    <div className="flex flex-col gap-2 p-3 sm:p-4">
+      <div className="flex items-center justify-between gap-2">
+        <BackButton label={backLabel} onClick={onBack} />
+        {centerContent}
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function BackButton({
+  label,
+  onClick,
+}: {
+  label: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 active:scale-95 active:bg-slate-100"
+      onClick={onClick}
+    >
+      <BackIcon className="h-3.5 w-3.5" />
+      {label}
+    </button>
+  );
+}
+
 function Input({
   value,
   onChange,
@@ -294,14 +348,14 @@ function Input({
 }: {
   value: string;
   onChange: (v: string) => void;
-  type?: string;
+  type?: React.HTMLInputTypeAttribute;
 }) {
   return (
     <input
       type={type}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-800 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+      className={baseInputClass}
     />
   );
 }
@@ -339,6 +393,7 @@ function CollapsibleSection({
   return (
     <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
       <button
+        type="button"
         onClick={onToggle}
         className="w-full px-4 py-3 text-left transition hover:bg-slate-50 active:bg-slate-100"
       >
@@ -347,13 +402,12 @@ function CollapsibleSection({
             <h2 className="text-sm font-bold text-slate-900">{title}</h2>
             <p className="mt-0.5 truncate text-xs text-slate-400">{subtitle}</p>
           </div>
-          <span
-            className={`mt-0.5 shrink-0 text-xs text-slate-400 transition-transform duration-200 ${
+
+          <ChevronIcon
+            className={`mt-0.5 h-4 w-4 shrink-0 text-slate-400 transition-transform duration-200 ${
               isExpanded ? "rotate-180" : ""
             }`}
-          >
-            ▼
-          </span>
+          />
         </div>
       </button>
 
@@ -365,31 +419,7 @@ function CollapsibleSection({
 }
 
 function StatusBadge({ status }: { status: OrderStatus }) {
-  const map: Record<
-    OrderStatus,
-    { bg: string; text: string; border: string; dot: string }
-  > = {
-    Pending: {
-      bg: "bg-amber-50",
-      text: "text-amber-700",
-      border: "border-amber-200",
-      dot: "bg-amber-400",
-    },
-    "In Progress": {
-      bg: "bg-blue-50",
-      text: "text-blue-700",
-      border: "border-blue-200",
-      dot: "bg-blue-400",
-    },
-    Completed: {
-      bg: "bg-emerald-50",
-      text: "text-emerald-700",
-      border: "border-emerald-200",
-      dot: "bg-emerald-400",
-    },
-  };
-
-  const cfg = map[status] ?? map.Pending;
+  const cfg = STATUS_STYLES[status] ?? STATUS_STYLES.Pending;
 
   return (
     <div

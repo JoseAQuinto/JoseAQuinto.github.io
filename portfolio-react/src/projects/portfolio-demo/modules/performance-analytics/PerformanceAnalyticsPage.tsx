@@ -41,28 +41,6 @@ const PerformanceAnalyticsPage = () => {
 
   const hasSelectedResource = selectedResource !== null;
 
-  const loadResources = useCallback(async (): Promise<void> => {
-    try {
-      setLoadingResources(true);
-
-      const data = await performanceAnalyticsService.getResources();
-
-      setResourceOptions(
-        data
-          .map((item) => ({
-            label: item.name,
-            value: item.id,
-          }))
-          .sort((a, b) => a.label.localeCompare(b.label))
-      );
-    } catch (err) {
-      console.error("Error loading resources", err);
-      setResourceOptions([]);
-    } finally {
-      setLoadingResources(false);
-    }
-  }, []);
-
   const loadData = useCallback(
     async (filters: PerformanceAnalyticsRequest): Promise<void> => {
       try {
@@ -93,6 +71,40 @@ const PerformanceAnalyticsPage = () => {
     [text.messages.noDataForFilters, text.messages.unexpectedError]
   );
 
+  const loadResources = useCallback(async (): Promise<void> => {
+    try {
+      setLoadingResources(true);
+
+      const data = await performanceAnalyticsService.getResources();
+
+      const sortedOptions = data
+        .map((item) => ({
+          label: item.name,
+          value: item.id,
+        }))
+        .sort((a, b) => a.label.localeCompare(b.label));
+
+      setResourceOptions(sortedOptions);
+
+      if (sortedOptions.length > 0) {
+        const firstResourceId = sortedOptions[0].value;
+        setSelectedResource(firstResourceId);
+
+        await loadData({
+          resourceId: firstResourceId,
+        });
+      }
+    } catch (err) {
+      console.error("Error loading resources", err);
+      setResourceOptions([]);
+      setSelectedResource(null);
+      setRows([]);
+      setSelectedIndex(0);
+    } finally {
+      setLoadingResources(false);
+    }
+  }, [loadData]);
+
   useEffect(() => {
     void loadResources();
   }, [loadResources]);
@@ -115,13 +127,24 @@ const PerformanceAnalyticsPage = () => {
     await loadData(filters);
   };
 
-  const handleClearFilters = (): void => {
-    setSelectedResource(null);
+  const handleClearFilters = async (): Promise<void> => {
     setFromDate("");
     setToDate("");
     setRows([]);
     setSelectedIndex(0);
     setError("");
+
+    if (resourceOptions.length > 0) {
+      const firstResourceId = resourceOptions[0].value;
+      setSelectedResource(firstResourceId);
+
+      await loadData({
+        resourceId: firstResourceId,
+      });
+      return;
+    }
+
+    setSelectedResource(null);
   };
 
   const lineChartOptions: Highcharts.Options = useMemo(() => {
@@ -469,13 +492,6 @@ const PerformanceAnalyticsPage = () => {
           </div>
 
           <div className="p-6">
-            {!hasSelectedResource && (
-              <div className="mb-4 flex items-center gap-2.5 rounded-xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-sky-700">
-                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-sky-400" />
-                {text.messages.selectResourceToView}
-              </div>
-            )}
-
             {hasSelectedResource && error && (
               <div className="mb-4 flex items-center gap-2.5 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
                 <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400" />

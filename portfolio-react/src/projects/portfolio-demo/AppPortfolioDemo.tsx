@@ -19,12 +19,15 @@ import MobileOrdersListPage from "./modules/mobile-orders/MobileOrdersListPage";
 import MobileOrderDetailPage from "./modules/mobile-orders/MobileOrderDetailPage";
 import ProductionMonitoringPage from "./modules/production-monitoring/productionMonitoringPage";
 
+import PortfolioDemoIntroModal from "./components/PortfolioDemoIntroModal";
+
 import { useLanguage } from "../../translations/LanguageContext";
 
 const navLinkClass = ({ isActive }: NavLinkRenderProps): string =>
-  `rounded-xl border px-4 py-2 text-sm font-semibold transition whitespace-nowrap ${isActive
-    ? "border-zinc-300 bg-white text-zinc-900 shadow-sm"
-    : "border-transparent bg-transparent text-zinc-700 hover:border-zinc-200 hover:bg-white hover:text-zinc-900"
+  `rounded-xl border px-4 py-2 text-sm font-semibold transition whitespace-nowrap ${
+    isActive
+      ? "border-zinc-300 bg-white text-zinc-900 shadow-sm"
+      : "border-transparent bg-transparent text-zinc-700 hover:border-zinc-200 hover:bg-white hover:text-zinc-900"
   }`;
 
 function Header() {
@@ -112,9 +115,10 @@ function Header() {
                 end={end}
                 onClick={() => setMenuOpen(false)}
                 className={({ isActive }: NavLinkRenderProps): string =>
-                  `rounded-xl border px-4 py-2.5 text-sm font-semibold transition ${isActive
-                    ? "border-zinc-300 bg-zinc-50 text-zinc-900 shadow-sm"
-                    : "border-transparent text-zinc-600 hover:border-zinc-200 hover:bg-zinc-50 hover:text-zinc-900"
+                  `rounded-xl border px-4 py-2.5 text-sm font-semibold transition ${
+                    isActive
+                      ? "border-zinc-300 bg-zinc-50 text-zinc-900 shadow-sm"
+                      : "border-transparent text-zinc-600 hover:border-zinc-200 hover:bg-zinc-50 hover:text-zinc-900"
                   }`
                 }
               >
@@ -131,14 +135,30 @@ function Header() {
 export default function AppPortfolioDemo() {
   return (
     <div className="min-h-screen bg-zinc-50">
+      {/* Modal informativo — se muestra solo la primera vez */}
+      <PortfolioDemoIntroModal />
+
       <Header />
 
       <main className="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6">
         <Routes>
           <Route index element={<OperationsOverviewPage />} />
-          <Route path="performance" element={<PerformanceAnalyticsPage />} />
-          <Route path="mobile-orders" element={<MobileOrdersListPage />} />
-          <Route path="mobile-orders/:id" element={<MobileOrderDetailPage />} />
+
+          <Route
+            path="performance"
+            element={<PerformanceAnalyticsPage />}
+          />
+
+          <Route
+            path="mobile-orders"
+            element={<MobileOrdersListPage />}
+          />
+
+          <Route
+            path="mobile-orders/:id"
+            element={<MobileOrderDetailPage />}
+          />
+
           <Route
             path="production-monitoring"
             element={<ProductionMonitoringPage />}
