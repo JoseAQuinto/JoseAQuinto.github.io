@@ -150,27 +150,27 @@ function Modal({
         type="button"
         aria-label="Close modal"
         onClick={onClose}
-        className="absolute inset-0 bg-[rgba(17,14,12,0.56)] backdrop-blur-[4px]"
+        className="absolute inset-0 bg-[rgba(15,16,18,0.56)] backdrop-blur-[4px]"
       />
 
       {/* Panel */}
       <div
         className={cx(
           "relative z-10 w-full max-w-[640px] overflow-hidden rounded-[28px]",
-          "border border-[#ddd5ca] bg-[#f6f2eb]",
+          "border border-[#d9ddd9] bg-[#f5f6f4]",
           "shadow-[0_28px_70px_rgba(0,0,0,0.18)]"
         )}
         style={{ fontFamily: editorialFont }}
       >
-        <div className="absolute inset-0 rounded-[28px] ring-1 ring-inset ring-white/40" />
+        <div className="absolute inset-0 rounded-[28px] ring-1 ring-inset ring-white/50" />
 
         <div className="relative px-7 pb-8 pt-7 sm:px-10 sm:pb-10 sm:pt-9">
           {/* Header */}
           <div className="flex items-start justify-between gap-5">
             <div className="min-w-0">
               <div className="mb-5 flex items-center gap-4">
-                <div className="h-px w-8 bg-[#b8afa2]" />
-                <span className="text-[10px] uppercase tracking-[0.22em] text-[#857d74]">
+                <div className="h-px w-8 bg-[#b6bbb7]" />
+                <span className="text-[10px] uppercase tracking-[0.22em] text-[#727872]">
                   Portfolio Demo
                 </span>
               </div>
@@ -183,21 +183,20 @@ function Modal({
               </h2>
 
               {subtitle ? (
-                <p className="mt-3 max-w-[54ch] text-[14px] leading-[1.9] text-[#615a53]">
+                <p className="mt-3 max-w-[54ch] text-[14px] leading-[1.9] text-[#565d57]">
                   {subtitle}
                 </p>
               ) : null}
             </div>
 
-            {/* SIMPLE X */}
             <button
               type="button"
               onClick={onClose}
               aria-label="Close modal"
               className={cx(
-                "mt-1 shrink-0 text-[16px] leading-none text-[#8c8378]",
+                "mt-1 shrink-0 text-[16px] leading-none text-[#7d847d]",
                 "transition-colors duration-200 hover:text-[#1a1a1a]",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1a1a1a]/15 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f6f2eb]"
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1a1a1a]/15 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5f6f4]"
               )}
               style={{ fontFamily: editorialFont }}
             >
@@ -205,7 +204,7 @@ function Modal({
             </button>
           </div>
 
-          <div className="mt-7 h-px w-full bg-[#ddd5ca]" />
+          <div className="mt-7 h-px w-full bg-[#d9ddd9]" />
 
           {/* Body */}
           <div className="mt-8 grid gap-4">
@@ -214,16 +213,16 @@ function Modal({
                 key={index}
                 className={cx(
                   "grid gap-4 rounded-[20px] border px-4 py-4 sm:grid-cols-[42px_minmax(0,1fr)] sm:px-5",
-                  "border-[#ddd5ca] bg-[#fcfaf6]"
+                  "border-[#dde1dd] bg-[#fafbfa]"
                 )}
               >
                 <div className="flex items-start">
-                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#d8cfc3] bg-[#f3eee6] text-[#6a635b]">
+                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#d3d8d3] bg-[#eef1ed] text-[#5b635d]">
                     {icons[index % icons.length]}
                   </div>
                 </div>
 
-                <p className="text-[14px] leading-[1.95] text-[#4d4741]">
+                <p className="text-[14px] leading-[1.95] text-[#444b46]">
                   {paragraph}
                 </p>
               </div>
@@ -237,9 +236,12 @@ function Modal({
               onClick={onClose}
               className={cx(
                 "group inline-flex items-center gap-2.5 rounded-full",
-                "border border-[#cfc5b9] bg-[#ede6db] px-5 py-3",
+                "border border-[#cfc5b9] bg-[#f9f7f4] px-5 py-3",
                 "text-[11px] uppercase tracking-[0.14em] text-[#302c28]",
-                "transition-all duration-300 hover:border-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-white active:translate-y-[1px]"
+                "transition-all duration-300",
+                "hover:border-[#c3b9ad] hover:bg-[#f3eee7] hover:text-[#2a2622]",
+                "hover:shadow-[0_6px_18px_rgba(0,0,0,0.05)]",
+                "active:translate-y-[1px]"
               )}
               style={{ fontFamily: editorialFont }}
             >

@@ -107,6 +107,19 @@ export const translations = {
             },
 
             mobileOrdersList: {
+
+                infoModal: {
+                    title: "Listado móvil de pedidos",
+                    subtitle: "Vista de navegación rápida",
+                    description1:
+                        "Esta pantalla está planteada como una demo de listado móvil orientada a consulta rápida, con especial atención a la legibilidad, el espaciado y la jerarquía visual.",
+                    description2:
+                        "El objetivo es mostrar cómo diseño interfaces táctiles para flujos operativos, facilitando la lectura del estado, cliente, ubicación y acceso al detalle de cada elemento.",
+                    description3:
+                        "Los datos están adaptados para portfolio, pero la estructura del listado, el comportamiento de filtrado y el enfoque de experiencia están pensados como una pantalla real de producto.",
+                    confirm: "Entendido",
+                    openAriaLabel: "Abrir información de la página",
+                },
                 title: "Pedidos",
                 subtitle: "Demo de lista móvil",
                 clear: "Limpiar",
@@ -153,6 +166,22 @@ export const translations = {
             },
 
             operationsOverview: {
+
+                //infoModal
+
+                infoModal: {
+                    title: "Resumen de operaciones",
+                    subtitle: "Vista general del panel",
+                    description1:
+                        "Esta demo representa un panel de seguimiento operativo orientado a mostrar indicadores clave, rankings y gráficos de actividad en una interfaz clara y estructurada.",
+                    description2:
+                        "El objetivo de esta pantalla es enseñar cómo presento métricas, filtros y visualizaciones de datos en un entorno de producto, manteniendo una jerarquía visual limpia y componentes reutilizables.",
+                    description3:
+                        "Los datos y parte de la lógica están simulados o adaptados para portfolio, pero el enfoque de diseño, organización de información y experiencia de uso está planteado como una interfaz real.",
+                    confirm: "Entendido",
+                    openAriaLabel: "Abrir información de la página",
+                },
+
                 headerTitle: "Resumen de operaciones",
                 dashboardBadge: "Dashboard",
                 filtersTitle: "Filtros",
@@ -199,6 +228,18 @@ export const translations = {
             },
 
             performanceAnalytics: {
+                infoModal: {
+                    title: "Analítica de rendimiento",
+                    subtitle: "Seguimiento visual de métricas",
+                    description1:
+                        "Esta demo muestra una pantalla de analítica orientada a consultar la evolución del rendimiento de un recurso a lo largo del tiempo mediante filtros, gráficos y métricas resumidas.",
+                    description2:
+                        "El objetivo es enseñar cómo estructuro interfaces de lectura analítica, combinando selección de recurso, rango de fechas, tendencia temporal y visualizaciones comparables en una misma vista.",
+                    description3:
+                        "Los datos están adaptados para portfolio, pero la jerarquía, el enfoque de experiencia y la composición del panel están planteados como una pantalla real de producto.",
+                    confirm: "Entendido",
+                    openAriaLabel: "Abrir información de la página",
+                },
                 headerTitle: "Analítica de rendimiento",
                 dashboardBadge: "Dashboard",
                 filtersTitle: "Filtros",
@@ -257,6 +298,18 @@ export const translations = {
             },
 
             productionMonitoring: {
+                infoModal: {
+                    title: "Seguimiento de producción",
+                    subtitle: "Monitorización operativa en tiempo real",
+                    description1:
+                        "Esta demo representa una pantalla de monitorización operativa centrada en mostrar el estado actual del servicio, la actividad del día y la evolución de los casos en una única vista.",
+                    description2:
+                        "El objetivo es enseñar cómo organizo interfaces de supervisión con timelines, indicadores clave, tarjetas de estado y listados conectados a un contexto temporal claro y fácil de interpretar.",
+                    description3:
+                        "Los datos y parte de la lógica han sido adaptados para portfolio, pero la jerarquía visual, el enfoque de seguimiento y la composición general están planteados como una interfaz real de producto.",
+                    confirm: "Entendido",
+                    openAriaLabel: "Abrir información de la página",
+                },
                 loading: "Cargando datos...",
                 statusLabels: {
                     offline: "Sin actividad",
@@ -440,6 +493,18 @@ export const translations = {
             },
 
             mobileOrdersList: {
+                infoModal: {
+                    title: "Mobile orders list",
+                    subtitle: "Quick navigation view",
+                    description1:
+                        "This screen is designed as a mobile list demo focused on quick consultation, with special attention to readability, spacing and visual hierarchy.",
+                    description2:
+                        "The goal is to show how I design touch-oriented interfaces for operational flows, making it easy to read the status, client, location and access the detail of each item.",
+                    description3:
+                        "The data is adapted for portfolio purposes, but the list structure, filtering behavior and experience approach are conceived as a real product screen.",
+                    confirm: "Understood",
+                    openAriaLabel: "Open page information",
+                },
                 title: "Orders",
                 subtitle: "Mobile list demo",
                 clear: "Clear",
@@ -486,6 +551,21 @@ export const translations = {
             },
 
             operationsOverview: {
+
+                // infoModal
+                infoModal: {
+                    title: "Operations overview",
+                    subtitle: "General panel overview",
+                    description1:
+                        "This demo represents an operational monitoring dashboard designed to display key indicators, rankings and activity charts in a clear and structured interface.",
+                    description2:
+                        "The goal of this screen is to show how I present metrics, filters and data visualizations in a product environment while keeping a clean visual hierarchy and reusable components.",
+                    description3:
+                        "The data and part of the logic are mocked or adapted for portfolio purposes, but the design approach, information structure and user experience are conceived as a real interface.",
+                    confirm: "Understood",
+                    openAriaLabel: "Open page information",
+                },
+
                 headerTitle: "Operations Overview",
                 dashboardBadge: "Dashboard",
                 filtersTitle: "Filters",
@@ -532,6 +612,18 @@ export const translations = {
             },
 
             performanceAnalytics: {
+                infoModal: {
+                    title: "Performance analytics",
+                    subtitle: "Visual tracking of metrics",
+                    description1:
+                        "This demo shows an analytics screen designed to review the performance evolution of a resource over time through filters, charts and summarized metrics.",
+                    description2:
+                        "The goal is to show how I structure analytical reading interfaces, combining resource selection, date range, time trend and comparable visualizations in a single view.",
+                    description3:
+                        "The data is adapted for portfolio purposes, but the hierarchy, experience approach and dashboard composition are conceived as a real product screen.",
+                    confirm: "Understood",
+                    openAriaLabel: "Open page information",
+                },
                 headerTitle: "Performance Analytics",
                 dashboardBadge: "Dashboard",
                 filtersTitle: "Filters",
@@ -590,6 +682,18 @@ export const translations = {
             },
 
             productionMonitoring: {
+                infoModal: {
+                    title: "Production monitoring",
+                    subtitle: "Real-time operational monitoring",
+                    description1:
+                        "This demo represents an operational monitoring screen focused on showing the current service status, the day's activity and the evolution of cases in a single view.",
+                    description2:
+                        "The goal is to show how I organize supervision interfaces with timelines, key indicators, status cards and lists connected to a clear and easy-to-read time context.",
+                    description3:
+                        "The data and part of the logic have been adapted for portfolio purposes, but the visual hierarchy, monitoring approach and overall composition are conceived as a real product interface.",
+                    confirm: "Understood",
+                    openAriaLabel: "Open page information",
+                },
                 loading: "Loading data...",
                 statusLabels: {
                     offline: "No activity",

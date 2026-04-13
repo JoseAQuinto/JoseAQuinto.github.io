@@ -19,6 +19,7 @@ import {
   toInputDate,
 } from "./operationsOverview.utils";
 import { useLanguage } from "../../../../translations/LanguageContext";
+import FloatingInfoButton from "../../components/FloatingInfoButton";
 
 /* ── Date range modal ─────────────────────────────────────────────── */
 
@@ -214,195 +215,208 @@ function OperationsOverviewPage() {
   }, [language]);
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] pb-12 font-sans text-slate-800">
-      {isFilterOpen && (
-        <DateRangeModal
-          initialFrom={dateFilter.from}
-          initialTo={dateFilter.to}
-          onApply={async (from, to) => {
-            await applyDateFilter(from, to);
-            setIsFilterOpen(false);
-          }}
-          onCancel={() => setIsFilterOpen(false)}
-        />
-      )}
+    <>
+      <FloatingInfoButton
+        position="bottom-right"
+        title={pageT.infoModal.title}
+        subtitle={pageT.infoModal.subtitle}
+        paragraphs={[
+          pageT.infoModal.description1,
+          pageT.infoModal.description2,
+          pageT.infoModal.description3,
+        ]}
+        buttonLabel={pageT.infoModal.confirm}
+      />
+      <div className="min-h-screen bg-[#f8fafc] pb-12 font-sans text-slate-800">
+        {isFilterOpen && (
+          <DateRangeModal
+            initialFrom={dateFilter.from}
+            initialTo={dateFilter.to}
+            onApply={async (from, to) => {
+              await applyDateFilter(from, to);
+              setIsFilterOpen(false);
+            }}
+            onCancel={() => setIsFilterOpen(false)}
+          />
+        )}
 
-      <header className="sticky top-0 z-20 border-b border-slate-200/80 bg-white/90 backdrop-blur-sm">
-        <div className="mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-6">
-          <div className="flex items-center gap-3">
-            <span className="flex h-7 w-1 rounded-full bg-gradient-to-b from-indigo-500 to-violet-600" />
-            <h1 className="text-[15px] font-bold tracking-tight text-slate-900">
-              {pageT.headerTitle}
-            </h1>
+        <header className="sticky top-0 z-20 border-b border-slate-200/80 bg-white/90 backdrop-blur-sm">
+          <div className="mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-6">
+            <div className="flex items-center gap-3">
+              <span className="flex h-7 w-1 rounded-full bg-gradient-to-b from-indigo-500 to-violet-600" />
+              <h1 className="text-[15px] font-bold tracking-tight text-slate-900">
+                {pageT.headerTitle}
+              </h1>
+            </div>
+            <span className="rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600">
+              {pageT.dashboardBadge}
+            </span>
           </div>
-          <span className="rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600">
-            {pageT.dashboardBadge}
-          </span>
-        </div>
-      </header>
+        </header>
 
-      <main className="mx-auto max-w-screen-2xl space-y-5 p-6">
-        <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
-          <div className="border-b border-slate-100 px-6 py-4">
-            <h2 className="text-[13px] font-semibold uppercase tracking-widest text-slate-400">
-              {pageT.filtersTitle}
-            </h2>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-between gap-3 p-6">
-            <div className="flex items-center gap-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
-              <span className="text-sm text-slate-500">{pageT.activeFilterLabel}</span>
-              <span className="text-sm font-semibold text-slate-900">{filterLabel}</span>
+        <main className="mx-auto max-w-screen-2xl space-y-5 p-6">
+          <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <div className="border-b border-slate-100 px-6 py-4">
+              <h2 className="text-[13px] font-semibold uppercase tracking-widest text-slate-400">
+                {pageT.filtersTitle}
+              </h2>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2">
-              <button
-                onClick={() => loadDashboardData(dateFilter)}
-                disabled={isLoading}
-                className="flex h-10 items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                <ArrowPathIcon className={`h-4 w-4 shrink-0 ${isLoading ? "animate-spin" : ""}`} />
-                {pageT.refresh}
-              </button>
+            <div className="flex flex-wrap items-center justify-between gap-3 p-6">
+              <div className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
+                <span className="text-sm text-slate-500">{pageT.activeFilterLabel}</span>
+                <span className="text-sm font-semibold text-slate-900">{filterLabel}</span>
+              </div>
 
-              {hasActiveFilter && (
+              <div className="flex flex-wrap items-center gap-2">
                 <button
-                  onClick={clearFilter}
+                  onClick={() => loadDashboardData(dateFilter)}
                   disabled={isLoading}
                   className="flex h-10 items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  <XMarkIcon className="h-4 w-4 shrink-0" />
-                  {pageT.clear}
+                  <ArrowPathIcon className={`h-4 w-4 shrink-0 ${isLoading ? "animate-spin" : ""}`} />
+                  {pageT.refresh}
                 </button>
-              )}
 
-              <button
-                onClick={() => setIsFilterOpen(true)}
-                className="flex h-10 items-center gap-2 rounded-lg bg-slate-900 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-[0.97]"
-              >
-                <FunnelIcon className="h-4 w-4 shrink-0" />
-                {pageT.setDateRange}
-              </button>
-            </div>
-          </div>
-        </section>
+                {hasActiveFilter && (
+                  <button
+                    onClick={clearFilter}
+                    disabled={isLoading}
+                    className="flex h-10 items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    <XMarkIcon className="h-4 w-4 shrink-0" />
+                    {pageT.clear}
+                  </button>
+                )}
 
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
-          <div className="flex flex-col gap-5 lg:col-span-2">
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-              <KpiCard
-                icon={<ClockIcon className="h-5 w-5" />}
-                iconBg="bg-emerald-50"
-                iconColor="text-emerald-500"
-                value={formatMinutes(totalDurationMinutes)}
-                label={pageT.kpis.totalDuration}
-              />
-              <KpiCard
-                icon={<ChartBarIcon className="h-5 w-5" />}
-                iconBg="bg-rose-50"
-                iconColor="text-rose-500"
-                value={incidentCount}
-                label={pageT.kpis.totalIncidents}
-              />
-              <KpiCard
-                icon={<ClockIcon className="h-5 w-5" />}
-                iconBg="bg-amber-50"
-                iconColor="text-amber-500"
-                value={formatMinutes(averageDurationMinutes)}
-                label={pageT.kpis.averageDuration}
-              />
-            </div>
-
-            <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
-              <div className="border-b border-slate-100 px-6 py-4">
-                <h2 className="font-bold text-slate-900">{pageT.categoryBreakdown.title}</h2>
-                <p className="mt-0.5 text-xs text-slate-400">
-                  {pageT.categoryBreakdown.subtitle}
-                </p>
+                <button
+                  onClick={() => setIsFilterOpen(true)}
+                  className="flex h-10 items-center gap-2 rounded-lg bg-slate-900 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:scale-[0.97]"
+                >
+                  <FunnelIcon className="h-4 w-4 shrink-0" />
+                  {pageT.setDateRange}
+                </button>
               </div>
-              <div className="p-6">
-                <div className="h-[320px]">
-                  <HighchartsReact
-                    highcharts={Highcharts}
-                    options={categoryChartOptions}
-                    containerProps={{ style: { height: "100%" } }}
-                  />
+            </div>
+          </section>
+
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+            <div className="flex flex-col gap-5 lg:col-span-2">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <KpiCard
+                  icon={<ClockIcon className="h-5 w-5" />}
+                  iconBg="bg-emerald-50"
+                  iconColor="text-emerald-500"
+                  value={formatMinutes(totalDurationMinutes)}
+                  label={pageT.kpis.totalDuration}
+                />
+                <KpiCard
+                  icon={<ChartBarIcon className="h-5 w-5" />}
+                  iconBg="bg-rose-50"
+                  iconColor="text-rose-500"
+                  value={incidentCount}
+                  label={pageT.kpis.totalIncidents}
+                />
+                <KpiCard
+                  icon={<ClockIcon className="h-5 w-5" />}
+                  iconBg="bg-amber-50"
+                  iconColor="text-amber-500"
+                  value={formatMinutes(averageDurationMinutes)}
+                  label={pageT.kpis.averageDuration}
+                />
+              </div>
+
+              <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+                <div className="border-b border-slate-100 px-6 py-4">
+                  <h2 className="font-bold text-slate-900">{pageT.categoryBreakdown.title}</h2>
+                  <p className="mt-0.5 text-xs text-slate-400">
+                    {pageT.categoryBreakdown.subtitle}
+                  </p>
                 </div>
-              </div>
-            </section>
-          </div>
+                <div className="p-6">
+                  <div className="h-[320px]">
+                    <HighchartsReact
+                      highcharts={Highcharts}
+                      options={categoryChartOptions}
+                      containerProps={{ style: { height: "100%" } }}
+                    />
+                  </div>
+                </div>
+              </section>
+            </div>
 
-          <div className="flex flex-col gap-5">
-            <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-              <div className="border-b border-slate-100 px-6 py-4">
-                <h2 className="font-bold text-slate-900">{pageT.topResources.title}</h2>
-                <p className="mt-0.5 text-xs text-slate-400">{pageT.topResources.subtitle}</p>
-              </div>
+            <div className="flex flex-col gap-5">
+              <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                <div className="border-b border-slate-100 px-6 py-4">
+                  <h2 className="font-bold text-slate-900">{pageT.topResources.title}</h2>
+                  <p className="mt-0.5 text-xs text-slate-400">{pageT.topResources.subtitle}</p>
+                </div>
 
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm">
-                  <thead>
-                    <tr className="border-b border-slate-100 bg-slate-50">
-                      <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
-                        {pageT.topResources.columns.resource}
-                      </th>
-                      <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
-                        {pageT.topResources.columns.duration}
-                      </th>
-                      <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
-                        {pageT.topResources.columns.reason}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {ranking.length === 0 ? (
-                      <tr>
-                        <td colSpan={3} className="px-5 py-10 text-center text-sm text-slate-400">
-                          {pageT.topResources.noData}
-                        </td>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-sm">
+                    <thead>
+                      <tr className="border-b border-slate-100 bg-slate-50">
+                        <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                          {pageT.topResources.columns.resource}
+                        </th>
+                        <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                          {pageT.topResources.columns.duration}
+                        </th>
+                        <th className="px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                          {pageT.topResources.columns.reason}
+                        </th>
                       </tr>
-                    ) : (
-                      ranking.map((item, index) => (
-                        <tr
-                          key={`${item.resourceName}-${index}`}
-                          className="border-t border-slate-100 transition hover:bg-slate-50/60"
-                        >
-                          <td className="px-5 py-3.5">
-                            <div className="flex items-center gap-2">
-                              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-slate-100 text-[10px] font-bold text-slate-500">
-                                {index + 1}
-                              </span>
-                              <span className="font-medium text-slate-800">{item.resourceName}</span>
-                            </div>
+                    </thead>
+                    <tbody>
+                      {ranking.length === 0 ? (
+                        <tr>
+                          <td colSpan={3} className="px-5 py-10 text-center text-sm text-slate-400">
+                            {pageT.topResources.noData}
                           </td>
-                          <td className="px-5 py-3.5 text-slate-600">
-                            {formatMinutes(item.downtimeMinutes)}
-                          </td>
-                          <td className="px-5 py-3.5 text-slate-500">{item.primaryReason}</td>
                         </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </section>
+                      ) : (
+                        ranking.map((item, index) => (
+                          <tr
+                            key={`${item.resourceName}-${index}`}
+                            className="border-t border-slate-100 transition hover:bg-slate-50/60"
+                          >
+                            <td className="px-5 py-3.5">
+                              <div className="flex items-center gap-2">
+                                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-slate-100 text-[10px] font-bold text-slate-500">
+                                  {index + 1}
+                                </span>
+                                <span className="font-medium text-slate-800">{item.resourceName}</span>
+                              </div>
+                            </td>
+                            <td className="px-5 py-3.5 text-slate-600">
+                              {formatMinutes(item.downtimeMinutes)}
+                            </td>
+                            <td className="px-5 py-3.5 text-slate-500">{item.primaryReason}</td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </section>
 
-            <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
-              <div className="border-b border-slate-100 px-6 py-4">
-                <h2 className="font-bold text-slate-900">{pageT.resourceComparison.title}</h2>
-                <p className="mt-0.5 text-xs text-slate-400">
-                  {pageT.resourceComparison.subtitle}
-                </p>
-              </div>
-              <div className="p-6">
-                <HighchartsReact highcharts={Highcharts} options={resourceChartOptions} />
-              </div>
-            </section>
+              <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+                <div className="border-b border-slate-100 px-6 py-4">
+                  <h2 className="font-bold text-slate-900">{pageT.resourceComparison.title}</h2>
+                  <p className="mt-0.5 text-xs text-slate-400">
+                    {pageT.resourceComparison.subtitle}
+                  </p>
+                </div>
+                <div className="p-6">
+                  <HighchartsReact highcharts={Highcharts} options={resourceChartOptions} />
+                </div>
+              </section>
+            </div>
           </div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </>
   );
 }
 

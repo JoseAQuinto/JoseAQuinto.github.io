@@ -33,6 +33,7 @@ import {
     isToday,
 } from "./productionMonitoring.utils";
 import { useLanguage } from "../../../../translations/LanguageContext";
+import FloatingInfoButton from "../../components/FloatingInfoButton";
 
 type TimelineSegment = {
     name: string;
@@ -603,288 +604,301 @@ const ProductionMonitoringPage: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            <header className="sticky top-0 z-40 border-b border-gray-200 bg-white/95 backdrop-blur-sm transition-shadow duration-300 shadow-sm">
-                <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                        <div className="flex items-center gap-4 min-w-0">
-                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-600 shadow-sm">
-                                <Cog6ToothIcon className="h-5 w-5" />
-                            </div>
-
-                            <div className="min-w-0 flex-1">
-                                <h1 className="truncate text-xl font-bold text-gray-900 sm:text-2xl">
-                                    {summary?.teamName ?? pageT.header.supportCenter}
-                                </h1>
-
-                                <div className="mt-1 flex items-center gap-3 flex-wrap">
-                                    <span className="flex items-center gap-1.5 text-xs font-semibold text-gray-500">
-                                        <CalendarIcon className="h-4 w-4 flex-shrink-0" />
-                                        {isToday(selectedDate) ? pageT.header.today : pageT.header.historical}
-                                    </span>
-
-                                    <div
-                                        className={`flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-semibold ${currentStatusType === "active"
-                                            ? "animate-pulse bg-emerald-50 text-emerald-700 border border-emerald-200"
-                                            : "bg-gray-100 text-gray-600 border border-gray-200"
-                                            }`}
-                                    >
-                                        <div className={`h-2 w-2 rounded-full ${currentStatusType === "active" ? "bg-emerald-500" : "bg-gray-400"}`} />
-                                        {currentStatusLabel}
-                                    </div>
+        <>
+            <FloatingInfoButton
+                position="bottom-right"
+                title={pageT.infoModal.title}
+                subtitle={pageT.infoModal.subtitle}
+                paragraphs={[
+                    pageT.infoModal.description1,
+                    pageT.infoModal.description2,
+                    pageT.infoModal.description3,
+                ]}
+                buttonLabel={pageT.infoModal.confirm}
+            />
+            <div className="min-h-screen bg-gray-50">
+                <header className="sticky top-0 z-40 border-b border-gray-200 bg-white/95 backdrop-blur-sm transition-shadow duration-300 shadow-sm">
+                    <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+                        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                            <div className="flex items-center gap-4 min-w-0">
+                                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-600 shadow-sm">
+                                    <Cog6ToothIcon className="h-5 w-5" />
                                 </div>
-                            </div>
-                        </div>
 
-                        <div className="flex flex-col items-end gap-2 sm:gap-1">
-                            <div
-                                className="group relative cursor-pointer"
-                                onClick={() => {
-                                    const input = dateInputRef.current as HTMLInputWithShowPicker | null;
-                                    if (!input) return;
+                                <div className="min-w-0 flex-1">
+                                    <h1 className="truncate text-xl font-bold text-gray-900 sm:text-2xl">
+                                        {summary?.teamName ?? pageT.header.supportCenter}
+                                    </h1>
 
-                                    if (typeof input.showPicker === "function") {
-                                        input.showPicker();
-                                    } else {
-                                        input.click();
-                                    }
-                                }}
-                            >
-                                <input
-                                    ref={dateInputRef}
-                                    type="date"
-                                    value={selectedDate}
-                                    onChange={(e) => setSelectedDate(e.target.value)}
-                                    className="pointer-events-none absolute inset-0 cursor-pointer opacity-0"
-                                />
+                                    <div className="mt-1 flex items-center gap-3 flex-wrap">
+                                        <span className="flex items-center gap-1.5 text-xs font-semibold text-gray-500">
+                                            <CalendarIcon className="h-4 w-4 flex-shrink-0" />
+                                            {isToday(selectedDate) ? pageT.header.today : pageT.header.historical}
+                                        </span>
 
-                                <div className="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm transition-all group-hover:border-blue-400 group-hover:ring-2 group-hover:ring-blue-100">
-                                    <CalendarIcon className="h-4 w-4 text-blue-600 flex-shrink-0" />
-                                    <span className="whitespace-nowrap">{formatLongDateLocal(selectedDate)}</span>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-1 text-xs text-gray-500">
-                                <ClockIcon className="h-4 w-4 flex-shrink-0" />
-                                <span className="tabular-nums font-medium">{formatNowTimeLocal()}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-                <section className="mb-8">
-                    <div className="rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-sm">
-                        <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                            <div className="flex items-center gap-2.5">
-                                <div className="h-1 w-5 rounded-full bg-blue-600" />
-                                <h2 className="text-lg font-bold text-gray-900">{pageT.timeline.dailyActivity}</h2>
-                                <InfoTooltip
-                                    text={
-                                        pageT.timeline.tooltipMain
-                                    }
-                                />
-                            </div>
-
-                            <button
-                                onClick={() => setShowCasesTimeline(!showCasesTimeline)}
-                                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all ${showCasesTimeline
-                                    ? "bg-blue-600 text-white shadow-md hover:bg-blue-700"
-                                    : "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
-                                    }`}
-                            >
-                                <QueueListIcon className="h-4 w-4" />
-                                {showCasesTimeline ? pageT.timeline.hide : pageT.timeline.breakdownBy} {pageT.timeline.cases}
-                            </button>
-                        </div>
-
-                        <div className="space-y-4">
-                            <div className="h-[120px] overflow-hidden rounded-lg border border-gray-100 bg-gray-50">
-                                <HighchartsReact highcharts={Highcharts} options={timelineOptions} />
-                            </div>
-
-                            <AnimatePresence initial={false}>
-                                {showCasesTimeline && (
-                                    <motion.div
-                                        initial={{ height: 0, opacity: 0 }}
-                                        animate={{ height: "auto", opacity: 1 }}
-                                        exit={{ height: 0, opacity: 0 }}
-                                        transition={{ duration: 0.2 }}
-                                        className="overflow-hidden"
-                                    >
-                                        <div className="h-[120px] overflow-hidden rounded-lg border border-gray-100 bg-gray-50">
-                                            <HighchartsReact
-                                                highcharts={Highcharts}
-                                                options={casesTimelineOptions}
-                                            />
+                                        <div
+                                            className={`flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-semibold ${currentStatusType === "active"
+                                                ? "animate-pulse bg-emerald-50 text-emerald-700 border border-emerald-200"
+                                                : "bg-gray-100 text-gray-600 border border-gray-200"
+                                                }`}
+                                        >
+                                            <div className={`h-2 w-2 rounded-full ${currentStatusType === "active" ? "bg-emerald-500" : "bg-gray-400"}`} />
+                                            {currentStatusLabel}
                                         </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col items-end gap-2 sm:gap-1">
+                                <div
+                                    className="group relative cursor-pointer"
+                                    onClick={() => {
+                                        const input = dateInputRef.current as HTMLInputWithShowPicker | null;
+                                        if (!input) return;
+
+                                        if (typeof input.showPicker === "function") {
+                                            input.showPicker();
+                                        } else {
+                                            input.click();
+                                        }
+                                    }}
+                                >
+                                    <input
+                                        ref={dateInputRef}
+                                        type="date"
+                                        value={selectedDate}
+                                        onChange={(e) => setSelectedDate(e.target.value)}
+                                        className="pointer-events-none absolute inset-0 cursor-pointer opacity-0"
+                                    />
+
+                                    <div className="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm transition-all group-hover:border-blue-400 group-hover:ring-2 group-hover:ring-blue-100">
+                                        <CalendarIcon className="h-4 w-4 text-blue-600 flex-shrink-0" />
+                                        <span className="whitespace-nowrap">{formatLongDateLocal(selectedDate)}</span>
+                                    </div>
+                                </div>
+
+                                <div className="flex items-center gap-1 text-xs text-gray-500">
+                                    <ClockIcon className="h-4 w-4 flex-shrink-0" />
+                                    <span className="tabular-nums font-medium">{formatNowTimeLocal()}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </section>
+                </header>
 
-                <div className="grid gap-8 lg:grid-cols-3">
-                    <section className="lg:col-span-1">
-                        <div className="flex h-full flex-col rounded-xl border border-gray-200 bg-white shadow-sm">
-                            <div className="border-b border-gray-200 bg-gray-50/50 px-5 py-4 sm:px-6">
-                                <div className="flex items-start justify-between gap-3">
-                                    <div>
-                                        <h3 className="flex items-center gap-2 text-base font-bold text-gray-900 sm:text-lg">
-                                            <QueueListIcon className="h-5 w-5 text-gray-400" />
-                                            {pageT.caseList.title}
-                                        </h3>
-                                        <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-gray-500">
-                                            {pageT.caseList.subtitle}
-                                        </p>
-                                    </div>
-
+                <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+                    <section className="mb-8">
+                        <div className="rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-sm">
+                            <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                                <div className="flex items-center gap-2.5">
+                                    <div className="h-1 w-5 rounded-full bg-blue-600" />
+                                    <h2 className="text-lg font-bold text-gray-900">{pageT.timeline.dailyActivity}</h2>
                                     <InfoTooltip
-                                        text={pageT.caseList.tooltip}
+                                        text={
+                                            pageT.timeline.tooltipMain
+                                        }
                                     />
                                 </div>
+
+                                <button
+                                    onClick={() => setShowCasesTimeline(!showCasesTimeline)}
+                                    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all ${showCasesTimeline
+                                        ? "bg-blue-600 text-white shadow-md hover:bg-blue-700"
+                                        : "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                                        }`}
+                                >
+                                    <QueueListIcon className="h-4 w-4" />
+                                    {showCasesTimeline ? pageT.timeline.hide : pageT.timeline.breakdownBy} {pageT.timeline.cases}
+                                </button>
                             </div>
 
-                            <div className="custom-scrollbar flex-1 overflow-auto p-4 sm:p-5">
-                                <div className="space-y-3">
-                                    {cases.length > 0 ? (
-                                        cases.map((item) => (
-                                            <CaseListItem
-                                                key={item.id}
-                                                supportCase={item}
-                                                labels={pageT.caseList}
-                                                locale={locale}
-                                            />
-                                        ))
-                                    ) : (
-                                        <div className="flex flex-col items-center justify-center py-16 text-center">
-                                            <CircleStackIcon className="mb-3 h-10 w-10 text-gray-300" />
-                                            <p className="text-sm font-medium text-gray-500">
-                                                {pageT.caseList.empty}
+                            <div className="space-y-4">
+                                <div className="h-[120px] overflow-hidden rounded-lg border border-gray-100 bg-gray-50">
+                                    <HighchartsReact highcharts={Highcharts} options={timelineOptions} />
+                                </div>
+
+                                <AnimatePresence initial={false}>
+                                    {showCasesTimeline && (
+                                        <motion.div
+                                            initial={{ height: 0, opacity: 0 }}
+                                            animate={{ height: "auto", opacity: 1 }}
+                                            exit={{ height: 0, opacity: 0 }}
+                                            transition={{ duration: 0.2 }}
+                                            className="overflow-hidden"
+                                        >
+                                            <div className="h-[120px] overflow-hidden rounded-lg border border-gray-100 bg-gray-50">
+                                                <HighchartsReact
+                                                    highcharts={Highcharts}
+                                                    options={casesTimelineOptions}
+                                                />
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div className="grid gap-8 lg:grid-cols-3">
+                        <section className="lg:col-span-1">
+                            <div className="flex h-full flex-col rounded-xl border border-gray-200 bg-white shadow-sm">
+                                <div className="border-b border-gray-200 bg-gray-50/50 px-5 py-4 sm:px-6">
+                                    <div className="flex items-start justify-between gap-3">
+                                        <div>
+                                            <h3 className="flex items-center gap-2 text-base font-bold text-gray-900 sm:text-lg">
+                                                <QueueListIcon className="h-5 w-5 text-gray-400" />
+                                                {pageT.caseList.title}
+                                            </h3>
+                                            <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-gray-500">
+                                                {pageT.caseList.subtitle}
                                             </p>
                                         </div>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                    </section>
 
-                    <section className="lg:col-span-2">
-                        <div className="flex h-full flex-col rounded-xl border border-gray-200 bg-white shadow-sm">
-                            <div className="border-b border-gray-200 px-5 py-6 sm:px-6">
-                                <div className="mb-5 flex items-start justify-between gap-4">
-                                    <div className="min-w-0 flex-1">
-                                        <p className="mb-2 text-xs font-bold uppercase tracking-widest text-blue-600">
-                                            {pageT.mainPanel.currentAttention}
-                                        </p>
-
-                                        <h3 className="truncate text-2xl font-bold text-gray-900 sm:text-3xl">
-                                            {summary?.activeCaseTitle || pageT.mainPanel.noCase}
-                                        </h3>
-
-                                        <p className="mt-2 text-sm font-semibold uppercase tracking-wide text-gray-600">
-                                            {summary?.activeChannelName || pageT.mainPanel.noChannel}
-                                        </p>
+                                        <InfoTooltip
+                                            text={pageT.caseList.tooltip}
+                                        />
                                     </div>
-
-                                    <InfoTooltip
-                                        text={pageT.mainPanel.tooltip}
-                                    />
                                 </div>
 
-                                <div className="grid gap-3 sm:grid-cols-3">
-                                    <TopMetricCard
-                                        icon={<ClockIcon className="h-4 w-4 text-amber-600" />}
-                                        label={pageT.mainPanel.handover}
-                                        value={minutesToHHmm(summary?.handoverMinutes ?? 0)}
-                                    />
-                                    <TopMetricCard
-                                        icon={<BoltIcon className="h-4 w-4 text-blue-600" />}
-                                        label={pageT.mainPanel.activeAttention}
-                                        value={minutesToHHmm(summary?.activeAttentionMinutes ?? 0)}
-                                    />
-                                    <TopMetricCard
-                                        icon={<CircleStackIcon className="h-4 w-4 text-emerald-600" />}
-                                        label={pageT.mainPanel.tickets}
-                                        value={`${summary?.resolvedTickets ?? 0} / ${summary?.targetTickets ?? 0}`}
-                                        progress={activeCaseProgress}
-                                    />
+                                <div className="custom-scrollbar flex-1 overflow-auto p-4 sm:p-5">
+                                    <div className="space-y-3">
+                                        {cases.length > 0 ? (
+                                            cases.map((item) => (
+                                                <CaseListItem
+                                                    key={item.id}
+                                                    supportCase={item}
+                                                    labels={pageT.caseList}
+                                                    locale={locale}
+                                                />
+                                            ))
+                                        ) : (
+                                            <div className="flex flex-col items-center justify-center py-16 text-center">
+                                                <CircleStackIcon className="mb-3 h-10 w-10 text-gray-300" />
+                                                <p className="text-sm font-medium text-gray-500">
+                                                    {pageT.caseList.empty}
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
+                        </section>
 
-                            <div className="flex-1 p-5 sm:p-6">
-                                <div className="space-y-4">
-                                    <div className="grid gap-4 lg:grid-cols-2">
-                                        <div className="flex h-[280px] items-center justify-center rounded-lg border border-gray-200 bg-gray-50/30">
-                                            <HighchartsReact highcharts={Highcharts} options={mainSlaOptions} />
+                        <section className="lg:col-span-2">
+                            <div className="flex h-full flex-col rounded-xl border border-gray-200 bg-white shadow-sm">
+                                <div className="border-b border-gray-200 px-5 py-6 sm:px-6">
+                                    <div className="mb-5 flex items-start justify-between gap-4">
+                                        <div className="min-w-0 flex-1">
+                                            <p className="mb-2 text-xs font-bold uppercase tracking-widest text-blue-600">
+                                                {pageT.mainPanel.currentAttention}
+                                            </p>
+
+                                            <h3 className="truncate text-2xl font-bold text-gray-900 sm:text-3xl">
+                                                {summary?.activeCaseTitle || pageT.mainPanel.noCase}
+                                            </h3>
+
+                                            <p className="mt-2 text-sm font-semibold uppercase tracking-wide text-gray-600">
+                                                {summary?.activeChannelName || pageT.mainPanel.noChannel}
+                                            </p>
                                         </div>
 
-                                        <div className="space-y-3">
-                                            <SubKPICard
-                                                icon={<ClockIcon className="h-5 w-5" />}
-                                                label={pageT.kpis.firstResponse}
-                                                value={mainKpis.firstResponse}
+                                        <InfoTooltip
+                                            text={pageT.mainPanel.tooltip}
+                                        />
+                                    </div>
+
+                                    <div className="grid gap-3 sm:grid-cols-3">
+                                        <TopMetricCard
+                                            icon={<ClockIcon className="h-4 w-4 text-amber-600" />}
+                                            label={pageT.mainPanel.handover}
+                                            value={minutesToHHmm(summary?.handoverMinutes ?? 0)}
+                                        />
+                                        <TopMetricCard
+                                            icon={<BoltIcon className="h-4 w-4 text-blue-600" />}
+                                            label={pageT.mainPanel.activeAttention}
+                                            value={minutesToHHmm(summary?.activeAttentionMinutes ?? 0)}
+                                        />
+                                        <TopMetricCard
+                                            icon={<CircleStackIcon className="h-4 w-4 text-emerald-600" />}
+                                            label={pageT.mainPanel.tickets}
+                                            value={`${summary?.resolvedTickets ?? 0} / ${summary?.targetTickets ?? 0}`}
+                                            progress={activeCaseProgress}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="flex-1 p-5 sm:p-6">
+                                    <div className="space-y-4">
+                                        <div className="grid gap-4 lg:grid-cols-2">
+                                            <div className="flex h-[280px] items-center justify-center rounded-lg border border-gray-200 bg-gray-50/30">
+                                                <HighchartsReact highcharts={Highcharts} options={mainSlaOptions} />
+                                            </div>
+
+                                            <div className="space-y-3">
+                                                <SubKPICard
+                                                    icon={<ClockIcon className="h-5 w-5" />}
+                                                    label={pageT.kpis.firstResponse}
+                                                    value={mainKpis.firstResponse}
+                                                    tone="blue"
+                                                    tooltip={pageT.kpis.firstResponseTooltip}
+                                                    labels={{
+                                                        onTarget: pageT.kpis.onTarget,
+                                                        belowTarget: pageT.kpis.belowTarget,
+                                                    }}
+                                                />
+                                                <SubKPICard
+                                                    icon={<BoltIcon className="h-5 w-5" />}
+                                                    label={pageT.kpis.resolution}
+                                                    value={mainKpis.resolution}
+                                                    tone="amber"
+                                                    tooltip={pageT.kpis.resolutionTooltip}
+                                                    labels={{
+                                                        onTarget: pageT.kpis.onTarget,
+                                                        belowTarget: pageT.kpis.belowTarget,
+                                                    }}
+                                                />
+                                                <SubKPICard
+                                                    icon={<CheckBadgeIcon className="h-5 w-5" />}
+                                                    label={pageT.kpis.satisfaction}
+                                                    value={mainKpis.satisfaction}
+                                                    tone="emerald"
+                                                    tooltip={pageT.kpis.satisfactionTooltip}
+                                                    labels={{
+                                                        onTarget: pageT.kpis.onTarget,
+                                                        belowTarget: pageT.kpis.belowTarget,
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="grid gap-3 sm:grid-cols-3 border-t border-gray-200 pt-4">
+                                            <QuickStateCard
+                                                icon={<PlayIcon className="h-4 w-4" />}
+                                                title={pageT.quickCards.activeCase}
+                                                value={summary?.activeCaseTitle || "--"}
                                                 tone="blue"
-                                                tooltip={pageT.kpis.firstResponseTooltip}
-                                                labels={{
-                                                    onTarget: pageT.kpis.onTarget,
-                                                    belowTarget: pageT.kpis.belowTarget,
-                                                }}
                                             />
-                                            <SubKPICard
-                                                icon={<BoltIcon className="h-5 w-5" />}
-                                                label={pageT.kpis.resolution}
-                                                value={mainKpis.resolution}
+                                            <QuickStateCard
+                                                icon={<ExclamationTriangleIcon className="h-4 w-4" />}
+                                                title={pageT.quickCards.status}
+                                                value={currentStatusLabel}
                                                 tone="amber"
-                                                tooltip={pageT.kpis.resolutionTooltip}
-                                                labels={{
-                                                    onTarget: pageT.kpis.onTarget,
-                                                    belowTarget: pageT.kpis.belowTarget,
-                                                }}
                                             />
-                                            <SubKPICard
-                                                icon={<CheckBadgeIcon className="h-5 w-5" />}
-                                                label={pageT.kpis.satisfaction}
-                                                value={mainKpis.satisfaction}
+                                            <QuickStateCard
+                                                icon={<CircleStackIcon className="h-4 w-4" />}
+                                                title={pageT.quickCards.target}
+                                                value={`${summary?.targetTickets ?? 0}`}
                                                 tone="emerald"
-                                                tooltip={pageT.kpis.satisfactionTooltip}
-                                                labels={{
-                                                    onTarget: pageT.kpis.onTarget,
-                                                    belowTarget: pageT.kpis.belowTarget,
-                                                }}
                                             />
                                         </div>
                                     </div>
-
-                                    <div className="grid gap-3 sm:grid-cols-3 border-t border-gray-200 pt-4">
-                                        <QuickStateCard
-                                            icon={<PlayIcon className="h-4 w-4" />}
-                                            title={pageT.quickCards.activeCase}
-                                            value={summary?.activeCaseTitle || "--"}
-                                            tone="blue"
-                                        />
-                                        <QuickStateCard
-                                            icon={<ExclamationTriangleIcon className="h-4 w-4" />}
-                                            title={pageT.quickCards.status}
-                                            value={currentStatusLabel}
-                                            tone="amber"
-                                        />
-                                        <QuickStateCard
-                                            icon={<CircleStackIcon className="h-4 w-4" />}
-                                            title={pageT.quickCards.target}
-                                            value={`${summary?.targetTickets ?? 0}`}
-                                            tone="emerald"
-                                        />
-                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
-                </div>
-            </main>
-        </div>
+                        </section>
+                    </div>
+                </main>
+            </div>
+        </>
     );
 };
 
