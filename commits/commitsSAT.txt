@@ -1,0 +1,91 @@
+2026-04-14 | FEAT(CrearSAT): proceso para crear sat, nuevas page, componentes, servicios y DTO
+2026-03-18 | merge
+2026-03-16 | MODIF(Crear Parte): Añadida sección informativa 'Intervención'
+2026-03-16 | MODIF(Crear Parte): Añadida sección informativa 'Intervención'
+2026-03-13 | FIX(Historico): gestión de TECNICO_NOMBRE y cambios de logica
+2026-03-10 | MODIF(Externalizar ruta API)
+2026-03-04 | Ajustes(pages):listas y carga de datos
+2026-03-03 | Ajustes para queue de insertParte offline
+2026-03-03 | FIX(Crear parte)
+2026-03-02 | Ajustes(stores): mejora de carga de cache
+2026-02-27 | FIX(Crear parte): Ajustes para que guarde el UserId como IDTECNICO al crear parte
+2026-02-27 | FEAT(Historico): page con Partes y componente de info
+2026-02-27 | AJUSTES(Creacion PARTE): resuelto bug step2
+2026-02-19 | FIX(Solucionados bugs): SATCrearParte.tsx, AddPrevisionMaterialModal.tsx
+2026-02-19 | Merge remote-tracking branch 'origin/master'
+2026-02-19 | Avances(MaterialesParte): ajuste para correcto manejo de los datos y mejora de UI
+2026-02-19 | Modif(SATPrevisionMateriales): modificado para mejor visualizacion, lista ampliada para mostrar usados no previstos
+2026-02-19 | Modif(SATPrevisionMateriales): modificado para mejor visualizacion, lista ampliada para mostrar usados no previstos
+2026-02-19 | Avances(proceso crear parte): modificados componentes y ampliacion de los mismos
+2026-02-17 | Avances en componentes de crear parte
+2026-02-13 | AVANCES(ProcesoCrearParte): ajuste en SATCrearParte, SATsContenido y componente step3
+2026-02-13 | AVANCES(SATCrearParte): proceso de creacion de parte,filtros, componentes mejorados, estilos
+2026-02-13 | FEAT(Crear parte): componentes para el proceso
+2026-02-12 | FEAT(ProcesoCrearParte): creación y modificación de componentes para 'crear parte'
+2026-02-11 | FEAT(Materiales Previstos)
+2026-02-10 | Added(servicios PartesMateriales, SatAlbaran)
+2026-02-10 | Add(Servicios conexion SAIGON, componentes SATs, (lista, modal de búsqueda, lógica general)
+2025-12-23 | Avances en bases de pages
+2025-12-22 | Ajustes mínimos para base
+2025-12-18 | cambio minimo
+2025-12-17 | Base inicial SAT
+2025-12-16 | Ajustes(Añadido control de errores y excepciones en pages)
+2025-12-16 | Fix(MovimientosDetail)
+2025-12-16 | Fix(MovimientosList)
+2025-12-16 | Modif(Expediciones): Ajustes recomendaciones packing de lineas y lógica
+2025-12-12 | Mod(PedidosDetail): Logica para finalizar pedidos
+2025-12-11 | Ajustes(PedidosDetail): Componentes, listas, ajustes de campos y lógica
+2025-12-11 | Merge branch 'master' of http://192.168.254.10:3000/ginnova/sga-frontend
+2025-12-11 | cambios minimos estilos
+2025-12-10 | Fix(ExpedicionesDetail): recomendaciones
+2025-12-09 | Add RegularizacionForm, Ajustes en componentes MovimientosDetail y Ubicaciones
+2025-12-04 | Fix(Movimientos): Creacion movimiento, correcciones en detail y mejora de msg error finalizar
+2025-12-04 | Ajustes (Movimientos, Regularizaciones): componente busqueda
+2025-12-03 | Merge branch 'master' of http://192.168.254.10:3000/ginnova/sga-frontend
+2025-12-03 | Funcionalidad(Borrar Pedidos Recepcionados)
+2025-12-03 | Ampliaciones(Campos CajasVenta y CajasCompra): En distintas pages
+2025-12-02 | Ajustes(Listas)
+2025-12-02 | Funcionalidades(Expediciones, Pedidos) Finalizar
+2025-12-01 | Ajuste minimo
+2025-11-28 | Ajustes campos Ubicaciones
+2025-11-28 | Added(Expediciones (observaciones)
+2025-11-28 | Ajustes minimos Ubicaciones
+2025-11-28 | Ajuste logs
+2025-11-28 | Ajustes para el funcionamiento de codigo de ubicaciones
+2025-11-27 | Added(Funcionalidad codigo en Ubicaciones): Busquedas con filtro en ListSearch
+2025-11-27 | Limpieza(Eliminados rchivos NO usados)
+2025-11-27 | Ajustes(ExpedicionesList)
+2025-11-26 | Merge branch 'master' of http://192.168.254.10:3000/ginnova/sga-frontend
+2025-11-26 | Estilos en listas de pages
+2025-11-26 | Ajustes en Filtros(ExpedicionesList)
+2025-11-26 | Filtro en Pedidos
+2025-11-26 | Merge conflict resolution
+2025-11-26 | Mejora(Componente ListSearch): Mejora en filtrado y estilo
+2025-11-25 | Ajustes varios: Alias, campos de listas, estilos
+2025-11-25 | Merge
+2025-11-25 | Estilos minimos
+2025-11-21 | Implementacion(Login)
+2025-11-20 | Eliminado DARK (estilos)
+2025-11-18 | Avances(Expediciones): Detail, componentes y srevices
+2025-11-14 | Avances(Expediciones, ExpedicionesLineas, ExpedicionesLineasPreparadas): Componentes, Headers, Listas, Dto
+2025-11-13 | NEW(Services): Expediciones y lineasRecomendaciones
+2025-11-13 | NEW(Expediciones): Rutas, menu y componente base
+2025-10-24 | fix(ModalSimple): Resuelto bug modal
+2025-10-02 | ampliaciones en nuevo y finalizaciones (movimientos y regulaciones)
+2025-10-01 | ajustes en servicios
+2025-10-01 | agregado comentario en vite.config.ts para actualizar  httpClient.ts
+2025-10-01 | ajuste para mejora de HTTP
+2025-10-01 | avances en estilos en componentes y pages
+2025-09-30 | Ajustes en componentes varios y estilos DARK
+2025-09-29 | componente reutilizable en movimientos y regularizaciones, ajustes en pedidos
+2025-09-29 | ajustes formato cantidad
+2025-09-19 | avances en stock y redirecciones de menu
+2025-09-19 | Avamces en StockList
+2025-09-18 | Avances en almacenUbicacion, lineasPedido y stockPage
+2025-09-17 | Avances en Pedidos, creación de hook y servicio reutiliz.
+2025-09-16 | avances en Pedidos
+2025-09-15 | Avances en Movimientos, Regularizaciones,  Pedidos y Creación de ajustes
+2025-09-12 | avances en OMovimientos y ORegularizaciones
+2025-09-11 | Avances en Movimientos y Regularizacion, y componentes generales
+2025-09-10 | avances en menu y pagina Movimientos
+2025-09-10 | Base Proyecto SGA Frontend

@@ -1,0 +1,39 @@
+2026-04-10 | merge
+2026-04-08 | refactor(andon-detail): ampliación controller y DTOs
+2026-04-08 | refactor(andon-detail): ampliación controller y DTOs
+2026-04-07 | MODIF(Controllers): Añadida comprobación TOKEN 'JWT' válido mediante [Authorize]
+2026-04-01 | FEAT(AndonOee): creado controller y dto, ajustado EstadoMaquinaService para SignalR en AndonOee.page(front)
+2026-04-01 | FEAT(Config TimelineCustom): Ampliados ConfigAdministracion controller, model y DTOs
+2026-03-24 | FIX(Ajuste endpoints HistoricoParosGraficos)
+2026-03-18 | FEAT(HistoricoParosGraficosController): controller y DTO para 'historico-paros-maquinas'
+2026-03-17 | FEAT(AnalyticsOee): Controller, model y DTO
+2026-03-17 | FEAT(AnalyticsParos): endpoints para 'DashboardParos' usando la función de db 'fn_analytics_paro_dashboard'.
+2026-03-09 | MODIF(Tarifas): ajustes y nuevos endpoints y DTOs ajustados
+2026-03-04 | ADDED(NecesidadesController): Anadidos tipos de 'GetNecesidadesArticulo' para conexion con funciones de db
+2026-03-04 | FEAT(procesos-agrupacion por usuario): ampliados 'ProduccionController' y DTOs
+2026-02-27 | Merge remote-tracking branch 'origin/master'
+2026-02-27 | FEAT(PlanificadorPartesAgrupacionUsuarios): Controller, Model y DTO
+2026-02-24 | FIX(DisenosController): ajustados endpoints GET
+2026-02-20 | Modif(OrdenesLineasController): añadida gestion del nombreCliente
+2026-02-20 | Added(Model, DTO Series): endpoints de OrdenesController nutridos
+2026-02-09 | FEAT(Administracion Usuarios): AuthController.cs , UsersAdministrationDTO.cs, UserService.cs
+2026-02-05 | Ajuste(MovimientosProduccion): traslado de logica de 'ejecutar' transformaciones a SGA
+2026-01-28 | Avances(ControlesCalidad): ContadorHub, ProduccionController, ControlCalidadScheduler, PantallaOperario
+2026-01-23 | Fix(OrdenesTransformacion): ajuste series
+2026-01-20 | Fix(OrdenesTransformacion): endpoints para series y config
+2026-01-15 | Ajuste(MovimientosProduccionController): Endpoint POST 'Ejecutar' -> modificado idOperacion y finalizar orden_transformacion
+2026-01-14 | Add(Controllers, Models, DTOs): Para gestion de OrdenesTransformacion y conexion con SGA
+2026-01-12 | avances(OrdenesTransformacion): WIP
+2026-01-09 | merge
+2026-01-09 | Add(ParosParteController): Models, DTO y Endpoints
+2025-11-19 | Remove(appsettings): añadido al gitignore
+2025-11-19 | cambios minimos
+2025-11-18 | Ajuste para permitir pull
+2025-11-07 | Ajustes puesta en produccion
+2025-10-29 | Avances(OrdenesLineas): Endpoints para modal de Ordenes Produccion
+2025-09-08 | avances en RelControlCalidad
+2025-09-08 | eliminacion archivos temporales
+2025-09-05 | ajustes controllers, escandallos, partes, maquina paros
+2025-09-04 | avances relacion articulo diseno
+2025-09-04 | avances Partes Consumo
+2025-09-03 | avances en Diario Produccion

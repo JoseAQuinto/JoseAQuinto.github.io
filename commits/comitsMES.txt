@@ -1,0 +1,75 @@
+2026-04-10 | MODIF(AndonDetail): ajustada parte 'Monitorización activa' para OEE total de la orden, ajustados servicios y DTOs
+2026-04-09 | feat(AndonOEE): Ampliación en page y detail para nuevos endpoints OEE
+2026-04-08 | refactor(andon-detail): ampliación del componente e integración con nuevos endpoints
+2026-04-07 | FIX(Login): arreglado redireccion '/login'
+2026-04-07 | Ajustes(Tipado): Tipado y DTOs en varias páginas
+2026-04-01 | FEAT(AndonOEE.page): Ajustada page, creado servicio y dto
+2026-04-01 | FEAT(Config TimelineCustom): ampliado 'ConfiguracionVentanas' para configuración en TimelineCustom y ajustados componentes que lo usan
+2026-04-01 | FIX(TimelineCustom): lineas generales permanecen al expandir
+2026-04-01 | FIX(Reajuste menu)
+2026-04-01 | FEAT(Planificador): Implementación de TimelineCustom en 'Planificador', 'PlanificacionPorUsuario', 'PlanificacionUsuarios'
+2026-03-25 | FIX(Ajustes campos)
+2026-03-24 | FIX(Grafico historico paros tiempo)
+2026-03-23 | DOCS(database/setup): guia para puesta a punto roles y permisos
+2026-03-18 | FEAT(HistoricoParosMaquinas): componentes de graficos, service, DTO
+2026-03-17 | FEAT(OEE): ampliación y conexión con datos reales, ampliacion de servicio
+2026-03-17 | Merge remote-tracking branch 'origin/master'
+2026-03-17 | FEAT(DashboardParos): ajustada funcionalidad y servicios
+2026-03-16 | FEAT(DashboardParos): ajustado servicio y page
+2026-03-13 | AVANCES(PlanificadorCustom): ampliado y añadido archivo que describe su funcionamiento en docs/
+2026-03-12 | AVANCES(componente de planificador personalizado): incorporadas nuevas funciones y ajustes en Planificador.page para su uso
+2026-03-12 | Ampliado(componente personalizado para planificador)
+2026-03-12 | PRUEBAS(Planificador): Vis y componente personalizado
+2026-03-11 | FIX(Rutas y permisos): ajuste de componentes de manejo de rutas y permisos de usuarios
+2026-03-09 | cambios minimos
+2026-03-09 | FEAT(permisos): en Tarifas
+2026-03-05 | FEAT(ConfiguracionPermisos.page): componentes, estructura y estilos
+2026-03-05 | Mejora de estilos y visualizacion en varias pages
+2026-03-05 | MEJORA(Perform.page): estilos y distribución
+2026-03-04 | MODIF(Necesidades): Ajustado grid para correcto funcionamiento de modales
+2026-03-04 | Merge remote-tracking branch 'origin/master'
+2026-03-04 | Merge remote-tracking branch 'origin/master'
+2026-03-04 | Merge remote-tracking branch 'origin/master'
+2026-03-04 | cambio minimo bugs GlobalGrid
+2026-03-04 | FEAT(ListOrdenesPorUsuario): procesos-agrupacion por usuario
+2026-02-27 | Merge remote-tracking branch 'origin/master'
+2026-02-27 | FEAT(Planificacion por usuarios): componentes de pages, +servicio partesAgrupacionUsuariosService, +estilos gantt-custom.css
+2026-02-24 | ADDED(OnboardingMenuModal.tsx): desplegable de cada sección de menú
+2026-02-20 | Fix(AdministracionPartesTrabajo y AdministracionPartesProduccion) Búsqueda solo al pulsar icono
+2026-02-20 | Fix(OrdenesProduccion): ajustes de campos, grid, filtros y DTOs
+2026-02-18 | modif(Onboarding): cambio minimo de estilos
+2026-02-09 | FEAT(Administracion de Usuarios): componentes, rutas protegidas, ajustes services
+2026-01-29 | ajustes(Operarios): ajustes en detalle y componente de 'ResumenTrabajo.tsx'
+2026-01-28 | Avances(ControlCalidad en Operarios): Componentes, servicios, logica de los controles de calidad
+2026-01-23 | Avances(OrdenesTransformacion): list, detail, componentes y service
+2026-01-20 | Fix(OrdenesTransformacion): peticiones series
+2026-01-15 | Ajustes(OrdenesTransformacionDetail): Grids(lógica campos editables), Modal de ubicaciones y estilos
+2026-01-15 | Avances(OrdenesTransformacionDetail): Logica ejecutar, funcionalidad y estilos en modales y grids
+2026-01-14 | Add(OrdenesTransformacion): List, Detail, Grids, componentes, services
+2026-01-13 | Avances(OrdenesTransformaciones): List, Detail, Grids, Componentes
+2026-01-12 | avances(OrdenesTransformacion): WIP
+2026-01-12 | Avances(HistoricoParosMaquinas)
+2026-01-09 | Add(HistoricoParosMaquinas): avances
+2025-11-20 | Ajuste(MaquinasList): Filtro
+2025-11-19 | Ajustes(Escandallos): decimales, mejoras en componentes
+2025-11-06 | Merge: limpieza de Mabesal (elimino servicios y referencias) y ajustes en Artículos
+2025-11-05 | fix(ConfiguracionMaestrosTIposArticulo):solucionado rerender de componentes
+2025-11-03 | Avances Maestros Tipos de Articulo y Articulo (muchos cambios)
+2025-10-29 | fix(OrdenesProduccion): Solucionado bug modales
+2025-10-29 | Avances(Ordenes produccion): Modal de "Nueva línea desde pedido"
+2025-10-28 | fix(articulos) arreglado guardado correcto de articulo
+2025-10-28 | fix(Articulos) Guardar Articulo y propiedades
+2025-10-28 | Base Mabesal, amplicacion en articulos
+2025-10-27 | Avances(articulos): avances en formulario dinamico, componentes, dto, servicios
+2025-10-24 | Avances(tipoArticulo): Combo de tipo de articulo
+2025-09-09 | Acabados modales ControlCalidad maquinas y procesos, mejora en estilos varios
+2025-09-09 | nuevo archivo para sql de tablas nuevas
+2025-09-08 | avances en tab de control calidad, control calidad modales
+2025-09-08 | ajustes git ignore
+2025-09-08 | Merge branch 'jose'
+2025-09-05 | avances ultimos, diarios, paros maquina, procesos, servicios
+2025-09-04 | Avances en Relacion Articulo Diseno
+2025-09-02 | Avances en DiarioProduccion
+2025-09-02 | avances en estilos de control de calidad Maquinas y Procesos
+2025-09-01 | ajustes en Estilos de Control de Calidad
+2025-09-01 | prueba commit

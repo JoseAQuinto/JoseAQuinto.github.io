@@ -1,0 +1,66 @@
+2026-03-26 | FIX(Ajustes): Grids ampliados con campos extra de artículo (Alias y/o Código)
+2026-03-25 | FIX(Articulos): etiquetas ruta
+2026-03-25 | FIX(Expediciones): ajustes en detail y grid para ver cantidades procesadas / total
+2026-03-25 | FIXES: Ajustes de campos, grids
+2026-02-09 | ADD(Administracion usuarios): Redireccion 'forbidden' para no Admin
+2026-02-06 | Feat(Registro usuarios, Rutas protegidas, administracion de usuarios)
+2026-02-05 | Ajuste(StockDetail): ajustado grid texto según idOperacion
+2026-02-05 | Feat(Devoluciones): List, Detail, Services, Components
+2026-01-19 | ajuste gitignore
+2026-01-19 | add(PedidosControlCalidad PAGE): List, detail, components, grids
+2026-01-19 | add(PedidosControlCalidad PAGE): List, detail, components, grids
+2026-01-15 | Ajustes(Estilos generales)
+2026-01-14 | Avances(StockDetail)
+2026-01-08 | Fix(stockDetail): redireccion del grid en 'operacion regularizacion'
+2026-01-07 | Modificados estilos de modales backoffice
+2026-01-07 | Modif(stockDetail): ajustes en grid cantidad total, filtro por ultima regularizacion
+2025-12-16 | Fix(Añadido control de excepciones y errores en pages)
+2025-12-16 | Fix(ArticulosDetail): añadir packaging
+2025-12-16 | Modif(Expediciones): Ajustes y estilos varios
+2025-12-15 | Modif(ExpedicionesDetail): Packaging y grids
+2025-12-15 | Modif(ArticulosDetail): modificado grid packaging
+2025-12-11 | Ajustes estilos en delete modal
+2025-12-10 | Add(ArticulosDetail): campo finalidad
+2025-12-10 | Add(ArticulosDetail): Seccion y Grid Packing (con delete)
+2025-12-10 | Fix(EditMovimiento): aplicado componente ListArticulos
+2025-12-09 | Ajustes Merge
+2025-12-09 | Merge
+2025-12-09 | Modificacion estilos a TAILWIND
+2025-12-04 | Fix(MovimientoDetail): Crear linea y manejo de errores
+2025-12-04 | Added(Articulos): Editar Cajas
+2025-12-02 | cambio minimo JqxGridTree
+2025-12-02 | Funcionalidad (NecesidadesStock): CrearPedido
+2025-11-28 | Merge branch 'master' of http://192.168.254.10:3000/ginnova/sga-backoffice
+2025-11-28 | Added(ExpedicionesDetail): Observaciones
+2025-11-27 | Ajustes(Botones, Regularizaciones): Botones reutilizables y Regularizaciones detail
+2025-11-27 | Cambios estilos
+2025-11-27 | Ajustes
+2025-11-27 | Ajustes(Campos operario)
+2025-11-27 | Modificaciones (Expediciones List y Detail): ModalCrear, CamposEditables, Codigo autoincremental, Guardar
+2025-11-25 | Ajustes(NecesidadesStock): + columna 'pedidos compra'  por configuracion
+2025-11-24 | Implementacion(Login)
+2025-11-20 | Eliminado DARK (estilos)
+2025-11-20 | Avances(NecesidadesStock): Tabs, cambios componentes grid
+2025-11-19 | Avances(NecesidadesStock): componentes, tabs
+2025-11-19 | Merge branch 'master' of http://192.168.254.10:3000/ginnova/sga-backoffice
+2025-11-19 | cambios minimos Necesidades
+2025-11-18 | Merge Expediciones
+2025-11-12 | Avances(Expediciones): terminado page expediciones, ajustados desplegables combos
+2025-11-11 | Avances(Expediciones): Avances en expediciones, detail, componentes reut. y componentes generales
+2025-11-10 | Creacion(Expediciones): Enrutamiento, menu, componentes , pages
+2025-11-04 | Avances(NecesidadesStock): Modal, Grids y servicio
+2025-10-31 | Avances(Articulos , NecesidadesStock): - Avances en paginas y componentes.
+2025-10-29 | Merge branch 'master' of http://192.168.254.10:3000/ginnova/sga-backoffice
+2025-10-29 | avances(articulos): creacion de ArticulosList y ArticulosDetail
+2025-10-23 | cambios minimos de estilo
+2025-10-23 | Añadido(Ubicaciones) Crear Ubicación
+2025-10-23 | Funcionalidad(Control Calidad) Crear Ubicacion
+2025-10-23 | ajustes minimos
+2025-10-23 | Creacion de pages: Ubicaciones y Almacenes, servicios, enrutamiento y componentes
+2025-10-15 | cambios minimos Stock grid y filtros
+2025-10-13 | Avances en StockList y StockDetail
+2025-10-08 | Avances en Stock, filtros, funcionalidad tour
+2025-10-07 | avances en movimientos y regularizaciones , creacion de page stock
+2025-10-06 | avances movimientos y regularizaciones, componentes
+2025-10-03 | Base de proyecto y avances en movimientos y regularizaciones
+2025-10-02 | Primer commit SGA backoffice

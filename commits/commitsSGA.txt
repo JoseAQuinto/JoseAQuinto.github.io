@@ -1,0 +1,73 @@
+2026-04-07 | FIX(httpClient): añadido interceptor para TOKEN JWT
+2026-03-26 | FIX(Movimientos y Regularizacion): ajustes
+2026-03-25 | FIX(Campos Articulo): en varias pages
+2026-03-18 | AÑADIDO(.env) y comentadas partes de permisos ya que aun no existe el controller
+2026-03-18 | Ajuste(httpClient)
+2026-03-16 | FEAT(Etiquetas): Creación de etiquetas 'Pedidos'
+2026-02-05 | Ajustes(Devoluciones): List, detail, service y componentes
+2026-02-03 | feat(devoluciones): list, detail, services y componentes
+2026-01-23 | Avances(Recomendaciones): List, Detail, components, service
+2026-01-22 | Feat(recomendaciones): page, service, menu, components
+2026-01-20 | Fix(pedidos): ajuste de lote
+2026-01-19 | modif(pedidosDetail): ajustes en control calidad pedidos compra
+2026-01-16 | feat(Pedidos): control de calidad, componentes, logica, servicios
+2025-12-16 | Ajustes(Añadido control de errores y excepciones en pages)
+2025-12-16 | Fix(MovimientosDetail)
+2025-12-16 | Fix(MovimientosList)
+2025-12-16 | Modif(Expediciones): Ajustes recomendaciones packing de lineas y lógica
+2025-12-12 | Mod(PedidosDetail): Logica para finalizar pedidos
+2025-12-11 | Ajustes(PedidosDetail): Componentes, listas, ajustes de campos y lógica
+2025-12-11 | Merge branch 'master' of http://192.168.254.10:3000/ginnova/sga-frontend
+2025-12-11 | cambios minimos estilos
+2025-12-10 | Fix(ExpedicionesDetail): recomendaciones
+2025-12-09 | Add RegularizacionForm, Ajustes en componentes MovimientosDetail y Ubicaciones
+2025-12-04 | Fix(Movimientos): Creacion movimiento, correcciones en detail y mejora de msg error finalizar
+2025-12-04 | Ajustes (Movimientos, Regularizaciones): componente busqueda
+2025-12-03 | Merge branch 'master' of http://192.168.254.10:3000/ginnova/sga-frontend
+2025-12-03 | Funcionalidad(Borrar Pedidos Recepcionados)
+2025-12-03 | Ampliaciones(Campos CajasVenta y CajasCompra): En distintas pages
+2025-12-02 | Ajustes(Listas)
+2025-12-02 | Funcionalidades(Expediciones, Pedidos) Finalizar
+2025-12-01 | Ajuste minimo
+2025-11-28 | Ajustes campos Ubicaciones
+2025-11-28 | Added(Expediciones (observaciones)
+2025-11-28 | Ajustes minimos Ubicaciones
+2025-11-28 | Ajuste logs
+2025-11-28 | Ajustes para el funcionamiento de codigo de ubicaciones
+2025-11-27 | Added(Funcionalidad codigo en Ubicaciones): Busquedas con filtro en ListSearch
+2025-11-27 | Limpieza(Eliminados rchivos NO usados)
+2025-11-27 | Ajustes(ExpedicionesList)
+2025-11-26 | Merge branch 'master' of http://192.168.254.10:3000/ginnova/sga-frontend
+2025-11-26 | Estilos en listas de pages
+2025-11-26 | Ajustes en Filtros(ExpedicionesList)
+2025-11-26 | Filtro en Pedidos
+2025-11-26 | Merge conflict resolution
+2025-11-26 | Mejora(Componente ListSearch): Mejora en filtrado y estilo
+2025-11-25 | Ajustes varios: Alias, campos de listas, estilos
+2025-11-25 | Merge
+2025-11-25 | Estilos minimos
+2025-11-21 | Implementacion(Login)
+2025-11-20 | Eliminado DARK (estilos)
+2025-11-18 | Avances(Expediciones): Detail, componentes y srevices
+2025-11-14 | Avances(Expediciones, ExpedicionesLineas, ExpedicionesLineasPreparadas): Componentes, Headers, Listas, Dto
+2025-11-13 | NEW(Services): Expediciones y lineasRecomendaciones
+2025-11-13 | NEW(Expediciones): Rutas, menu y componente base
+2025-10-24 | fix(ModalSimple): Resuelto bug modal
+2025-10-02 | ampliaciones en nuevo y finalizaciones (movimientos y regulaciones)
+2025-10-01 | ajustes en servicios
+2025-10-01 | agregado comentario en vite.config.ts para actualizar  httpClient.ts
+2025-10-01 | ajuste para mejora de HTTP
+2025-10-01 | avances en estilos en componentes y pages
+2025-09-30 | Ajustes en componentes varios y estilos DARK
+2025-09-29 | componente reutilizable en movimientos y regularizaciones, ajustes en pedidos
+2025-09-29 | ajustes formato cantidad
+2025-09-19 | avances en stock y redirecciones de menu
+2025-09-19 | Avamces en StockList
+2025-09-18 | Avances en almacenUbicacion, lineasPedido y stockPage
+2025-09-17 | Avances en Pedidos, creación de hook y servicio reutiliz.
+2025-09-16 | avances en Pedidos
+2025-09-15 | Avances en Movimientos, Regularizaciones,  Pedidos y Creación de ajustes
+2025-09-12 | avances en OMovimientos y ORegularizaciones
+2025-09-11 | Avances en Movimientos y Regularizacion, y componentes generales
+2025-09-10 | avances en menu y pagina Movimientos
+2025-09-10 | Base Proyecto SGA Frontend

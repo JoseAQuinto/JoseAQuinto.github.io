@@ -1,0 +1,83 @@
+2026-04-07 | MODIF(Controllers): Añadida comprobación TOKKEN 'JWT' válido mediante [Authorize]
+2026-03-31 | FIX (LineasPreparadasController): Flujo correcto recomendaciones-expediciones
+2026-03-30 | FIX(Expediciones) ajustado endpoint POST de 'procesar-expedicion'
+2026-03-26 | FIX(Expediciones): ajustes en endpoints de expediciones
+2026-03-26 | FIX(Ajustes): Ampliados campos de 'Artículos' en varios endpoints GET
+2026-03-25 | FIX(Campos Articulos y Endpoint Expediciones)
+2026-02-06 | Feat(Registro usuarios, acciones administrador)
+2026-02-05 | Feat(Devoluciones): Controllers, Models y DTOs
+2026-01-23 | Avances(OperacionesExternas y recomendaciones): controllers, Model y DTOs
+2026-01-22 | Fix(OperacionesExternas): fix ubicacion
+2026-01-22 | Avance(OperacionesExternas): Operaciones de recomendaciones
+2026-01-21 | Feat(Recomendaciones y LineasRecomendaciones): Controllers, Models y DTOs
+2026-01-19 | Ajustes(PedidosControlCalidad y Pedidos): ajustes en endpoints, y DTOs
+2026-01-16 | feat(controlCalidadPedidos): controllers, models, DTOs
+2026-01-14 | Ajustes(MovimientosService): conexion con MES
+2026-01-08 | Add(Endpoint OMovimientosController): para grid 'regularizacionesDetail'
+2026-01-07 | Modif(StockController) y modelo, para endpoint de ultima regulariz
+2025-12-18 | added(UbicarPulmonService): gestiona la reubicacion de stock
+2025-12-17 | Ajuste(PedidosEntrada): crear LineaPedidoEntrada con cantidad base
+2025-12-16 | Modif(Expediciones): campo para packaging y ajuste recomendaciones
+2025-12-15 | Fix(ExpedicionesLineas)
+2025-12-15 | Modif(ArticulosPackaging y Expediciones): campo cantidad venta
+2025-12-12 | Mod(PedidosEntradaController): Endpoint Finalizar pedidos
+2025-12-12 | Ajustes(Finalizacion pedidos): ajustes de campos y endpoints
+2025-12-11 | Ajustes(LineasPedidos): Controllers y DTOs, para correcta funcionalidad en 'Pedidos'
+2025-12-10 | Add(Articulos): campo finalidad
+2025-12-10 | Ajuste cantidades decimal
+2025-12-10 | Fix(Expediciones) Endpoints
+2025-12-04 | Merge branch 'master' of http://192.168.254.10:3000/ginnova/sga-backend
+2025-12-04 | Ajustes(OMovimientos, OMovimientosDetalle): campos de respuesta ajustados y logs
+2025-12-04 | Ajustado endpoint saigon-expediciones
+2025-12-03 | Merge branch 'master' of http://192.168.254.10:3000/ginnova/sga-backend
+2025-12-03 | Funcionalidad(Borrar LineasPedidoFrag)
+2025-12-03 | Ampliaciones(Campos CajasVenta y CajasCompra): En Articulos y varios Controllers, Models, DTOs
+2025-12-02 | Fix(Pedidos)Excluidos estado 0
+2025-12-02 | Fix(LineasPedidoRecepcion): corregido error innecesario
+2025-12-02 | Ajustes(Get filtrados)
+2025-12-02 | Fix(Expediciones): SaigonCreate
+2025-12-02 | Funcionalidades (Saigon Endpoints): Expediciones, LineasPedidoRecepcion, NecesidadesStock
+2025-12-02 | Creado(Endpoints Finalizacion Expediciones y Pedidos)
+2025-12-01 | Creado(Endpoint SaigonApiLineasPedido) (Endpoint Expediciones SaigonCreate)
+2025-12-01 | Ajuste endpoint SaigonCreate
+2025-12-01 | Nuevo Endpoint Expediciones: SaigonCreate
+2025-11-28 | Ajustes para codigo gln ubicaciones
+2025-11-28 | Added(Expediciones): Campo observaciones
+2025-11-27 | Ajustado(Ubicacion): codigo barras interno
+2025-11-27 | Filtro expediciones app
+2025-11-27 | Modificaciones(Expediciones): Ajustes endpoints y Codigo Autoincremental
+2025-11-26 | Merge branch 'master' of http://192.168.254.10:3000/ginnova/sga-backend
+2025-11-26 | Ajustados campos para listas
+2025-11-25 | Modificado(PedidosController): InnerJoin -> LeftJoin
+2025-11-25 | Corregidos campos Cliente => Proveedor
+2025-11-25 | Merge branch 'master' of http://192.168.254.10:3000/ginnova/sga-backend
+2025-11-25 | Ampliaciones(Configuraciones , NecesidadesStockController)
+2025-11-21 | Implementacion(Login): servicios, controllers, Auth
+2025-11-20 | Creado(Configuraciones): Controller, Model, DTO
+2025-11-18 | Avances(Expediciones, ExpedicionesLineasPreparadas): Controllers
+2025-11-14 | Añadido(Expediciones, ExpedicionesLineasPreparadas): Controllers, Models y DTOs
+2025-11-12 | Añadido(Clientes): Controller, Model, DTO, ajustes en otros controllers
+2025-11-11 | Creacion(Expediciones, Clientes): Controllers, Modelos y DTOs
+2025-11-10 | Ampliaciones(Expediciones, LineaPedidoVenta): Controladores, modelos y dto
+2025-11-10 | Merge branch 'master' of http://192.168.254.10:3000/ginnova/sga-backend
+2025-11-04 | Creacion(Sincronizacion SGA-Produccion): OrdenesSync
+2025-10-31 | Avances(Articulos y NecesidadesStock): Creación y/o ajustes de controladores, modelos y dto necesarios.
+2025-10-30 | Añadido(Articulos): nuevos campos en Controller, Modelo y DTOs
+2025-10-29 | Avances(Articulos): Ampliacion de Articulos (Controlador, Modelo, DTOs)
+2025-10-24 | fix(OMocimientosDetalleService): ajustada validacion en servicio
+2025-10-23 | fix(Stock): Correccion de orden por fecha en Stock
+2025-10-23 | feat(Almacen y Ubicacion): + Controllers, Models, DTOs
+2025-10-13 | Ajustes en StockController y DTO
+2025-10-08 | avances en Stock y servicios
+2025-10-07 | Avances en Controllers movimientos historico y detalle, creacion de servicios, ajustes regularizaciones service, creacion de servicio para recuento stock
+2025-10-06 | + Servicio PatchOMovimientosDetalle
+2025-10-02 | creacion MovimientosHistorico y ajustes OMovimientos
+2025-10-01 | avances en OMovimientosController, y http como antes
+2025-10-01 | cambios minimos mejora HTTP
+2025-09-29 | ajustes en LineasPedidoRecepcion, creacion de PedidoFrag y LineasPedidoFrag
+2025-09-19 | ajustes en StockController y DTO
+2025-09-19 | Avances en Controllers de LineasPedido LineasPedidoRecepcion Movimientos y StockController | Creación de servicio MovimientosService
+2025-09-17 | Avances en Pedidos
+2025-09-16 | avances en Pedidos, Lineas Pedidos y Maestros
+2025-09-11 | Avances en Paginas Movimientos y Regularizacion
+2025-09-10 | chore: ignore VS/.NET artifacts (.vs, bin, obj) y otros temporales
