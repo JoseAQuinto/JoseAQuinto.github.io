@@ -637,6 +637,23 @@ export default function ProjectsPage() {
   const page = t.projectsPage;
   const common = t.common;
 
+  // de momento hasta meter las traducciones y demas
+  const projects = useMemo(
+    () => [
+      ...page.projects,
+      {
+        id: "stock-system",
+        title: "Stock System",
+        description:
+          "Sistema de stock con React, TypeScript y Supabase. Incluye filtros, tabla, alta, edición, borrado y configuración visual persistente.",
+        tags: ["React", "TypeScript", "Supabase", "Stock"],
+        href: "/stock-system",
+        cta: language === "es" ? "Ver proyecto" : "View project",
+      },
+    ],
+    [page.projects, language]
+  );
+
   useEffect(() => {
     const tmr = window.setTimeout(() => setMounted(true), 40);
     return () => window.clearTimeout(tmr);
@@ -1457,7 +1474,7 @@ export default function ProjectsPage() {
             </div>
 
             <div className="grid gap-5">
-              {page.projects.map((project, index) => (
+              {projects.map((project, index) => (
                 <ProjectCard
                   key={project.id}
                   project={project}
