@@ -1,4 +1,4 @@
-import { useEffect, useId, useState, type ReactNode, type SVGProps } from "react";
+import { useEffect, useState, type ReactNode, type SVGProps } from "react";
 
 const editorialFont = "'Georgia', 'Times New Roman', serif";
 
