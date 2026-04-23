@@ -6,11 +6,11 @@ import { ApiUtilitiesLanguageProvider } from "./translations/ApiUtilitiesLanguag
 export default function AppApiUtilities() {
   return (
     <ApiUtilitiesLanguageProvider>
-      {/* <AuthGate> */}
+      <AuthGate>
 
         <ApiUtilitiesPage />
 
-      {/* </AuthGate> */}
+      </AuthGate>
     </ApiUtilitiesLanguageProvider>
   );
 }
