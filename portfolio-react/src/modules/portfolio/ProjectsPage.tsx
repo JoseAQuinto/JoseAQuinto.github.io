@@ -639,20 +639,29 @@ export default function ProjectsPage() {
 
   // de momento hasta meter las traducciones y demas
   const projects = useMemo(
-    () => [
-      ...page.projects,
-      {
-        id: "stock-system",
-        title: "Stock System",
-        description:
-          "Sistema de stock con React, TypeScript y Supabase. Incluye filtros, tabla, alta, edición, borrado y configuración visual persistente.",
-        tags: ["React", "TypeScript", "Supabase", "Stock"],
-        href: "/stock-system",
-        cta: language === "es" ? "Ver proyecto" : "View project",
-      },
-    ],
-    [page.projects, language]
-  );
+  () => [
+    ...page.projects,
+    {
+      id: "stock-system",
+      title: "Stock System",
+      description:
+        "Sistema de stock con React, TypeScript y Supabase. Incluye filtros, tabla, alta, edición, borrado y configuración visual persistente.",
+      tags: ["React", "TypeScript", "Supabase", "Stock"],
+      href: "/stock-system",
+      cta: language === "es" ? "Ver proyecto" : "View project",
+    },
+    {
+      id: "api-utilities",
+      title: "API Utilities",
+      description:
+        "Módulo visual estilo Swagger para documentar y probar utilidades API con React y Supabase. Incluye ejemplos de peticiones, respuestas JSON y estructura preparada para Edge Functions.",
+      tags: ["React", "TypeScript", "Supabase", "API", "Swagger UI"],
+      href: "/api-utilities",
+      cta: language === "es" ? "Ver proyecto" : "View project",
+    },
+  ],
+  [page.projects, language]
+);
 
   useEffect(() => {
     const tmr = window.setTimeout(() => setMounted(true), 40);
