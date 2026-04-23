@@ -1,3 +1,4 @@
+import { apiUtilitiesTranslations } from "../translations/translations";
 import { hasSupabaseConfig, supabase } from "./supabaseClient";
 
 type NoteRow = {
@@ -6,6 +7,12 @@ type NoteRow = {
   content: string;
   created_at: string;
 };
+
+function getCurrentTranslations() {
+  const savedLanguage = localStorage.getItem("language");
+  const language = savedLanguage === "es" ? "es" : "en";
+  return apiUtilitiesTranslations[language];
+}
 
 let mockNotes: NoteRow[] = [
   {
@@ -44,24 +51,23 @@ async function createMock(body: Record<string, unknown>) {
 }
 
 async function updateMock(body: Record<string, unknown>) {
+  const t = getCurrentTranslations();
   const id = Number(body.id);
 
   if (!id) {
-    throw new Error("El campo id es obligatorio para actualizar.");
+    throw new Error(t.noteIdRequiredForUpdate);
   }
 
   const existing = mockNotes.find((note) => note.id === id);
 
   if (!existing) {
-    throw new Error(`No existe una nota con id ${id}.`);
+    throw new Error(t.noteNotFound.replace("{id}", String(id)));
   }
 
   const updated: NoteRow = {
     ...existing,
-    title:
-      typeof body.title === "string" ? body.title : existing.title,
-    content:
-      typeof body.content === "string" ? body.content : existing.content,
+    title: typeof body.title === "string" ? body.title : existing.title,
+    content: typeof body.content === "string" ? body.content : existing.content,
   };
 
   mockNotes = mockNotes.map((note) => (note.id === id ? updated : note));
@@ -69,16 +75,17 @@ async function updateMock(body: Record<string, unknown>) {
 }
 
 async function removeMock(body: Record<string, unknown>) {
+  const t = getCurrentTranslations();
   const id = Number(body.id);
 
   if (!id) {
-    throw new Error("El campo id es obligatorio para borrar.");
+    throw new Error(t.noteIdRequiredForDelete);
   }
 
   const exists = mockNotes.some((note) => note.id === id);
 
   if (!exists) {
-    throw new Error(`No existe una nota con id ${id}.`);
+    throw new Error(t.noteNotFound.replace("{id}", String(id)));
   }
 
   mockNotes = mockNotes.filter((note) => note.id !== id);
@@ -90,8 +97,10 @@ async function removeMock(body: Record<string, unknown>) {
 }
 
 async function getAllSupabase() {
+  const t = getCurrentTranslations();
+
   if (!supabase) {
-    throw new Error("Supabase no está configurado.");
+    throw new Error(t.supabaseNotConfigured);
   }
 
   const { data, error } = await supabase
@@ -100,15 +109,17 @@ async function getAllSupabase() {
     .order("id", { ascending: false });
 
   if (error) {
-    throw new Error(error.message || "Error obteniendo notas.");
+    throw new Error(error.message || t.errorFetchingNotes);
   }
 
   return data ?? [];
 }
 
 async function createSupabase(body: Record<string, unknown>) {
+  const t = getCurrentTranslations();
+
   if (!supabase) {
-    throw new Error("Supabase no está configurado.");
+    throw new Error(t.supabaseNotConfigured);
   }
 
   const payload = {
@@ -123,21 +134,23 @@ async function createSupabase(body: Record<string, unknown>) {
     .single();
 
   if (error) {
-    throw new Error(error.message || "Error creando nota.");
+    throw new Error(error.message || t.errorCreatingNote);
   }
 
   return data;
 }
 
 async function updateSupabase(body: Record<string, unknown>) {
+  const t = getCurrentTranslations();
+
   if (!supabase) {
-    throw new Error("Supabase no está configurado.");
+    throw new Error(t.supabaseNotConfigured);
   }
 
   const id = Number(body.id);
 
   if (!id) {
-    throw new Error("El campo id es obligatorio para actualizar.");
+    throw new Error(t.noteIdRequiredForUpdate);
   }
 
   const updatePayload: Record<string, unknown> = {};
@@ -158,27 +171,29 @@ async function updateSupabase(body: Record<string, unknown>) {
     .single();
 
   if (error) {
-    throw new Error(error.message || "Error actualizando nota.");
+    throw new Error(error.message || t.errorUpdatingNote);
   }
 
   return data;
 }
 
 async function removeSupabase(body: Record<string, unknown>) {
+  const t = getCurrentTranslations();
+
   if (!supabase) {
-    throw new Error("Supabase no está configurado.");
+    throw new Error(t.supabaseNotConfigured);
   }
 
   const id = Number(body.id);
 
   if (!id) {
-    throw new Error("El campo id es obligatorio para borrar.");
+    throw new Error(t.noteIdRequiredForDelete);
   }
 
   const { error } = await supabase.from("notes").delete().eq("id", id);
 
   if (error) {
-    throw new Error(error.message || "Error borrando nota.");
+    throw new Error(error.message || t.errorDeletingNote);
   }
 
   return {
@@ -191,6 +206,8 @@ export async function executeCrudEndpoint(
   endpointId: string,
   body: Record<string, unknown>
 ) {
+  const t = getCurrentTranslations();
+
   if (hasSupabaseConfig) {
     switch (endpointId) {
       case "get-notes":
@@ -202,7 +219,7 @@ export async function executeCrudEndpoint(
       case "delete-note":
         return removeSupabase(body);
       default:
-        throw new Error("Endpoint CRUD no soportado.");
+        throw new Error(t.unsupportedCrudEndpoint);
     }
   }
 
@@ -216,6 +233,6 @@ export async function executeCrudEndpoint(
     case "delete-note":
       return removeMock(body);
     default:
-      throw new Error("Endpoint CRUD no soportado.");
+      throw new Error(t.unsupportedCrudEndpoint);
   }
 }

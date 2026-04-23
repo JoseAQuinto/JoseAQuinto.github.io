@@ -1,4 +1,5 @@
 import type { ApiEndpoint } from "../types/api";
+import { useApiUtilitiesLanguage } from "../translations/ApiUtilitiesLanguageProvider";
 import CodeBlock from "./CodeBlock";
 import StatusBadge from "./StatusBadge";
 
@@ -9,6 +10,8 @@ type Props = {
 };
 
 export default function ApiEndpointCard({ endpoint }: Props) {
+  const { t } = useApiUtilitiesLanguage();
+
   return (
     <section className="rounded-[30px] border border-[#e5dfd6] bg-white/88 p-6 backdrop-blur-sm transition-[box-shadow,border-color,background-color] duration-500 hover:border-[#cfc6ba] hover:bg-white hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)]">
       <div className="flex flex-col gap-4 border-b border-[#e8e2d9] pb-5">
@@ -39,11 +42,18 @@ export default function ApiEndpointCard({ endpoint }: Props) {
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
         <CodeBlock
-          title="Request example"
-          code={endpoint.requestExample ?? { note: "No request body" }}
+          title={t.requestExample}
+          code={
+            endpoint.requestExample ?? {
+              note: t.noRequestBody,
+            }
+          }
         />
 
-        <CodeBlock title="Response example" code={endpoint.responseExample} />
+        <CodeBlock
+          title={t.responseExample}
+          code={endpoint.responseExample}
+        />
       </div>
     </section>
   );

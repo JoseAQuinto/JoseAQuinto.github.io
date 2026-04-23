@@ -6,6 +6,14 @@ type Props = {
 };
 
 export default function CodeBlock({ title, code }: Props) {
+  let formattedCode: string;
+
+  try {
+    formattedCode = JSON.stringify(code, null, 2);
+  } catch {
+    formattedCode = String(code);
+  }
+
   return (
     <div className="overflow-hidden rounded-[22px] border border-[#e4dfd8] bg-[#fbfaf7]">
       <div className="border-b border-[#e4dfd8] px-4 py-3">
@@ -18,7 +26,7 @@ export default function CodeBlock({ title, code }: Props) {
       </div>
 
       <pre className="overflow-x-auto px-4 py-4 text-sm leading-[1.9] text-[#403b36]">
-        <code>{JSON.stringify(code, null, 2)}</code>
+        <code>{formattedCode}</code>
       </pre>
     </div>
   );

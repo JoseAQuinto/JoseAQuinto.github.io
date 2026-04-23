@@ -1,9 +1,16 @@
+import { apiUtilitiesTranslations } from "../translations/translations";
 import { hasSupabaseConfig, supabase } from "./supabaseClient";
 
 type UtilityRequest = {
   endpointId: string;
   body: Record<string, unknown>;
 };
+
+function getCurrentTranslations() {
+  const savedLanguage = localStorage.getItem("language");
+  const language = savedLanguage === "es" ? "es" : "en";
+  return apiUtilitiesTranslations[language];
+}
 
 function normalizeText(value: unknown): string {
   return typeof value === "string" ? value : "";
@@ -30,6 +37,7 @@ async function runMockUtility({
   endpointId,
   body,
 }: UtilityRequest): Promise<Record<string, unknown>> {
+  const t = getCurrentTranslations();
   const text = normalizeText(body.text);
 
   switch (endpointId) {
@@ -56,7 +64,7 @@ async function runMockUtility({
       };
 
     default:
-      throw new Error("Endpoint no soportado en modo mock.");
+      throw new Error(t.unsupportedMockEndpoint);
   }
 }
 
@@ -64,8 +72,10 @@ async function runSupabaseUtility({
   endpointId,
   body,
 }: UtilityRequest): Promise<Record<string, unknown>> {
+  const t = getCurrentTranslations();
+
   if (!supabase) {
-    throw new Error("Supabase no está configurado.");
+    throw new Error(t.supabaseNotConfigured);
   }
 
   const { data, error } = await supabase.functions.invoke(endpointId, {
@@ -73,7 +83,7 @@ async function runSupabaseUtility({
   });
 
   if (error) {
-    throw new Error(error.message || "Error ejecutando la función en Supabase.");
+    throw new Error(error.message || t.supabaseFunctionExecutionError);
   }
 
   return (data ?? {}) as Record<string, unknown>;

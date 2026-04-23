@@ -639,29 +639,29 @@ export default function ProjectsPage() {
 
   // de momento hasta meter las traducciones y demas
   const projects = useMemo(
-  () => [
-    ...page.projects,
-    {
-      id: "stock-system",
-      title: "Stock System",
-      description:
-        "Sistema de stock con React, TypeScript y Supabase. Incluye filtros, tabla, alta, edición, borrado y configuración visual persistente.",
-      tags: ["React", "TypeScript", "Supabase", "Stock"],
-      href: "/stock-system",
-      cta: language === "es" ? "Ver proyecto" : "View project",
-    },
-    {
-      id: "api-utilities",
-      title: "API Utilities",
-      description:
-        "Módulo visual estilo Swagger para documentar y probar utilidades API con React y Supabase. Incluye ejemplos de peticiones, respuestas JSON y estructura preparada para Edge Functions.",
-      tags: ["React", "TypeScript", "Supabase", "API", "Swagger UI"],
-      href: "/api-utilities",
-      cta: language === "es" ? "Ver proyecto" : "View project",
-    },
-  ],
-  [page.projects, language]
-);
+    () => [
+      ...page.projects,
+      {
+        id: "stock-system",
+        title: "Stock System",
+        description:
+          "Sistema de stock con React, TypeScript y Supabase. Incluye filtros, tabla, alta, edición, borrado y configuración visual persistente.",
+        tags: ["React", "TypeScript", "Supabase", "Stock"],
+        href: "/stock-system",
+        cta: language === "es" ? "Ver proyecto" : "View project",
+      },
+      {
+        id: "api-utilities",
+        title: "API Utilities",
+        description:
+          "Módulo visual estilo Swagger para documentar y probar utilidades API con React y Supabase. Incluye ejemplos de peticiones, respuestas JSON y estructura preparada para Edge Functions.",
+        tags: ["React", "TypeScript", "Supabase", "API", "Swagger UI"],
+        href: "/api-utilities",
+        cta: language === "es" ? "Ver proyecto" : "View project",
+      },
+    ],
+    [page.projects, language]
+  );
 
   useEffect(() => {
     const tmr = window.setTimeout(() => setMounted(true), 40);
@@ -1591,21 +1591,19 @@ function BackToTop({ ariaLabel }: { ariaLabel: string }) {
   }, []);
 
   return (
-    <Magnetic strength={0.4}>
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        type="button"
-        aria-label={ariaLabel}
-        className={cx(
-          "fixed bottom-6 right-6 z-50 inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#d8d1c7] bg-white/95 text-[#66615c] shadow-[0_8px_24px_rgba(0,0,0,0.06)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#aaa095] hover:text-[#1a1a1a] hover:shadow-[0_12px_32px_rgba(0,0,0,0.1)] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1a1a1a]/15 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f7f6f3]",
-          show
-            ? "translate-y-0 opacity-100"
-            : "pointer-events-none translate-y-4 opacity-0"
-        )}
-      >
-        <ArrowUpIcon size={14} />
-      </button>
-    </Magnetic>
+    <button
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      type="button"
+      aria-label={ariaLabel}
+      className={cx(
+        "fixed bottom-6 right-6 z-50 inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#d8d1c7] bg-white/95 text-[#66615c] shadow-[0_8px_24px_rgba(0,0,0,0.06)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#aaa095] hover:text-[#1a1a1a] hover:shadow-[0_12px_32px_rgba(0,0,0,0.1)] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1a1a1a]/15 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f7f6f3]",
+        show
+          ? "translate-y-0 opacity-100"
+          : "pointer-events-none translate-y-4 opacity-0"
+      )}
+    >
+      <ArrowUpIcon size={14} />
+    </button>
   );
 }
 

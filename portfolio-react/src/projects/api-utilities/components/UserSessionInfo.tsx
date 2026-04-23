@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../services/supabaseClient";
+import { useApiUtilitiesLanguage } from "../translations/ApiUtilitiesLanguageProvider";
 
 export default function UserSessionInfo() {
+  const { t } = useApiUtilitiesLanguage();
+
   const [email, setEmail] = useState<string | null>(null);
 
   useEffect(() => {
@@ -18,16 +21,14 @@ export default function UserSessionInfo() {
 
   return (
     <div className="text-sm text-[#6d655f]">
-
       {email ? (
         <>
-          Logged as:
+          {t.loggedAs}
           <strong> {email}</strong>
         </>
       ) : (
-        <>Not authenticated</>
+        <>{t.notAuthenticated}</>
       )}
-
     </div>
   );
 }

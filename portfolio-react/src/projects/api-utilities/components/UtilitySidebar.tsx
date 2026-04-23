@@ -1,4 +1,5 @@
 import type { ApiEndpoint } from "../types/api";
+import { useApiUtilitiesLanguage } from "../translations/ApiUtilitiesLanguageProvider";
 import StatusBadge from "./StatusBadge";
 
 const editorialFont = "'Georgia', 'Times New Roman', serif";
@@ -14,6 +15,8 @@ export default function UtilitySidebar({
   selectedId,
   onSelect,
 }: Props) {
+  const { t } = useApiUtilitiesLanguage();
+
   return (
     <aside className="rounded-[30px] border border-[#e5dfd6] bg-white/88 p-4 backdrop-blur-sm">
       <div className="mb-4 px-1">
@@ -21,7 +24,7 @@ export default function UtilitySidebar({
           className="text-[10px] uppercase tracking-[0.22em] text-[#9b948a]"
           style={{ fontFamily: editorialFont }}
         >
-          Endpoints
+          {t.endpoints}
         </p>
       </div>
 
@@ -42,11 +45,14 @@ export default function UtilitySidebar({
             >
               <div className="flex items-center justify-between gap-3">
                 <StatusBadge method={endpoint.method} />
+
                 <span
                   className="text-[10px] uppercase tracking-[0.16em] text-[#a09890]"
                   style={{ fontFamily: editorialFont }}
                 >
-                  {endpoint.section === "crud" ? "database" : "utility"}
+                  {endpoint.section === "crud"
+                    ? t.databaseLabel
+                    : t.utilityLabel}
                 </span>
               </div>
 
@@ -57,7 +63,9 @@ export default function UtilitySidebar({
                 {endpoint.title}
               </p>
 
-              <p className="mt-2 text-xs text-[#8f887f]">{endpoint.path}</p>
+              <p className="mt-2 text-xs text-[#8f887f]">
+                {endpoint.path}
+              </p>
             </button>
           );
         })}
