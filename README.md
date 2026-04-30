@@ -50,7 +50,7 @@ En este repositorio y en otros de mi portfolio en GitHub, encontrarás ejemplos 
 
 Si deseas colaborar, intercambiar ideas o conocer más sobre mi trabajo, no dudes en contactarme:
 
-- **Email:** [joseaquinto1997@gmail.com](mailto:joseaquinto1997@gmail.com)
+- **Email:** [kinto.097@gmail.com](mailto:kinto.097@gmail.com)
 - **LinkedIn:** [Perfil de LinkedIn](https://www.linkedin.com/in/jose-%C3%A1ngel-quinto-ferr%C3%A1ndez-34b2121a0/)
 
 ---
