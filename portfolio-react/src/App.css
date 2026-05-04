@@ -40,3 +40,174 @@
 .read-the-docs {
   color: #888;
 }
+
+
+/* PRUEBAS JOSE */
+/* Añade estas animaciones a tu bloque de estilos existente */
+@keyframes float-particle {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(-10px, -20px) rotate(90deg); }
+  50% { transform: translate(10px, -40px) rotate(180deg); }
+  75% { transform: translate(20px, -20px) rotate(270deg); }
+}
+
+.showcase-particle {
+  animation: float-particle 8s ease-in-out infinite;
+}
+
+.showcase-particle:nth-child(odd) {
+  animation-delay: -4s;
+  animation-duration: 6s;
+}
+
+/* Efecto de glow cuando el elemento está en vista */
+.showcase-glow {
+  box-shadow: 0 0 100px rgba(161, 145, 119, 0.3), 
+              0 0 50px rgba(196, 185, 168, 0.2);
+}
+
+
+/* Estilos para el efecto holográfico */
+.energy-particle {
+  animation: energy-float 4s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+
+@keyframes energy-float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translate(10px, -20px) scale(1.5);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-10px, -40px) scale(0.8);
+    opacity: 0.5;
+  }
+  75% {
+    transform: translate(-20px, -10px) scale(1.2);
+    opacity: 0.6;
+  }
+}
+
+.holographic-ring {
+  animation: ring-rotate 20s linear infinite;
+}
+
+@keyframes ring-rotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Efecto de scan line */
+.scan-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.scan-effect::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(161, 145, 119, 0.6), 
+    transparent
+  );
+  animation: scan 3s linear infinite;
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+
+/* Estilos para el efecto de deconstrucción geométrica */
+@keyframes escape-line {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes morph-shape {
+  0% {
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    transform: rotate(0deg) scale(1);
+  }
+  33% {
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    transform: rotate(120deg) scale(1.2);
+  }
+  66% {
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+    transform: rotate(240deg) scale(0.8);
+  }
+  100% {
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+.deconstruct-letter {
+  animation: letter-float 8s ease-in-out infinite;
+  display: inline-block;
+}
+
+.deconstruct-letter:nth-child(even) {
+  animation-delay: -4s;
+  animation-duration: 6s;
+}
+
+@keyframes letter-float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+  75% {
+    transform: translateY(4px) rotate(-1deg);
+  }
+}
+
+/* Efecto de glitch ocasional */
+.glitch-effect {
+  position: relative;
+}
+
+.glitch-effect:hover::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 2px;
+  text-shadow: -2px 0 #a19177;
+  top: 0;
+  color: #2a2520;
+  overflow: hidden;
+  clip: rect(0, 900px, 0, 0);
+  animation: glitch-anim 0.3s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% { clip: rect(30px, 9999px, 25px, 0); }
+  20% { clip: rect(10px, 9999px, 85px, 0); }
+  40% { clip: rect(65px, 9999px, 5px, 0); }
+  60% { clip: rect(40px, 9999px, 45px, 0); }
+  80% { clip: rect(15px, 9999px, 92px, 0); }
+  100% { clip: rect(58px, 9999px, 2px, 0); }
+}
+
+/* FIN PRUEBAS JOSE */

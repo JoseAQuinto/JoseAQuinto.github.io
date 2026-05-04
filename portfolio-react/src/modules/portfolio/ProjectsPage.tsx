@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { ReactNode, SVGProps } from "react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../../translations/LanguageContext";
@@ -479,6 +481,3205 @@ function SpotlightCard({
   );
 }
 
+// PRUEBAS JOSE
+function GSAPScrollShowcase() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const shapesRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLParagraphElement>(null);
+  const buttonRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const container = containerRef.current;
+    const title = titleRef.current;
+    const image = imageRef.current;
+    const shapes = shapesRef.current;
+    const text = textRef.current;
+    const button = buttonRef.current;
+
+    if (!container || !title || !image || !shapes || !text || !button) return;
+
+    const ctx = gsap.context(() => {
+      // Timeline principal con ScrollTrigger
+      const masterTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: container,
+          start: "top center",
+          end: "bottom center",
+          scrub: 1.2,
+          // markers: true, // Descomenta para debug
+        },
+      });
+
+      // 1. Fondo con efecto parallax y blur
+      masterTimeline.fromTo(
+        container,
+        {
+          scale: 0.8,
+          filter: "blur(20px)",
+          borderRadius: "80px"
+        },
+        {
+          scale: 1,
+          filter: "blur(0px)",
+          borderRadius: "30px",
+          duration: 2,
+          ease: "power3.inOut",
+        }
+      );
+
+      // 2. Título con efecto de revelación 3D
+      const titleTimeline = gsap.timeline();
+      titleTimeline.fromTo(
+        title,
+        {
+          yPercent: 150,
+          rotateZ: 8,
+          rotateX: 45,
+          opacity: 0,
+          scale: 1.2,
+        },
+        {
+          yPercent: 0,
+          rotateZ: 0,
+          rotateX: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 1.8,
+          ease: "power4.out",
+        }
+      );
+
+      // 3. Imagen con efecto de revelación máscara
+      const imageTimeline = gsap.timeline();
+      imageTimeline.fromTo(
+        image,
+        {
+          clipPath: "inset(100% 0% 0% 0%)",
+          scale: 1.3,
+          filter: "grayscale(100%) brightness(0.7)",
+        },
+        {
+          clipPath: "inset(0% 0% 0% 0%)",
+          scale: 1,
+          filter: "grayscale(0%) brightness(1)",
+          duration: 2,
+          ease: "power4.inOut",
+        }
+      );
+
+      // 4. Formas geométricas con rotación y escala
+      gsap.to(shapes.children, {
+        scrollTrigger: {
+          trigger: shapes,
+          start: "top center",
+          end: "bottom center",
+          scrub: 0.8,
+        },
+        rotation: 360,
+        scale: 1.5,
+        opacity: 0,
+        stagger: 0.1,
+        ease: "none",
+      });
+
+      // 5. Efecto de línea decorativa
+      gsap.fromTo(
+        ".showcase-line",
+        {
+          scaleX: 0,
+          transformOrigin: "left center"
+        },
+        {
+          scaleX: 1,
+          duration: 1.2,
+          scrollTrigger: {
+            trigger: container,
+            start: "top 60%",
+            end: "top 40%",
+            scrub: 0.6,
+          },
+          ease: "power3.inOut",
+        }
+      );
+
+      // 6. Texto con stagger por palabras
+      gsap.fromTo(
+        ".showcase-word",
+        {
+          y: 60,
+          opacity: 0,
+          rotate: -10,
+          scale: 1.3,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          rotate: 0,
+          scale: 1,
+          stagger: 0.05,
+          duration: 1,
+          scrollTrigger: {
+            trigger: text,
+            start: "top 70%",
+            end: "top 40%",
+            scrub: 0.8,
+          },
+          ease: "elastic.out(1, 0.5)",
+        }
+      );
+
+      // 7. Botón con efecto de revelación
+      gsap.fromTo(
+        button,
+        {
+          y: 40,
+          opacity: 0,
+          scale: 0.5,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+          scrollTrigger: {
+            trigger: button,
+            start: "top 85%",
+            end: "top 60%",
+            scrub: 0.3,
+          },
+          ease: "back.out(1.5)",
+        }
+      );
+
+      // 8. Partículas flotantes que reaccionan al scroll
+      const particles = document.createElement("div");
+      particles.className = "showcase-particles";
+      container.appendChild(particles);
+
+      for (let i = 0; i < 15; i++) {
+        const particle = document.createElement("div");
+        particle.className = "showcase-particle";
+        particle.style.cssText = `
+          position: absolute;
+          width: ${gsap.utils.random(4, 12)}px;
+          height: ${gsap.utils.random(4, 12)}px;
+          background: rgba(161, 145, 119, ${gsap.utils.random(0.1, 0.3)});
+          border-radius: 50%;
+          left: ${gsap.utils.random(10, 90)}%;
+          top: ${gsap.utils.random(10, 90)}%;
+        `;
+        particles.appendChild(particle);
+
+        gsap.to(particle, {
+          scrollTrigger: {
+            trigger: container,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: gsap.utils.random(0.5, 1.5),
+          },
+          x: gsap.utils.random(-100, 100),
+          y: gsap.utils.random(-100, 100),
+          scale: gsap.utils.random(0.5, 2),
+          rotation: gsap.utils.random(-180, 180),
+          opacity: 0,
+          duration: 2,
+          ease: "none",
+        });
+      }
+
+      // 9. Efecto de sombra dinámica
+      gsap.to(container, {
+        scrollTrigger: {
+          trigger: container,
+          start: "top center",
+          end: "bottom center",
+          scrub: 1,
+        },
+        boxShadow: "0 40px 80px rgba(0,0,0,0.3), 0 10px 30px rgba(161, 145, 119, 0.5)",
+        duration: 1,
+      });
+
+      // Combinar todos los timelines
+      masterTimeline
+        .add(titleTimeline, 0.3)
+        .add(imageTimeline, 0.5)
+        .add("end");
+
+    }, container);
+
+    return () => ctx.revert();
+  }, []);
+
+  const titleWords = "ESTE ES UN EFECTO DE SCROLL ESPECTACULAR".split(" ");
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative mx-auto mb-32 mt-10 max-w-4xl overflow-hidden rounded-[30px] bg-gradient-to-br from-[#2a2520] to-[#1a1815] p-1 shadow-2xl"
+      style={{
+        background: "linear-gradient(135deg, #2a2520 0%, #1a1815 50%, #2a2520 100%)",
+      }}
+    >
+      <div className="relative rounded-[28px] bg-gradient-to-br from-[#f7f6f3] to-[#e8e3d8] p-12 md:p-16 overflow-hidden">
+        {/* Gradientes decorativos */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#c4b9a8]/10 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-bl from-transparent via-transparent to-[#8a7f6e]/5" />
+
+        {/* Formas decorativas flotantes */}
+        <div ref={shapesRef} className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(5)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute rounded-full opacity-10"
+              style={{
+                width: `${60 + i * 30}px`,
+                height: `${60 + i * 30}px`,
+                background: `radial-gradient(circle, #a19177, transparent)`,
+                left: `${20 + i * 15}%`,
+                top: `${10 + i * 20}%`,
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="relative z-10">
+          {/* Título con efecto 3D */}
+          <div className="overflow-hidden mb-8">
+            <h2
+              ref={titleRef}
+              className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-[#2a2520] mb-4"
+              style={{
+                fontFamily: editorialFont,
+                textShadow: "2px 2px 4px rgba(0,0,0,0.1)",
+                transform: "perspective(500px)"
+              }}
+            >
+              {titleWords.map((word, i) => (
+                <span
+                  key={i}
+                  className="showcase-word inline-block mr-3"
+                  style={{ display: "inline-block" }}
+                >
+                  {word}
+                </span>
+              ))}
+            </h2>
+          </div>
+
+          {/* Línea decorativa animada */}
+          <div className="showcase-line h-px bg-gradient-to-r from-[#a19177] via-[#c4b9a8] to-transparent mb-8" />
+
+          {/* Imagen de prueba con efecto máscara */}
+          <div
+            ref={imageRef}
+            className="relative mb-8 rounded-2xl overflow-hidden shadow-2xl"
+            style={{ height: "300px" }}
+          >
+            <div
+              className="w-full h-full bg-cover bg-center"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 800 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%232a2520;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%238a7f6e;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='600' fill='url(%23grad)'/%3E%3Ccircle cx='200' cy='150' r='80' fill='%23c4b9a8' opacity='0.3'/%3E%3Ccircle cx='600' cy='450' r='120' fill='%23a19177' opacity='0.2'/%3E%3Ctext x='400' y='320' font-family='Georgia' font-size='48' fill='white' text-anchor='middle' opacity='0.9'%3EEfecto Visual%3C/text%3E%3C/svg%3E")`,
+              }}
+            />
+
+            {/* Overlay gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#2a2520]/80 via-transparent to-transparent" />
+
+            {/* Texto overlay */}
+            <div className="absolute bottom-6 left-6 text-white">
+              <h3 className="text-xl font-bold mb-2" style={{ fontFamily: editorialFont }}>
+                Imagen con Efecto de Revelación
+              </h3>
+              <p className="text-sm opacity-80" style={{ fontFamily: editorialFont }}>
+                Clip-path mask animation
+              </p>
+            </div>
+          </div>
+
+          {/* Texto descriptivo */}
+          <p
+            ref={textRef}
+            className="text-lg text-[#4a4540] mb-8 leading-relaxed max-w-2xl"
+            style={{ fontFamily: editorialFont }}
+          >
+            Este es un elemento de prueba que demuestra un espectacular efecto de scroll
+            utilizando GSAP ScrollTrigger con múltiples animaciones sincronizadas,
+            incluyendo parallax, revelaciones 3D, máscaras y partículas interactivas.
+          </p>
+
+          {/* Botones de acción */}
+          <div ref={buttonRef} className="flex gap-4">
+            <button
+              className="px-6 py-3 bg-gradient-to-r from-[#2a2520] to-[#4a4540] text-white rounded-full font-medium hover:shadow-lg transition-all duration-300"
+              style={{ fontFamily: editorialFont }}
+            >
+              Explorar Efecto
+            </button>
+            <button
+              className="px-6 py-3 border-2 border-[#a19177] text-[#2a2520] rounded-full font-medium hover:bg-[#a19177]/10 transition-all duration-300"
+              style={{ fontFamily: editorialFont }}
+            >
+              Ver Detalles
+            </button>
+          </div>
+        </div>
+
+        {/* Indicador de scroll */}
+        <div className="absolute bottom-4 right-4 flex items-center gap-2 text-[#8a7f6e]">
+          <span className="text-xs uppercase tracking-wider" style={{ fontFamily: editorialFont }}>
+            Scroll para ver magia
+          </span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 3a5 5 0 0 1 5 5v4a5 5 0 0 1-10 0V8a5 5 0 0 1 5-5zm0 1a4 4 0 0 0-4 4v4a4 4 0 0 0 8 0V8a4 4 0 0 0-4-4z" />
+            <circle cx="8" cy="8" r="1.5" className="animate-bounce" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function GSAPHolographicReveal() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
+  const layerBackRef = useRef<HTMLDivElement>(null);
+  const layerMidRef = useRef<HTMLDivElement>(null);
+  const layerFrontRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
+  const floatingCardsRef = useRef<HTMLDivElement[]>([]);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const container = containerRef.current;
+    const main = mainRef.current;
+    const layerBack = layerBackRef.current;
+    const layerMid = layerMidRef.current;
+    const layerFront = layerFrontRef.current;
+    const grid = gridRef.current;
+    const stats = statsRef.current;
+    const cards = floatingCardsRef.current;
+
+    if (!container || !main || !layerBack || !layerMid || !layerFront || !grid || !stats) return;
+
+    const ctx = gsap.context(() => {
+      // Efecto 1: Capas con profundidad y perspectiva
+      gsap.set([layerBack, layerMid, layerFront, grid], {
+        transformOrigin: "center center",
+      });
+
+      const layersTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: container,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1.5,
+        },
+      });
+
+      // Capa fondo - movimiento lento
+      layersTimeline.to(layerBack, {
+        y: -80,
+        scale: 1.08,
+        filter: "blur(8px) brightness(0.8)",
+        rotation: 1,
+        ease: "none",
+      }, 0);
+
+      // Capa media - movimiento medio
+      layersTimeline.to(layerMid, {
+        y: -120,
+        scale: 0.92,
+        filter: "blur(3px) brightness(1.1)",
+        rotation: -0.5,
+        ease: "none",
+      }, 0);
+
+      // Capa frontal - movimiento rápido
+      layersTimeline.to(layerFront, {
+        y: -200,
+        scale: 1.15,
+        filter: "blur(0px) brightness(1.3)",
+        rotation: 0.8,
+        ease: "none",
+      }, 0);
+
+      // Grid con distorsión
+      layersTimeline.to(grid, {
+        scale: 1.2,
+        rotation: 5,
+        opacity: 0.3,
+        backgroundPosition: "100% 100%",
+        ease: "none",
+      }, 0);
+
+      // Efecto 2: Tarjetas flotantes con diferentes velocidades
+      cards.forEach((card, index) => {
+        if (!card) return;
+
+        gsap.fromTo(card,
+          {
+            y: gsap.utils.random(100, 300),
+            x: gsap.utils.random(-50, 50),
+            rotation: gsap.utils.random(-15, 15),
+            scale: 0.7,
+            opacity: 0,
+            filter: "blur(10px)",
+          },
+          {
+            y: gsap.utils.random(-200, -100),
+            x: gsap.utils.random(-30, 30),
+            rotation: gsap.utils.random(-5, 5),
+            scale: 1,
+            opacity: 1,
+            filter: "blur(0px)",
+            duration: 2,
+            ease: "power3.inOut",
+            scrollTrigger: {
+              trigger: container,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1 + index * 0.2,
+            },
+          }
+        );
+
+        // Efecto hover en tarjetas
+        card.addEventListener("mouseenter", () => {
+          gsap.to(card, {
+            scale: 1.05,
+            rotation: 0,
+            boxShadow: "0 25px 50px rgba(0,0,0,0.25)",
+            duration: 0.4,
+            ease: "power2.out",
+          });
+        });
+
+        card.addEventListener("mouseleave", () => {
+          gsap.to(card, {
+            scale: 1,
+            boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
+            duration: 0.4,
+            ease: "power2.out",
+          });
+        });
+      });
+
+      // Efecto 3: Estadísticas con contador
+      const statNumbers = stats.querySelectorAll(".stat-number");
+      statNumbers.forEach((stat) => {
+        const target = parseInt(stat.getAttribute("data-target") || "0");
+        const suffix = stat.getAttribute("data-suffix") || "";
+
+        gsap.fromTo(stat,
+          { innerText: 0 },
+          {
+            innerText: target,
+            duration: 2,
+            ease: "power2.out",
+            snap: { innerText: 1 },
+            scrollTrigger: {
+              trigger: stats,
+              start: "top 80%",
+              end: "top 30%",
+              scrub: 0.5,
+            },
+            onUpdate: function () {
+              stat.textContent = Math.round(this.targets()[0].innerText) + suffix;
+            },
+          }
+        );
+      });
+
+      // Efecto 4: Líneas de conexión animadas
+      const lines = document.querySelectorAll(".connection-line");
+      lines.forEach((line, index) => {
+        gsap.fromTo(line,
+          {
+            scaleX: 0,
+            opacity: 0,
+          },
+          {
+            scaleX: 1,
+            opacity: 1,
+            duration: 1.5,
+            delay: index * 0.2,
+            ease: "power3.inOut",
+            scrollTrigger: {
+              trigger: container,
+              start: "top 60%",
+              end: "top 20%",
+              scrub: 0.8,
+            },
+          }
+        );
+      });
+
+      // Efecto 5: Partículas de energía
+      for (let i = 0; i < 20; i++) {
+        const particle = document.createElement("div");
+        particle.className = "energy-particle";
+        particle.style.cssText = `
+          position: absolute;
+          width: 3px;
+          height: 3px;
+          background: #a19177;
+          border-radius: 50%;
+          left: ${gsap.utils.random(0, 100)}%;
+          top: ${gsap.utils.random(0, 100)}%;
+          box-shadow: 0 0 10px #a19177, 0 0 20px #c4b9a8;
+        `;
+        container.appendChild(particle);
+
+        gsap.to(particle, {
+          scrollTrigger: {
+            trigger: container,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 0.5 + Math.random(),
+          },
+          x: gsap.utils.random(-200, 200),
+          y: gsap.utils.random(-300, 300),
+          scale: gsap.utils.random(0, 3),
+          opacity: gsap.utils.random(0, 0.8),
+          rotation: gsap.utils.random(-360, 360),
+          duration: 3,
+          ease: "none",
+          repeat: -1,
+          yoyo: true,
+        });
+      }
+
+      // Efecto 6: Revelación del título principal
+      const titleWords = main.querySelectorAll(".holo-title-word");
+      gsap.fromTo(titleWords,
+        {
+          y: 100,
+          rotationX: -90,
+          opacity: 0,
+          filter: "blur(10px)",
+        },
+        {
+          y: 0,
+          rotationX: 0,
+          opacity: 1,
+          filter: "blur(0px)",
+          stagger: 0.08,
+          duration: 1.5,
+          ease: "elastic.out(1, 0.5)",
+          scrollTrigger: {
+            trigger: main,
+            start: "top 70%",
+            end: "top 30%",
+            scrub: 0.8,
+          },
+        }
+      );
+
+      // Efecto 7: Anillos concéntricos
+      gsap.to(".holographic-ring", {
+        scrollTrigger: {
+          trigger: container,
+          start: "top center",
+          end: "bottom center",
+          scrub: 1,
+        },
+        rotation: 360,
+        scale: 1.5,
+        opacity: 0,
+        stagger: 0.2,
+        ease: "none",
+      });
+
+    }, container);
+
+    return () => ctx.revert();
+  }, []);
+
+  const floatingCards = [
+    { title: "Diseño 3D", subtitle: "Renderizado Avanzado", color: "#2a2520" },
+    { title: "Animación", subtitle: "60 FPS Fluid", color: "#3a3530" },
+    { title: "Interacción", subtitle: "UX Inmersiva", color: "#4a4540" },
+    { title: "Performance", subtitle: "Optimizado", color: "#5a5550" },
+  ];
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative mx-auto mb-32 mt-10 max-w-6xl overflow-hidden rounded-[40px]"
+      style={{
+        minHeight: "700px",
+        background: "linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%)",
+        perspective: "1000px",
+      }}
+    >
+      {/* Grid de fondo con efecto */}
+      <div
+        ref={gridRef}
+        className="absolute inset-0 opacity-20"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(161, 145, 119, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(161, 145, 119, 0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: "40px 40px",
+          backgroundPosition: "0 0",
+          transformOrigin: "center center",
+        }}
+      />
+
+      {/* Anillos holográficos */}
+      {[...Array(3)].map((_, i) => (
+        <div
+          key={i}
+          className="holographic-ring absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border opacity-20"
+          style={{
+            width: `${300 + i * 150}px`,
+            height: `${300 + i * 150}px`,
+            borderColor: `rgba(161, 145, 119, ${0.1 + i * 0.05})`,
+            borderWidth: "1px",
+            borderStyle: i === 1 ? "dashed" : "solid",
+          }}
+        />
+      ))}
+
+      {/* Capas de profundidad */}
+      <div className="relative z-10">
+        {/* Capa de fondo */}
+        <div
+          ref={layerBackRef}
+          className="absolute inset-0 opacity-30"
+          style={{
+            background: "radial-gradient(circle at 50% 50%, rgba(196, 185, 168, 0.3), transparent 70%)",
+          }}
+        />
+
+        {/* Capa media */}
+        <div
+          ref={layerMidRef}
+          className="absolute inset-0 opacity-40"
+          style={{
+            background: "radial-gradient(circle at 30% 70%, rgba(161, 145, 119, 0.4), transparent 50%)",
+          }}
+        />
+
+        {/* Capa frontal */}
+        <div
+          ref={layerFrontRef}
+          className="absolute inset-0 opacity-50"
+          style={{
+            background: "radial-gradient(circle at 70% 30%, rgba(138, 127, 110, 0.3), transparent 60%)",
+          }}
+        />
+
+        {/* Contenido principal */}
+        <div ref={mainRef} className="relative z-20 px-8 py-16 md:px-16 md:py-24">
+          {/* Título con efecto holográfico */}
+          <div className="mb-16 text-center" style={{ perspective: "1000px" }}>
+            <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6">
+              {"EFECTO HOLOGRÁFICO".split("").map((letter, i) => (
+                <span
+                  key={i}
+                  className="holo-title-word inline-block"
+                  style={{
+                    display: "inline-block",
+                    color: letter === " " ? "transparent" : undefined,
+                    textShadow: "0 0 20px rgba(161, 145, 119, 0.5), 0 0 40px rgba(196, 185, 168, 0.3)",
+                    width: letter === " " ? "0.5em" : undefined,
+                  }}
+                >
+                  {letter}
+                </span>
+              ))}
+            </h2>
+
+            {/* Línea de conexión animada */}
+            <div className="connection-line mx-auto h-px w-64 bg-gradient-to-r from-transparent via-[#a19177] to-transparent mb-8" />
+
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto" style={{ fontFamily: editorialFont }}>
+              Revelación en capas con profundidad de campo y distorsión parallax
+            </p>
+          </div>
+
+          {/* Tarjetas flotantes */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+            {floatingCards.map((card, index) => (
+              <div
+                key={index}
+                ref={(el) => { floatingCardsRef.current[index] = el; }}
+                className="group relative rounded-2xl p-6 backdrop-blur-sm cursor-pointer transition-all duration-300"
+                style={{
+                  background: "rgba(255, 255, 255, 0.03)",
+                  border: "1px solid rgba(161, 145, 119, 0.2)",
+                  boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
+                }}
+              >
+                {/* Efecto hover gradient */}
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{
+                    background: "linear-gradient(135deg, rgba(161, 145, 119, 0.1), rgba(196, 185, 168, 0.05))",
+                  }}
+                />
+
+                <div className="relative z-10">
+                  <div className="w-12 h-12 rounded-full mb-4"
+                    style={{
+                      background: `linear-gradient(135deg, ${card.color}, #a19177)`,
+                      boxShadow: `0 0 20px ${card.color}44`,
+                    }}
+                  />
+                  <h3 className="text-lg font-bold text-white mb-2" style={{ fontFamily: editorialFont }}>
+                    {card.title}
+                  </h3>
+                  <p className="text-sm text-gray-500" style={{ fontFamily: editorialFont }}>
+                    {card.subtitle}
+                  </p>
+                </div>
+
+                {/* Línea de conexión */}
+                <div className="connection-line absolute bottom-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-[#a19177]/30 to-transparent" />
+              </div>
+            ))}
+          </div>
+
+          {/* Estadísticas animadas */}
+          <div
+            ref={statsRef}
+            className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16"
+          >
+            {[
+              { number: 100, suffix: "%", label: "Performance" },
+              { number: 60, suffix: "fps", label: "Fluidez" },
+              { number: 24, suffix: "k", label: "Resolución" },
+              { number: 3, suffix: "D", label: "Profundidad" },
+            ].map((stat, index) => (
+              <div key={index} className="text-center">
+                <div
+                  className="stat-number text-4xl md:text-5xl font-bold text-white mb-2"
+                  data-target={stat.number}
+                  data-suffix={stat.suffix}
+                  style={{
+                    fontFamily: editorialFont,
+                    textShadow: "0 0 15px rgba(161, 145, 119, 0.3)",
+                  }}
+                >
+                  0{stat.suffix}
+                </div>
+                <div className="text-sm text-gray-500 uppercase tracking-wider">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Zona interactiva */}
+          <div className="text-center">
+            <div className="connection-line mx-auto h-px w-48 bg-gradient-to-r from-transparent via-[#a19177] to-transparent mb-8" />
+
+            <button
+              className="group relative px-8 py-4 bg-gradient-to-r from-[#a19177] to-[#c4b9a8] text-white rounded-full font-medium overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-[#a19177]/30 active:scale-95"
+              style={{ fontFamily: editorialFont }}
+              onMouseEnter={(e) => {
+                gsap.to(e.currentTarget, {
+                  scale: 1.05,
+                  duration: 0.3,
+                  ease: "power2.out",
+                });
+              }}
+              onMouseLeave={(e) => {
+                gsap.to(e.currentTarget, {
+                  scale: 1,
+                  duration: 0.3,
+                  ease: "power2.out",
+                });
+              }}
+            >
+              <span className="relative z-10">Explorar Tecnología</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Indicador de profundidad */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4">
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-[#a19177] animate-pulse" />
+          <span className="text-xs text-gray-600 uppercase tracking-wider" style={{ fontFamily: editorialFont }}>
+            Capa 1
+          </span>
+        </div>
+        <div className="connection-line w-12 h-px bg-gradient-to-r from-[#a19177]/30 to-[#a19177]/60" />
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-[#c4b9a8] animate-pulse" style={{ animationDelay: "0.2s" }} />
+          <span className="text-xs text-gray-600 uppercase tracking-wider" style={{ fontFamily: editorialFont }}>
+            Capa 2
+          </span>
+        </div>
+        <div className="connection-line w-12 h-px bg-gradient-to-r from-[#a19177]/60 to-[#a19177]" />
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-white animate-pulse" style={{ animationDelay: "0.4s" }} />
+          <span className="text-xs text-gray-600 uppercase tracking-wider" style={{ fontFamily: editorialFont }}>
+            Capa 3
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function GSAPGeometricDeconstruction() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mainTitleRef = useRef<HTMLHeadingElement>(null);
+  const canvasRef = useRef<HTMLDivElement>(null);
+  const hexagonsRef = useRef<HTMLDivElement>(null);
+  const fragmentsRef = useRef<HTMLDivElement>(null);
+  const featuresRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const container = containerRef.current;
+    const mainTitle = mainTitleRef.current;
+    const canvas = canvasRef.current;
+    const hexagons = hexagonsRef.current;
+    const fragments = fragmentsRef.current;
+    const features = featuresRef.current;
+
+    if (!container || !mainTitle || !canvas || !hexagons || !fragments || !features) return;
+
+    const ctx = gsap.context(() => {
+      // 1. Efecto de explosión/reconstrucción del título
+      const titleLetters = mainTitle.querySelectorAll('.deconstruct-letter');
+
+      const titleTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: container,
+          start: "top bottom",
+          end: "top center",
+          scrub: 1,
+        },
+      });
+
+      titleLetters.forEach((letter, index) => {
+        // Movimiento caótico inicial
+        gsap.set(letter, {
+          x: gsap.utils.random(-200, 200),
+          y: gsap.utils.random(-300, 300),
+          rotation: gsap.utils.random(-180, 180),
+          scale: gsap.utils.random(0.3, 3),
+          opacity: 0,
+        });
+
+        titleTimeline.to(letter, {
+          x: 0,
+          y: 0,
+          rotation: 0,
+          scale: 1,
+          opacity: 1,
+          duration: 1.5,
+          ease: "elastic.out(1, 0.4)",
+        }, index * 0.02);
+      });
+
+      // 2. Hexágonos que se reorganizan
+      const hexElements = hexagons.querySelectorAll('.hexagon-piece');
+
+      const hexTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: hexagons,
+          start: "top bottom",
+          end: "bottom center",
+          scrub: 1.2,
+        },
+      });
+
+      hexElements.forEach((hex, index) => {
+        // Configuración inicial fragmentada
+        gsap.set(hex, {
+          scale: 0,
+          rotation: gsap.utils.random(-360, 360),
+          x: gsap.utils.random(-100, 100),
+          y: gsap.utils.random(-100, 100),
+          opacity: 0,
+          filter: "blur(10px)",
+        });
+
+        hexTimeline.to(hex, {
+          scale: 1,
+          rotation: 0,
+          x: 0,
+          y: 0,
+          opacity: 1,
+          filter: "blur(0px)",
+          duration: 1.8,
+          ease: "back.out(1.7)",
+        }, index * 0.1);
+      });
+
+      // 3. Fragmentos flotantes con física
+      const fragmentPieces = fragments.querySelectorAll('.fragment-piece');
+
+      fragmentPieces.forEach((piece, index) => {
+        const randomX = gsap.utils.random(-150, 150);
+        const randomY = gsap.utils.random(-200, 200);
+        const randomDuration = gsap.utils.random(1.5, 3);
+
+        gsap.to(piece, {
+          x: randomX,
+          y: randomY,
+          rotation: gsap.utils.random(-360, 360),
+          scale: gsap.utils.random(0.5, 1.5),
+          opacity: gsap.utils.random(0.3, 0.8),
+          duration: randomDuration,
+          ease: "none",
+          repeat: -1,
+          yoyo: true,
+          scrollTrigger: {
+            trigger: fragments,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 0.5,
+          },
+        });
+      });
+
+      // 4. Características con revelación en espiral
+      const featureCards = features.querySelectorAll('.feature-card');
+
+      featureCards.forEach((card, index) => {
+        const angle = (index / featureCards.length) * Math.PI * 2;
+        const radius = 200;
+
+        gsap.fromTo(card,
+          {
+            x: Math.cos(angle) * radius,
+            y: Math.sin(angle) * radius,
+            rotation: 360,
+            scale: 0,
+            opacity: 0,
+            filter: "blur(15px)",
+          },
+          {
+            x: 0,
+            y: 0,
+            rotation: 0,
+            scale: 1,
+            opacity: 1,
+            filter: "blur(0px)",
+            duration: 1.5,
+            delay: index * 0.15,
+            ease: "elastic.out(1, 0.5)",
+            scrollTrigger: {
+              trigger: features,
+              start: "top 80%",
+              end: "top 40%",
+              scrub: 0.7,
+            },
+          }
+        );
+      });
+
+      // 5. Líneas de conexión dinámicas
+      const connectionLines = document.querySelectorAll('.dynamic-line');
+
+      connectionLines.forEach((line, index) => {
+        gsap.fromTo(line,
+          {
+            scaleX: 0,
+            scaleY: 0,
+            opacity: 0,
+            transformOrigin: "left center",
+          },
+          {
+            scaleX: 1,
+            scaleY: 1,
+            opacity: 1,
+            duration: 1.2,
+            delay: index * 0.2,
+            ease: "power4.inOut",
+            scrollTrigger: {
+              trigger: container,
+              start: "top center",
+              end: "bottom center",
+              scrub: 0.8,
+            },
+          }
+        );
+      });
+
+      // 6. Partículas geométricas
+      for (let i = 0; i < 30; i++) {
+        const shape = document.createElement("div");
+        const shapes = ["polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)",
+          "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
+          "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)"];
+
+        shape.style.cssText = `
+          position: absolute;
+          width: ${gsap.utils.random(5, 15)}px;
+          height: ${gsap.utils.random(5, 15)}px;
+          background: ${gsap.utils.random(["#a19177", "#c4b9a8", "#8a7f6e", "#2a2520"])};
+          clip-path: ${shapes[i % shapes.length]};
+          left: ${gsap.utils.random(0, 100)}%;
+          top: ${gsap.utils.random(0, 100)}%;
+          opacity: 0;
+        `;
+        container.appendChild(shape);
+
+        gsap.fromTo(shape,
+          {
+            x: gsap.utils.random(-100, 100),
+            y: gsap.utils.random(-100, 100),
+            rotation: 0,
+            scale: 0,
+            opacity: 0,
+          },
+          {
+            x: gsap.utils.random(-50, 50),
+            y: gsap.utils.random(-50, 50),
+            rotation: gsap.utils.random(-360, 360),
+            scale: gsap.utils.random(0.5, 2),
+            opacity: gsap.utils.random(0.1, 0.4),
+            duration: 2,
+            ease: "none",
+            repeat: -1,
+            yoyo: true,
+            scrollTrigger: {
+              trigger: container,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 0.3,
+            },
+          }
+        );
+      }
+
+      // 7. Efecto de onda en el fondo
+      const waveElements = canvas.querySelectorAll('.wave-layer');
+
+      waveElements.forEach((wave, index) => {
+        gsap.to(wave, {
+          x: `${gsap.utils.random(-20, 20)}%`,
+          y: `${gsap.utils.random(-10, 10)}%`,
+          scaleX: gsap.utils.random(0.9, 1.1),
+          scaleY: gsap.utils.random(0.9, 1.1),
+          rotation: gsap.utils.random(-5, 5),
+          duration: 3 + index,
+          ease: "sine.inOut",
+          repeat: -1,
+          yoyo: true,
+          scrollTrigger: {
+            trigger: container,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 0.5 + index * 0.1,
+          },
+        });
+      });
+
+      // 8. Números que se revelan
+      const numberElements = document.querySelectorAll('.reveal-number');
+
+      numberElements.forEach((num, index) => {
+        gsap.fromTo(num,
+          {
+            y: 100,
+            rotationX: 90,
+            opacity: 0,
+            scale: 0.5,
+          },
+          {
+            y: 0,
+            rotationX: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 1,
+            delay: index * 0.1,
+            ease: "back.out(1.5)",
+            scrollTrigger: {
+              trigger: num,
+              start: "top 85%",
+              end: "top 45%",
+              scrub: 0.6,
+            },
+          }
+        );
+      });
+
+    }, container);
+
+    return () => ctx.revert();
+  }, []);
+
+  const title = "DECONSTRUCCIÓN GEOMÉTRICA";
+  const featuresList = [
+    { icon: "⬡", title: "Geometría Viva", desc: "Formas que mutan y se reorganizan" },
+    { icon: "◇", title: "Física Aplicada", desc: "Movimiento con inercia realista" },
+    { icon: "△", title: "Fragmentación", desc: "Elementos que se descomponen" },
+    { icon: "□", title: "Reconstrucción", desc: "Ensamblaje progresivo" },
+    { icon: "⬠", title: "Patrones", desc: "Ritmos visuales complejos" },
+    { icon: "⬢", title: "Profundidad", desc: "Múltiples planos de acción" },
+  ];
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative mx-auto mb-32 mt-10 max-w-6xl overflow-hidden rounded-[40px]"
+      style={{
+        minHeight: "800px",
+        background: "linear-gradient(135deg, #f5f0e8 0%, #e8e0d5 30%, #dfd6c8 70%, #f5f0e8 100%)",
+      }}
+    >
+      {/* Capas de ondas de fondo */}
+      <div ref={canvasRef} className="absolute inset-0 overflow-hidden">
+        {[...Array(3)].map((_, i) => (
+          <div
+            key={i}
+            className="wave-layer absolute rounded-full opacity-5"
+            style={{
+              width: `${600 + i * 200}px`,
+              height: `${600 + i * 200}px`,
+              background: `radial-gradient(circle, #2a2520 ${30 - i * 10}%, transparent 70%)`,
+              left: `${30 + i * 15}%`,
+              top: `${20 + i * 20}%`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Grid geométrico decorativo */}
+      <div className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `
+            linear-gradient(30deg, #2a2520 1px, transparent 1px),
+            linear-gradient(-30deg, #2a2520 1px, transparent 1px)
+          `,
+          backgroundSize: "60px 60px",
+        }}
+      />
+
+      {/* Contenido principal */}
+      <div className="relative z-10 px-8 py-16 md:px-16 md:py-24">
+        {/* Título deconstruido */}
+        <div className="mb-20 text-center">
+          <div ref={hexagonsRef} className="flex justify-center gap-2 mb-8">
+            {[...Array(5)].map((_, i) => (
+              <div
+                key={i}
+                className="hexagon-piece w-8 h-8 opacity-20"
+                style={{
+                  background: "#a19177",
+                  clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
+                }}
+              />
+            ))}
+          </div>
+
+          <h2
+            ref={mainTitleRef}
+            className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8"
+            style={{ fontFamily: editorialFont }}
+          >
+            {title.split("").map((letter, i) => (
+              <span
+                key={i}
+                className="deconstruct-letter inline-block"
+                style={{
+                  color: i % 3 === 0 ? "#2a2520" : i % 3 === 1 ? "#5a5550" : "#8a7f6e",
+                  textShadow: "2px 2px 0px rgba(0,0,0,0.05)",
+                }}
+              >
+                {letter === " " ? "\u00A0" : letter}
+              </span>
+            ))}
+          </h2>
+
+          {/* Líneas dinámicas */}
+          <div className="relative mb-8">
+            <div className="dynamic-line h-px bg-gradient-to-r from-transparent via-[#2a2520] to-transparent" />
+            <div className="dynamic-line h-px bg-gradient-to-r from-transparent via-[#a19177] to-transparent mt-2" style={{ width: "70%", margin: "0 auto" }} />
+            <div className="dynamic-line h-px bg-gradient-to-r from-transparent via-[#c4b9a8] to-transparent mt-2" style={{ width: "40%", margin: "0 auto" }} />
+          </div>
+
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto" style={{ fontFamily: editorialFont }}>
+            Observa cómo los elementos se fragmentan y reconstruyen mientras navegas
+          </p>
+        </div>
+
+        {/* Fragmentos flotantes */}
+        <div ref={fragmentsRef} className="relative h-40 mb-16">
+          {[...Array(8)].map((_, i) => (
+            <div
+              key={i}
+              className="fragment-piece absolute opacity-0"
+              style={{
+                left: `${10 + i * 12}%`,
+                top: `${20 + (i % 3) * 30}%`,
+                width: `${20 + i * 5}px`,
+                height: `${20 + i * 5}px`,
+                background: `rgba(${161 - i * 10}, ${145 - i * 10}, ${119 - i * 10}, 0.3)`,
+                clipPath: i % 3 === 0 ? "polygon(50% 0%, 0% 100%, 100% 100%)" :
+                  i % 3 === 1 ? "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" :
+                    "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)",
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Características en espiral */}
+        <div ref={featuresRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          {featuresList.map((feature, index) => (
+            <div
+              key={index}
+              className="feature-card group relative bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-[#d0c8bb] hover:bg-white/90 transition-all duration-500 cursor-pointer overflow-hidden"
+              style={{
+                boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
+              }}
+              onMouseEnter={(e) => {
+                gsap.to(e.currentTarget, {
+                  y: -8,
+                  rotation: gsap.utils.random(-2, 2),
+                  boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
+                  borderColor: "#a19177",
+                  duration: 0.4,
+                  ease: "power2.out",
+                });
+              }}
+              onMouseLeave={(e) => {
+                gsap.to(e.currentTarget, {
+                  y: 0,
+                  rotation: 0,
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
+                  borderColor: "#d0c8bb",
+                  duration: 0.4,
+                  ease: "power2.out",
+                });
+              }}
+            >
+              {/* Decoración geométrica */}
+              <div className="absolute top-0 right-0 w-20 h-20 opacity-5 group-hover:opacity-10 transition-opacity duration-500"
+                style={{
+                  background: "radial-gradient(circle, #2a2520, transparent)",
+                }}
+              />
+
+              <div className="relative z-10">
+                <div className="text-3xl mb-4 reveal-number" style={{ fontFamily: editorialFont }}>
+                  {feature.icon}
+                </div>
+                <h3 className="text-lg font-bold mb-2 text-[#2a2520] reveal-number" style={{ fontFamily: editorialFont }}>
+                  {feature.title}
+                </h3>
+                <p className="text-sm text-gray-600 reveal-number" style={{ fontFamily: editorialFont }}>
+                  {feature.desc}
+                </p>
+
+                {/* Línea decorativa que se revela */}
+                <div className="mt-4 h-px bg-gradient-to-r from-[#a19177] to-transparent transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Zona de interacción */}
+        <div className="text-center relative">
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full border border-[#d0c8bb]/30 animate-pulse" />
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 rounded-full border border-[#a19177]/20 animate-pulse" style={{ animationDelay: "0.5s" }} />
+
+          <button
+            className="reveal-number group relative px-8 py-4 bg-[#2a2520] text-white rounded-full font-medium overflow-hidden transition-all duration-300 hover:bg-[#3a3530] hover:shadow-2xl hover:shadow-[#2a2520]/20 active:scale-95"
+            style={{ fontFamily: editorialFont }}
+            onMouseEnter={(e) => {
+              gsap.to(e.currentTarget, {
+                scale: 1.05,
+                duration: 0.3,
+                ease: "back.out(2)",
+              });
+            }}
+            onMouseLeave={(e) => {
+              gsap.to(e.currentTarget, {
+                scale: 1,
+                duration: 0.3,
+                ease: "power2.out",
+              });
+            }}
+          >
+            <span className="relative z-10">Experimentar Deconstrucción</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#a19177] to-[#c4b9a8] transform -skew-x-12 translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
+          </button>
+        </div>
+
+        {/* Indicador de partículas */}
+        <div className="absolute bottom-6 right-6 flex items-center gap-2">
+          <div className="flex gap-1">
+            {[...Array(3)].map((_, i) => (
+              <div
+                key={i}
+                className="w-1.5 h-1.5 rounded-full bg-[#2a2520] animate-pulse"
+                style={{ animationDelay: `${i * 0.2}s` }}
+              />
+            ))}
+          </div>
+          <span className="text-xs text-gray-500 uppercase tracking-wider" style={{ fontFamily: editorialFont }}>
+            Partículas Activas
+          </span>
+        </div>
+      </div>
+
+      {/* Líneas de escape */}
+      <div className="absolute bottom-0 left-0 right-0">
+        {[...Array(5)].map((_, i) => (
+          <div
+            key={i}
+            className="h-px opacity-0"
+            style={{
+              background: `linear-gradient(90deg, transparent, #a19177 ${30 + i * 10}%, transparent)`,
+              marginBottom: "4px",
+              animation: `escape-line 3s ${i * 0.6}s ease-in-out infinite`,
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function GSAPLiquidDimension() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const blobContainerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const pillarsRef = useRef<HTMLDivElement[]>([]);
+  const rippleRef = useRef<HTMLDivElement>(null);
+  const galleryRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const container = containerRef.current;
+    const blobContainer = blobContainerRef.current;
+    const title = titleRef.current;
+    const pillars = pillarsRef.current.filter(Boolean);
+    const ripple = rippleRef.current;
+    const gallery = galleryRef.current;
+
+    if (!container || !blobContainer || !title || !ripple || !gallery) return;
+
+    const ctx = gsap.context(() => {
+      // 1. Blobs orgánicos que se deforman y fluyen
+      for (let i = 0; i < 6; i++) {
+        const blob = document.createElement("div");
+        blob.className = "liquid-blob";
+        const size = gsap.utils.random(100, 300);
+        blob.style.cssText = `
+          position: absolute;
+          width: ${size}px;
+          height: ${size}px;
+          background: radial-gradient(circle at ${gsap.utils.random(20, 80)}% ${gsap.utils.random(20, 80)}%, 
+            rgba(161, 145, 119, ${gsap.utils.random(0.05, 0.15)}), 
+            rgba(42, 37, 32, ${gsap.utils.random(0.03, 0.08)}));
+          border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+          left: ${gsap.utils.random(0, 80)}%;
+          top: ${gsap.utils.random(0, 80)}%;
+          filter: blur(${gsap.utils.random(20, 60)}px);
+        `;
+        blobContainer.appendChild(blob);
+
+        // Animación de morphing continuo
+        gsap.to(blob, {
+          borderRadius: `${gsap.utils.random(30, 80)}% ${gsap.utils.random(30, 80)}% ${gsap.utils.random(30, 80)}% ${gsap.utils.random(30, 80)}% / ${gsap.utils.random(30, 80)}% ${gsap.utils.random(30, 80)}% ${gsap.utils.random(30, 80)}% ${gsap.utils.random(30, 80)}%`,
+          x: gsap.utils.random(-100, 100),
+          y: gsap.utils.random(-100, 100),
+          scale: gsap.utils.random(0.8, 1.5),
+          duration: gsap.utils.random(8, 15),
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+
+        // Movimiento con scroll
+        gsap.to(blob, {
+          x: gsap.utils.random(-200, 200),
+          y: gsap.utils.random(-300, 300),
+          scale: gsap.utils.random(0.5, 2),
+          duration: 3,
+          ease: "none",
+          scrollTrigger: {
+            trigger: container,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 0.5,
+          },
+        });
+      }
+
+      // 2. Título con efecto de líquido que se estira
+      const titleTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: container,
+          start: "top bottom",
+          end: "top 40%",
+          scrub: 1,
+        },
+      });
+
+      // Cada carácter tiene animación independiente tipo onda
+      title.querySelectorAll('.liquid-char').forEach((char: Element, index: number) => {
+        gsap.set(char, {
+          y: gsap.utils.random(100, 300),
+          scaleY: gsap.utils.random(0.5, 2),
+          opacity: 0,
+          filter: "blur(20px)",
+        });
+
+        titleTimeline.to(char, {
+          y: 0,
+          scaleY: 1,
+          opacity: 1,
+          filter: "blur(0px)",
+          duration: 1.5,
+          ease: "elastic.out(1, 0.3)",
+        }, index * 0.03);
+
+        // Onda continua después de aparecer
+        gsap.to(char, {
+          y: -10,
+          scaleY: 1.1,
+          duration: 0.6,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: index * 0.1,
+        });
+      });
+
+      // 3. Pilares que se elevan como líquido
+      pillars.forEach((pillar, index) => {
+        gsap.set(pillar, {
+          scaleY: 0,
+          transformOrigin: "bottom center",
+          opacity: 0,
+        });
+
+        gsap.to(pillar, {
+          scaleY: 1,
+          opacity: 1,
+          duration: 1.8,
+          delay: index * 0.4,
+          ease: "elastic.out(1, 0.5)",
+          scrollTrigger: {
+            trigger: pillar,
+            start: "top 90%",
+            end: "top 30%",
+            scrub: 0.7,
+          },
+        });
+
+        // Oscilación líquida
+        gsap.to(pillar, {
+          scaleY: gsap.utils.random(0.8, 1.2),
+          scaleX: gsap.utils.random(0.9, 1.1),
+          skewX: gsap.utils.random(-5, 5),
+          duration: 2,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: index * 0.3,
+        });
+      });
+
+      // 4. Efecto de ondulación en el ripple
+      const rippleTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: ripple,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+        },
+      });
+
+      rippleTimeline.fromTo(ripple,
+        {
+          scale: 0.3,
+          opacity: 0,
+        },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 2,
+          ease: "power3.inOut",
+        }
+      );
+
+      // 5. Galería con efecto de distorsión líquida
+      const galleryItems = gallery.querySelectorAll('.gallery-item');
+
+      galleryItems.forEach((item: Element, index: number) => {
+        gsap.fromTo(item,
+          {
+            y: gsap.utils.random(200, 500),
+            scale: gsap.utils.random(0.5, 0.8),
+            opacity: 0,
+            filter: "blur(30px) hue-rotate(90deg)",
+            borderRadius: "50%",
+          },
+          {
+            y: 0,
+            scale: 1,
+            opacity: 1,
+            filter: "blur(0px) hue-rotate(0deg)",
+            borderRadius: "20px",
+            duration: 2,
+            ease: "elastic.out(1, 0.4)",
+            scrollTrigger: {
+              trigger: gallery,
+              start: "top 80%",
+              end: "top 30%",
+              scrub: 0.8,
+            },
+          }
+        );
+
+        // Efecto hover con distorsión
+        item.addEventListener("mousemove", (e: Event) => {
+          const mouseEvent = e as MouseEvent;
+          const rect = (item as HTMLElement).getBoundingClientRect();
+          const x = (mouseEvent.clientX - rect.left) / rect.width;
+          const y = (mouseEvent.clientY - rect.top) / rect.height;
+
+          gsap.to(item, {
+            borderRadius: `${30 + x * 20}% ${30 + y * 20}% ${30 + (1 - x) * 20}% ${30 + (1 - y) * 20}%`,
+            scale: 1.05,
+            duration: 0.4,
+            ease: "power2.out",
+          });
+        });
+
+        item.addEventListener("mouseleave", () => {
+          gsap.to(item, {
+            borderRadius: "20px",
+            scale: 1,
+            duration: 0.4,
+            ease: "power2.out",
+          });
+        });
+      });
+
+      // 6. Burbujas que suben
+      const createBubble = () => {
+        const bubble = document.createElement("div");
+        bubble.className = "liquid-bubble";
+        const size = gsap.utils.random(10, 40);
+        bubble.style.cssText = `
+          position: absolute;
+          width: ${size}px;
+          height: ${size}px;
+          background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), rgba(161, 145, 119, 0.2));
+          border-radius: 50%;
+          left: ${gsap.utils.random(0, 100)}%;
+          bottom: -50px;
+          opacity: 0;
+        `;
+        container.appendChild(bubble);
+
+        gsap.fromTo(bubble,
+          {
+            y: 0,
+            x: 0,
+            opacity: 0.8,
+          },
+          {
+            y: gsap.utils.random(-400, -800),
+            x: gsap.utils.random(-50, 50),
+            opacity: 0,
+            duration: gsap.utils.random(3, 6),
+            ease: "power1.out",
+            onComplete: () => {
+              bubble.remove();
+            },
+          }
+        );
+      };
+
+      // Crear burbujas periódicamente
+      const bubbleInterval = setInterval(createBubble, 800);
+
+      // 7. Gradientes que fluyen
+      const gradientOverlays = document.querySelectorAll('.gradient-flow');
+      gradientOverlays.forEach((overlay: Element, index: number) => {
+        gsap.to(overlay, {
+          backgroundPosition: `${gsap.utils.random(0, 100)}% ${gsap.utils.random(0, 100)}%`,
+          duration: gsap.utils.random(5, 10),
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          scrollTrigger: {
+            trigger: container,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 0.3,
+          },
+        });
+      });
+
+      return () => {
+        clearInterval(bubbleInterval);
+      };
+
+    }, container);
+
+    return () => ctx.revert();
+  }, []);
+
+  const galleryItems = [
+    { title: "Metamorfosis", color: "#a19177" },
+    { title: "Fluidez", color: "#8a7f6e" },
+    { title: "Distorsión", color: "#c4b9a8" },
+    { title: "Transición", color: "#6a5f4e" },
+  ];
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative mx-auto mb-32 mt-10 max-w-6xl overflow-hidden rounded-[40px]"
+      style={{
+        minHeight: "800px",
+        background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
+        backgroundSize: "400% 400%",
+        animation: "gradient-shift 15s ease infinite",
+      }}
+    >
+      <style>{`
+        @keyframes gradient-shift {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+        @keyframes liquid-morph {
+          0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+          25% { border-radius: 30% 60% 70% 40% / 50% 60% 40% 60%; }
+          50% { border-radius: 40% 30% 60% 60% / 40% 70% 30% 60%; }
+          75% { border-radius: 70% 30% 40% 60% / 30% 40% 60% 40%; }
+        }
+      `}</style>
+
+      {/* Contenedor de blobs */}
+      <div ref={blobContainerRef} className="absolute inset-0 overflow-hidden" />
+
+      {/* Gradientes fluidos */}
+      <div className="gradient-flow absolute inset-0 opacity-30"
+        style={{
+          background: "radial-gradient(circle at 50% 50%, rgba(161, 145, 119, 0.2), transparent 70%)",
+          backgroundSize: "200% 200%",
+        }}
+      />
+      <div className="gradient-flow absolute inset-0 opacity-20"
+        style={{
+          background: "radial-gradient(circle at 30% 70%, rgba(138, 127, 110, 0.3), transparent 50%)",
+          backgroundSize: "200% 200%",
+        }}
+      />
+
+      {/* Partículas de luz */}
+      <div className="absolute inset-0">
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full animate-pulse"
+            style={{
+              width: `${gsap.utils.random(2, 6)}px`,
+              height: `${gsap.utils.random(2, 6)}px`,
+              background: "white",
+              left: `${gsap.utils.random(0, 100)}%`,
+              top: `${gsap.utils.random(0, 100)}%`,
+              opacity: gsap.utils.random(0.1, 0.4),
+              animationDelay: `${gsap.utils.random(0, 3)}s`,
+              animationDuration: `${gsap.utils.random(1, 4)}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Contenido principal */}
+      <div className="relative z-10 px-8 py-16 md:px-16 md:py-24">
+        {/* Título líquido */}
+        <div className="text-center mb-16">
+          <div ref={rippleRef} className="relative inline-block mb-8">
+            <div className="absolute inset-0 rounded-full border-2 border-[#a19177]/30 animate-ping" />
+            <div className="relative px-8 py-3 rounded-full bg-white/5 backdrop-blur-md border border-white/10">
+              <span className="text-sm text-[#a19177] uppercase tracking-widest" style={{ fontFamily: editorialFont }}>
+                Dimensión Líquida
+              </span>
+            </div>
+          </div>
+
+          <h2
+            ref={titleRef}
+            className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6"
+            style={{ fontFamily: editorialFont }}
+          >
+            {"PORTAL LÍQUIDO".split("").map((char, i) => (
+              <span
+                key={i}
+                className="liquid-char inline-block"
+                style={{
+                  textShadow: "0 0 20px rgba(161, 145, 119, 0.4)",
+                  display: "inline-block",
+                }}
+              >
+                {char === " " ? "\u00A0" : char}
+              </span>
+            ))}
+          </h2>
+
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto" style={{ fontFamily: editorialFont }}>
+            Morphing orgánico y transiciones fluidas que responden al movimiento
+          </p>
+        </div>
+
+        {/* Pilares líquidos */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+          {[
+            { height: 200, color: "#a19177", label: "Viscosidad" },
+            { height: 250, color: "#8a7f6e", label: "Fluidez" },
+            { height: 180, color: "#c4b9a8", label: "Densidad" },
+            { height: 220, color: "#6a5f4e", label: "Presión" },
+          ].map((pillar, index) => (
+            <div key={index} className="flex flex-col items-center gap-4">
+              <div
+                ref={(el) => { pillarsRef.current[index] = el; }}
+                className="w-full rounded-full relative overflow-hidden"
+                style={{
+                  height: `${pillar.height}px`,
+                  background: `linear-gradient(180deg, ${pillar.color} 0%, ${pillar.color}88 50%, ${pillar.color}22 100%)`,
+                  boxShadow: `0 0 30px ${pillar.color}33`,
+                }}
+              >
+                {/* Efecto de superficie líquida */}
+                <div className="absolute top-0 left-0 right-0 h-2 bg-white/20 rounded-full"
+                  style={{
+                    animation: "liquid-surface 3s ease-in-out infinite",
+                  }}
+                />
+              </div>
+              <span className="text-sm text-gray-400" style={{ fontFamily: editorialFont }}>
+                {pillar.label}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* Galería morphing */}
+        <div ref={galleryRef} className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          {galleryItems.map((item, index) => (
+            <div
+              key={index}
+              className="gallery-item group relative h-64 rounded-[20px] overflow-hidden cursor-pointer"
+              style={{
+                background: `linear-gradient(135deg, ${item.color}33, ${item.color}11)`,
+                border: "1px solid rgba(255,255,255,0.1)",
+                backdropFilter: "blur(10px)",
+                transition: "border-radius 0.3s ease",
+              }}
+            >
+              {/* Contenido líquido interno */}
+              <div className="absolute inset-0 opacity-20"
+                style={{
+                  background: `radial-gradient(circle at 50% 50%, ${item.color}, transparent)`,
+                  animation: "liquid-morph 8s ease-in-out infinite",
+                }}
+              />
+
+              {/* Overlay con blur */}
+              <div className="absolute inset-0 backdrop-blur-sm" />
+
+              {/* Contenido */}
+              <div className="relative z-10 h-full flex flex-col items-center justify-center p-8">
+                <div className="w-16 h-16 rounded-full mb-4"
+                  style={{
+                    background: `radial-gradient(circle at 30% 30%, white, ${item.color})`,
+                    boxShadow: `0 0 30px ${item.color}66`,
+                    animation: "liquid-morph 6s ease-in-out infinite",
+                  }}
+                />
+                <h3 className="text-2xl font-bold text-white mb-2" style={{ fontFamily: editorialFont }}>
+                  {item.title}
+                </h3>
+                <p className="text-sm text-gray-400" style={{ fontFamily: editorialFont }}>
+                  Efecto de morphing líquido
+                </p>
+              </div>
+
+              {/* Borde líquido animado */}
+              <div className="absolute inset-0 rounded-[inherit] border-2 border-transparent"
+                style={{
+                  background: `linear-gradient(45deg, ${item.color}, transparent, ${item.color}) border-box`,
+                  WebkitMask: "linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)",
+                  WebkitMaskComposite: "destination-out",
+                  maskComposite: "exclude",
+                  opacity: 0,
+                  transition: "opacity 0.3s ease",
+                }}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Botón líquido */}
+        <div className="text-center">
+          <button
+            className="group relative px-12 py-5 rounded-full overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95"
+            style={{
+              background: "linear-gradient(135deg, #a19177, #8a7f6e)",
+              boxShadow: "0 10px 40px rgba(161, 145, 119, 0.3)",
+            }}
+            onMouseEnter={(e) => {
+              gsap.to(e.currentTarget, {
+                borderRadius: "30% 70% 70% 30% / 30% 30% 70% 70%",
+                duration: 0.6,
+                ease: "elastic.out(1, 0.3)",
+              });
+            }}
+            onMouseLeave={(e) => {
+              gsap.to(e.currentTarget, {
+                borderRadius: "9999px",
+                duration: 0.6,
+                ease: "elastic.out(1, 0.3)",
+              });
+            }}
+          >
+            <span className="relative z-10 text-white font-medium" style={{ fontFamily: editorialFont }}>
+              Sumergirse en el Portal
+            </span>
+            {/* Ondulación en hover */}
+            <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              style={{
+                animation: "wave 2s linear infinite",
+              }}
+            />
+          </button>
+        </div>
+      </div>
+
+      {/* Indicador de profundidad líquida */}
+      <div className="absolute bottom-6 left-6 flex items-center gap-4">
+        <div className="flex items-center gap-2">
+          <div className="relative w-3 h-3">
+            <div className="absolute inset-0 rounded-full bg-[#a19177] animate-ping opacity-75" />
+            <div className="relative rounded-full w-3 h-3 bg-[#a19177]" />
+          </div>
+          <span className="text-xs text-gray-500" style={{ fontFamily: editorialFont }}>
+            Superficie
+          </span>
+        </div>
+        <div className="w-8 h-px bg-gradient-to-r from-[#a19177]/50 to-transparent" />
+        <div className="flex items-center gap-2">
+          <div className="relative w-3 h-3">
+            <div className="absolute inset-0 rounded-full bg-[#8a7f6e] animate-pulse opacity-75" />
+            <div className="relative rounded-full w-3 h-3 bg-[#8a7f6e]" />
+          </div>
+          <span className="text-xs text-gray-500" style={{ fontFamily: editorialFont }}>
+            Profundidad
+          </span>
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes wave {
+          0% { transform: translateX(-100%) skewX(-15deg); }
+          100% { transform: translateX(100%) skewX(-15deg); }
+        }
+        @keyframes liquid-surface {
+          0%, 100% { transform: translateY(0px) scaleX(1); }
+          50% { transform: translateY(2px) scaleX(0.8); }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+function GSAPCosmicWeave() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const starsRef = useRef<HTMLDivElement>(null);
+  const threadsRef = useRef<HTMLDivElement>(null);
+  const constellationsRef = useRef<HTMLDivElement>(null);
+  const nodesRef = useRef<HTMLDivElement[]>([]);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const container = containerRef.current;
+    const stars = starsRef.current;
+    const threads = threadsRef.current;
+    const constellations = constellationsRef.current;
+    const title = titleRef.current;
+    const nodes = nodesRef.current.filter(Boolean);
+
+    if (!container || !stars || !threads || !constellations || !title) return;
+
+    const ctx = gsap.context(() => {
+      // 1. Campo de estrellas con parallax
+      for (let i = 0; i < 50; i++) {
+        const star = document.createElement("div");
+        star.className = "cosmic-star";
+        const size = gsap.utils.random(1, 4);
+        const depth = gsap.utils.random(0.2, 1);
+
+        star.style.cssText = `
+          position: absolute;
+          width: ${size}px;
+          height: ${size}px;
+          background: white;
+          border-radius: 50%;
+          left: ${gsap.utils.random(0, 100)}%;
+          top: ${gsap.utils.random(0, 100)}%;
+          opacity: ${gsap.utils.random(0.2, 0.8)};
+          box-shadow: 0 0 ${size * 3}px rgba(255, 255, 255, 0.5),
+                      0 0 ${size * 6}px rgba(161, 145, 119, 0.3);
+        `;
+        stars.appendChild(star);
+
+        // Parpadeo individual
+        gsap.to(star, {
+          opacity: gsap.utils.random(0.1, 0.9),
+          scale: gsap.utils.random(0.5, 1.5),
+          duration: gsap.utils.random(1, 3),
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: gsap.utils.random(0, 2),
+        });
+
+        // Movimiento con scroll (estrellas cercanas se mueven más rápido)
+        gsap.to(star, {
+          y: -200 * depth,
+          x: gsap.utils.random(-50, 50) * depth,
+          scale: 1 + depth,
+          duration: 2,
+          ease: "none",
+          scrollTrigger: {
+            trigger: container,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 0.5 * depth,
+          },
+        });
+      }
+
+      // 2. Hilos de luz que se tejen
+      const threadElements: HTMLDivElement[] = [];
+      for (let i = 0; i < 8; i++) {
+        const thread = document.createElement("div");
+        thread.className = "cosmic-thread";
+        thread.style.cssText = `
+          position: absolute;
+          height: 1px;
+          background: linear-gradient(90deg, 
+            transparent, 
+            rgba(161, 145, 119, ${gsap.utils.random(0.1, 0.4)}), 
+            rgba(196, 185, 168, ${gsap.utils.random(0.2, 0.5)}),
+            rgba(161, 145, 119, ${gsap.utils.random(0.1, 0.4)}), 
+            transparent);
+          left: ${gsap.utils.random(-20, 80)}%;
+          top: ${gsap.utils.random(0, 100)}%;
+          width: ${gsap.utils.random(30, 80)}%;
+          transform: rotate(${gsap.utils.random(-15, 15)}deg);
+          opacity: 0;
+        `;
+        threads.appendChild(thread);
+        threadElements.push(thread);
+
+        // Animación de tejido
+        gsap.fromTo(thread,
+          {
+            scaleX: 0,
+            opacity: 0,
+          },
+          {
+            scaleX: 1,
+            opacity: 1,
+            duration: 2,
+            ease: "power2.inOut",
+            scrollTrigger: {
+              trigger: container,
+              start: "top bottom",
+              end: "bottom center",
+              scrub: 0.6,
+            },
+          }
+        );
+
+        // Ondulación continua
+        gsap.to(thread, {
+          y: gsap.utils.random(-30, 30),
+          rotation: gsap.utils.random(-5, 5),
+          duration: gsap.utils.random(3, 6),
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: gsap.utils.random(0, 3),
+        });
+      }
+
+      // 3. Constelaciones que se dibujan
+      const constellationPoints: { x: number, y: number }[] = [];
+      for (let i = 0; i < 12; i++) {
+        const point = document.createElement("div");
+        point.className = "constellation-node";
+        point.style.cssText = `
+          position: absolute;
+          width: 6px;
+          height: 6px;
+          background: #a19177;
+          border-radius: 50%;
+          left: ${gsap.utils.random(10, 90)}%;
+          top: ${gsap.utils.random(10, 90)}%;
+          box-shadow: 0 0 10px #a19177, 0 0 20px #c4b9a8;
+          opacity: 0;
+        `;
+        constellations.appendChild(point);
+        constellationPoints.push({
+          x: parseFloat(point.style.left),
+          y: parseFloat(point.style.top),
+        });
+
+        // Aparición secuencial
+        gsap.fromTo(point,
+          {
+            scale: 0,
+            opacity: 0,
+          },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 0.8,
+            delay: i * 0.15,
+            ease: "back.out(2)",
+            scrollTrigger: {
+              trigger: constellations,
+              start: "top 80%",
+              end: "top 40%",
+              scrub: 0.5,
+            },
+          }
+        );
+      }
+
+      // Dibujar líneas de constelación
+      const canvas = document.createElement("canvas");
+      canvas.style.cssText = `
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      `;
+      constellations.appendChild(canvas);
+
+      const ctx2d = canvas.getContext("2d");
+      const drawConstellations = () => {
+        if (!ctx2d) return;
+        const rect = constellations.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+
+        ctx2d.clearRect(0, 0, canvas.width, canvas.height);
+        ctx2d.strokeStyle = "rgba(161, 145, 119, 0.15)";
+        ctx2d.lineWidth = 1;
+
+        for (let i = 0; i < constellationPoints.length; i++) {
+          const connections = Math.floor(gsap.utils.random(1, 3));
+          for (let j = 0; j < connections; j++) {
+            const target = Math.floor(gsap.utils.random(0, constellationPoints.length - 1));
+            if (target !== i) {
+              ctx2d.beginPath();
+              ctx2d.moveTo(
+                (constellationPoints[i].x / 100) * canvas.width,
+                (constellationPoints[i].y / 100) * canvas.height
+              );
+              ctx2d.lineTo(
+                (constellationPoints[target].x / 100) * canvas.width,
+                (constellationPoints[target].y / 100) * canvas.height
+              );
+              ctx2d.stroke();
+            }
+          }
+        }
+      };
+
+      drawConstellations();
+      window.addEventListener("resize", drawConstellations);
+
+      // 4. Título con efecto de curvatura espacio-temporal
+      const titleLetters = title.querySelectorAll('.cosmic-char');
+
+      titleLetters.forEach((letter, index) => {
+        // Posición inicial curvada
+        gsap.set(letter, {
+          y: Math.sin(index * 0.3) * 100,
+          x: Math.cos(index * 0.3) * 50,
+          rotation: Math.sin(index * 0.2) * 30,
+          scale: 0.5,
+          opacity: 0,
+          filter: "blur(15px)",
+        });
+
+        // Animación de llegada con curvatura
+        gsap.to(letter, {
+          y: 0,
+          x: 0,
+          rotation: 0,
+          scale: 1,
+          opacity: 1,
+          filter: "blur(0px)",
+          duration: 2,
+          ease: "elastic.out(1, 0.3)",
+          delay: index * 0.04,
+          scrollTrigger: {
+            trigger: title,
+            start: "top bottom",
+            end: "top 50%",
+            scrub: 0.7,
+          },
+        });
+
+        // Flotación orbital
+        gsap.to(letter, {
+          y: Math.sin(index * 0.5 + Date.now() * 0.001) * 5,
+          rotation: Math.sin(index * 0.3) * 2,
+          duration: 3,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: index * 0.1,
+        });
+      });
+
+      // 5. Nodos de información que orbitan
+      nodes.forEach((node, index) => {
+        const angle = (index / nodes.length) * Math.PI * 2;
+        const radius = 250;
+
+        gsap.set(node, {
+          x: Math.cos(angle) * radius,
+          y: Math.sin(angle) * radius,
+          opacity: 0,
+          scale: 0,
+        });
+
+        // Entrada orbital
+        gsap.to(node, {
+          x: 0,
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 1.5,
+          delay: index * 0.2,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: node,
+            start: "top 85%",
+            end: "top 40%",
+            scrub: 0.6,
+          },
+        });
+
+        // Rotación orbital continua
+        gsap.to(node, {
+          rotation: 360,
+          duration: 20 + index * 5,
+          repeat: -1,
+          ease: "none",
+        });
+
+        // Efecto hover gravitacional
+        node.addEventListener("mouseenter", () => {
+          gsap.to(node, {
+            scale: 1.2,
+            boxShadow: "0 0 30px rgba(161, 145, 119, 0.5)",
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        });
+
+        node.addEventListener("mouseleave", () => {
+          gsap.to(node, {
+            scale: 1,
+            boxShadow: "0 0 15px rgba(161, 145, 119, 0.2)",
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        });
+      });
+
+      // 6. Nebulosas de fondo
+      for (let i = 0; i < 4; i++) {
+        const nebula = document.createElement("div");
+        nebula.className = "cosmic-nebula";
+        nebula.style.cssText = `
+          position: absolute;
+          width: ${gsap.utils.random(300, 500)}px;
+          height: ${gsap.utils.random(300, 500)}px;
+          background: radial-gradient(
+            circle at center,
+            rgba(161, 145, 119, ${gsap.utils.random(0.05, 0.15)}),
+            rgba(138, 127, 110, ${gsap.utils.random(0.03, 0.08)}),
+            transparent 70%
+          );
+          border-radius: 50%;
+          left: ${gsap.utils.random(10, 70)}%;
+          top: ${gsap.utils.random(10, 70)}%;
+          filter: blur(${gsap.utils.random(30, 60)}px);
+          opacity: 0;
+        `;
+        container.appendChild(nebula);
+
+        gsap.fromTo(nebula,
+          {
+            scale: 0.5,
+            opacity: 0,
+          },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 3,
+            ease: "power2.inOut",
+            scrollTrigger: {
+              trigger: container,
+              start: "top bottom",
+              end: "center center",
+              scrub: 0.8,
+            },
+          }
+        );
+
+        // Movimiento de nebulosa
+        gsap.to(nebula, {
+          x: gsap.utils.random(-50, 50),
+          y: gsap.utils.random(-50, 50),
+          scale: gsap.utils.random(0.8, 1.3),
+          duration: gsap.utils.random(8, 15),
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      }
+
+      // 7. Rayos de luz que cruzan
+      for (let i = 0; i < 5; i++) {
+        const ray = document.createElement("div");
+        ray.className = "light-ray";
+        ray.style.cssText = `
+          position: absolute;
+          width: ${gsap.utils.random(1, 3)}px;
+          height: ${gsap.utils.random(200, 400)}px;
+          background: linear-gradient(to bottom, 
+            transparent, 
+            rgba(161, 145, 119, 0.3), 
+            rgba(196, 185, 168, 0.2), 
+            transparent
+          );
+          left: ${gsap.utils.random(10, 90)}%;
+          top: ${gsap.utils.random(-20, 60)}%;
+          transform: rotate(${gsap.utils.random(-30, 30)}deg);
+          opacity: 0;
+          border-radius: 50%;
+        `;
+        container.appendChild(ray);
+
+        gsap.fromTo(ray,
+          {
+            scaleY: 0,
+            opacity: 0,
+          },
+          {
+            scaleY: 1,
+            opacity: 1,
+            duration: 1.5,
+            delay: i * 0.3,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: container,
+              start: "top 70%",
+              end: "top 30%",
+              scrub: 0.5,
+            },
+          }
+        );
+
+        // Oscilación de rayos
+        gsap.to(ray, {
+          x: gsap.utils.random(-20, 20),
+          rotation: gsap.utils.random(-10, 10),
+          opacity: gsap.utils.random(0.3, 0.8),
+          duration: gsap.utils.random(4, 8),
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      }
+
+      // Limpiar canvas al desmontar
+      return () => {
+        window.removeEventListener("resize", drawConstellations);
+      };
+
+    }, container);
+
+    return () => ctx.revert();
+  }, []);
+
+  const nodesInfo = [
+    { title: "Gravedad", desc: "Curvatura espacial", symbol: "⊙" },
+    { title: "Entrelazamiento", desc: "Conexión cuántica", symbol: "⧬" },
+    { title: "Singularidad", desc: "Punto infinito", symbol: "◉" },
+    { title: "Horizonte", desc: "Eventos límite", symbol: "◎" },
+  ];
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative mx-auto mb-32 mt-10 max-w-6xl overflow-hidden rounded-[40px]"
+      style={{
+        minHeight: "800px",
+        background: "radial-gradient(ellipse at center, #0a0a1a 0%, #000010 100%)",
+      }}
+    >
+      {/* Campo de estrellas */}
+      <div ref={starsRef} className="absolute inset-0" />
+
+      {/* Nebulosas de fondo */}
+      <div className="absolute inset-0 overflow-hidden" />
+
+      {/* Hilos cósmicos */}
+      <div ref={threadsRef} className="absolute inset-0 overflow-hidden" />
+
+      {/* Constelaciones */}
+      <div ref={constellationsRef} className="absolute inset-0" />
+
+      {/* Contenido principal */}
+      <div className="relative z-10 px-8 py-16 md:px-16 md:py-24">
+        {/* Indicador de coordenadas */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10">
+            <span className="w-2 h-2 rounded-full bg-[#a19177] animate-pulse" />
+            <span className="text-xs text-gray-400 uppercase tracking-[0.3em]" style={{ fontFamily: editorialFont }}>
+              Coordenadas • Sector 7G
+            </span>
+            <span className="w-2 h-2 rounded-full bg-[#c4b9a8] animate-pulse" style={{ animationDelay: "0.5s" }} />
+          </div>
+        </div>
+
+        {/* Título cósmico */}
+        <h2
+          ref={titleRef}
+          className="text-5xl md:text-7xl lg:text-8xl font-bold text-center mb-8"
+          style={{ fontFamily: editorialFont }}
+        >
+          {"TEJIDO CÓSMICO".split("").map((char, i) => (
+            <span
+              key={i}
+              className="cosmic-char inline-block"
+              style={{
+                color: "white",
+                textShadow: "0 0 30px rgba(161, 145, 119, 0.5), 0 0 60px rgba(196, 185, 168, 0.3)",
+                display: "inline-block",
+                width: char === " " ? "0.3em" : undefined,
+              }}
+            >
+              {char === " " ? "\u00A0" : char}
+            </span>
+          ))}
+        </h2>
+
+        {/* Subtítulo */}
+        <div className="text-center mb-20">
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#a19177]/50 to-transparent" />
+            <span className="text-sm text-gray-500 uppercase tracking-[0.2em]" style={{ fontFamily: editorialFont }}>
+              Espacio-Tiempo Curvado
+            </span>
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#a19177]/50 to-transparent" />
+          </div>
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto" style={{ fontFamily: editorialFont }}>
+            Hilos de luz que conectan realidades a través del scroll
+          </p>
+        </div>
+
+        {/* Nodos orbitales */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+          {nodesInfo.map((node, index) => (
+            <div
+              key={index}
+              ref={(el) => { nodesRef.current[index] = el; }}
+              className="group relative cursor-pointer"
+            >
+              <div className="relative p-8 rounded-2xl bg-white/3 backdrop-blur-sm border border-white/10 hover:border-[#a19177]/50 transition-all duration-500"
+                style={{
+                  boxShadow: "0 0 20px rgba(161, 145, 119, 0.1)",
+                }}
+              >
+                {/* Símbolo orbital */}
+                <div className="text-5xl mb-6 text-center text-[#a19177]"
+                  style={{
+                    textShadow: "0 0 20px rgba(161, 145, 119, 0.5)",
+                  }}
+                >
+                  {node.symbol}
+                </div>
+
+                <h3 className="text-xl font-bold text-white text-center mb-3" style={{ fontFamily: editorialFont }}>
+                  {node.title}
+                </h3>
+                <p className="text-sm text-gray-500 text-center" style={{ fontFamily: editorialFont }}>
+                  {node.desc}
+                </p>
+
+                {/* Anillo orbital */}
+                <div className="absolute inset-0 rounded-2xl border border-transparent group-hover:border-[#a19177]/30 transition-all duration-500"
+                  style={{
+                    transform: "rotate(45deg)",
+                  }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Portal dimensional */}
+        <div className="text-center relative">
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            {[...Array(3)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#a19177]/20"
+                style={{
+                  width: `${100 + i * 50}px`,
+                  height: `${100 + i * 50}px`,
+                  animation: `orbit ${3 + i}s linear infinite`,
+                  animationDirection: i % 2 === 0 ? "normal" : "reverse",
+                }}
+              />
+            ))}
+          </div>
+
+          <button
+            className="group relative px-10 py-5 rounded-full bg-white/5 backdrop-blur-sm border border-white/20 overflow-hidden transition-all duration-300 hover:border-[#a19177]/50 hover:bg-white/10 hover:scale-105 active:scale-95"
+            style={{ fontFamily: editorialFont }}
+            onMouseEnter={(e) => {
+              gsap.to(e.currentTarget, {
+                boxShadow: "0 0 40px rgba(161, 145, 119, 0.4), 0 0 80px rgba(196, 185, 168, 0.2)",
+                duration: 0.3,
+                ease: "power2.out",
+              });
+            }}
+            onMouseLeave={(e) => {
+              gsap.to(e.currentTarget, {
+                boxShadow: "none",
+                duration: 0.3,
+                ease: "power2.out",
+              });
+            }}
+          >
+            <span className="relative z-10 text-white font-medium text-lg">
+              Activar Portal Dimensional
+            </span>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#a19177]/20 via-transparent to-[#c4b9a8]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          </button>
+        </div>
+      </div>
+
+      {/* Indicador de frecuencia cósmica */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-6">
+        <div className="flex items-center gap-2">
+          <div className="w-1 h-8 bg-gradient-to-b from-[#a19177] to-transparent animate-pulse" />
+          <span className="text-xs text-gray-600" style={{ fontFamily: editorialFont }}>
+            432 Hz
+          </span>
+        </div>
+        <div className="w-8 h-px bg-gradient-to-r from-transparent via-[#a19177] to-transparent" />
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-gray-600" style={{ fontFamily: editorialFont }}>
+            7.83 Hz
+          </span>
+          <div className="w-1 h-8 bg-gradient-to-t from-[#c4b9a8] to-transparent animate-pulse" style={{ animationDelay: "0.5s" }} />
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes orbit {
+          from { transform: translate(-50%, -50%) rotate(0deg); }
+          to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+function GSAPCrystalTemporal() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const prismRef = useRef<HTMLDivElement>(null);
+  const crystalGridRef = useRef<HTMLDivElement>(null);
+  const facetsRef = useRef<HTMLDivElement[]>([]);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const lightBeamsRef = useRef<HTMLDivElement>(null);
+  const timeMarkersRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const container = containerRef.current;
+    const prism = prismRef.current;
+    const crystalGrid = crystalGridRef.current;
+    const facets = facetsRef.current.filter(Boolean);
+    const title = titleRef.current;
+    const lightBeams = lightBeamsRef.current;
+    const timeMarkers = timeMarkersRef.current;
+
+    if (!container || !prism || !crystalGrid || !title || !lightBeams || !timeMarkers) return;
+
+    const ctx = gsap.context(() => {
+      // 1. Prisma central con refracción
+      gsap.set(prism, {
+        rotationX: 45,
+        rotationY: 45,
+        scale: 0.3,
+        opacity: 0,
+        filter: "blur(20px)",
+      });
+
+      const prismTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: container,
+          start: "top bottom",
+          end: "top 30%",
+          scrub: 1,
+        },
+      });
+
+      prismTimeline.to(prism, {
+        rotationX: 0,
+        rotationY: 0,
+        scale: 1,
+        opacity: 1,
+        filter: "blur(0px)",
+        duration: 2.5,
+        ease: "power4.out",
+      });
+
+      // Rotación continua sutil del prisma
+      gsap.to(prism, {
+        rotationY: 360,
+        duration: 40,
+        repeat: -1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: container,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 0.3,
+        },
+      });
+
+      // 2. Grid de cristal que se forma
+      const crystalCells = crystalGrid.querySelectorAll('.crystal-cell');
+      
+      crystalCells.forEach((cell, index) => {
+        const row = Math.floor(index / 5);
+        const col = index % 5;
+        
+        gsap.set(cell, {
+          scale: 0,
+          rotation: gsap.utils.random(-90, 90),
+          opacity: 0,
+          filter: "blur(15px)",
+        });
+
+        gsap.to(cell, {
+          scale: 1,
+          rotation: 0,
+          opacity: 1,
+          filter: "blur(0px)",
+          duration: 1.2,
+          delay: (row + col) * 0.05,
+          ease: "elastic.out(1, 0.5)",
+          scrollTrigger: {
+            trigger: crystalGrid,
+            start: "top 90%",
+            end: "top 20%",
+            scrub: 0.6,
+          },
+        });
+
+        // Brillo pulsante
+        gsap.to(cell, {
+          boxShadow: "0 0 20px rgba(161, 145, 119, 0.6), 0 0 40px rgba(196, 185, 168, 0.3)",
+          duration: 2 + Math.random(),
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: Math.random() * 2,
+        });
+      });
+
+      // 3. Facetas que se revelan como diamante
+      facets.forEach((facet, index) => {
+        gsap.set(facet, {
+          scale: 0,
+          opacity: 0,
+          rotation: gsap.utils.random(-45, 45),
+        });
+
+        gsap.to(facet, {
+          scale: 1,
+          opacity: 1,
+          rotation: 0,
+          duration: 1.5,
+          delay: index * 0.15,
+          ease: "back.out(1.7)",
+          scrollTrigger: {
+            trigger: facets[index],
+            start: "top 85%",
+            end: "top 35%",
+            scrub: 0.7,
+          },
+        });
+
+        // Reflejo que se mueve
+        gsap.to(facet, {
+          backgroundPosition: "200% 200%",
+          duration: 3 + index,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      });
+
+      // 4. Título con efecto de refracción tipográfica
+      const titleLetters = title.querySelectorAll('.crystal-char');
+      
+      titleLetters.forEach((letter, index) => {
+        // Espectro de colores
+        const hue = (index / titleLetters.length) * 60 + 20; // Rango de dorados
+        
+        gsap.set(letter, {
+          y: 80,
+          opacity: 0,
+          scale: 0.5,
+          filter: "blur(10px)",
+          color: `hsl(${hue}, 30%, ${60 + (index % 3) * 15}%)`,
+        });
+
+        gsap.to(letter, {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          filter: "blur(0px)",
+          duration: 1.8,
+          delay: index * 0.04,
+          ease: "power4.out",
+          scrollTrigger: {
+            trigger: title,
+            start: "top bottom",
+            end: "top 45%",
+            scrub: 0.8,
+          },
+        });
+
+        // Micro-movimiento de refracción
+        gsap.to(letter, {
+          y: Math.sin(index * 0.8) * 3,
+          x: Math.cos(index * 0.6) * 2,
+          duration: 2,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: index * 0.05,
+        });
+      });
+
+      // 5. Haces de luz que atraviesan
+      for (let i = 0; i < 8; i++) {
+        const beam = document.createElement("div");
+        beam.className = "light-beam";
+        const angle = gsap.utils.random(-45, 45);
+        const startPos = gsap.utils.random(0, 100);
+        
+        beam.style.cssText = `
+          position: absolute;
+          width: ${gsap.utils.random(100, 300)}px;
+          height: 1px;
+          background: linear-gradient(90deg, 
+            transparent, 
+            rgba(255, 255, 255, ${gsap.utils.random(0.1, 0.3)}),
+            rgba(196, 185, 168, ${gsap.utils.random(0.2, 0.5)}),
+            rgba(255, 255, 255, ${gsap.utils.random(0.1, 0.3)}),
+            transparent
+          );
+          left: ${startPos}%;
+          top: ${gsap.utils.random(20, 80)}%;
+          transform: rotate(${angle}deg);
+          opacity: 0;
+          filter: blur(1px);
+        `;
+        lightBeams.appendChild(beam);
+
+        gsap.fromTo(beam,
+          {
+            scaleX: 0,
+            opacity: 0,
+          },
+          {
+            scaleX: 1,
+            opacity: 1,
+            duration: 1.5,
+            delay: i * 0.2,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: container,
+              start: "top 70%",
+              end: "top 30%",
+              scrub: 0.5,
+            },
+          }
+        );
+
+        // Oscilación de luz
+        gsap.to(beam, {
+          x: gsap.utils.random(-30, 30),
+          y: gsap.utils.random(-20, 20),
+          opacity: gsap.utils.random(0.3, 0.8),
+          duration: gsap.utils.random(4, 7),
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      }
+
+      // 6. Marcadores temporales
+      const markers = timeMarkers.querySelectorAll('.time-marker');
+      
+      markers.forEach((marker, index) => {
+        gsap.set(marker, {
+          scaleX: 0,
+          opacity: 0,
+          transformOrigin: "left center",
+        });
+
+        gsap.to(marker, {
+          scaleX: 1,
+          opacity: 1,
+          duration: 1.2,
+          delay: index * 0.25,
+          ease: "power3.inOut",
+          scrollTrigger: {
+            trigger: timeMarkers,
+            start: "top 80%",
+            end: "top 30%",
+            scrub: 0.7,
+          },
+        });
+
+        // Pulso del marcador
+        const dot = marker.querySelector('.marker-dot');
+        if (dot) {
+          gsap.to(dot, {
+            scale: 1.5,
+            opacity: 0.5,
+            duration: 1.5,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+            delay: index * 0.3,
+          });
+        }
+      });
+
+      // 7. Polvo de cristal flotante
+      for (let i = 0; i < 30; i++) {
+        const crystal = document.createElement("div");
+        crystal.className = "crystal-dust";
+        const size = gsap.utils.random(2, 6);
+        
+        crystal.style.cssText = `
+          position: absolute;
+          width: ${size}px;
+          height: ${size}px;
+          background: white;
+          clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+          left: ${gsap.utils.random(0, 100)}%;
+          top: ${gsap.utils.random(0, 100)}%;
+          opacity: 0;
+          box-shadow: 0 0 ${size * 2}px rgba(196, 185, 168, 0.8);
+        `;
+        container.appendChild(crystal);
+
+        gsap.fromTo(crystal,
+          {
+            scale: 0,
+            opacity: 0,
+            rotation: 0,
+          },
+          {
+            scale: gsap.utils.random(0.5, 1.5),
+            opacity: gsap.utils.random(0.2, 0.6),
+            rotation: gsap.utils.random(-180, 180),
+            duration: 2,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: container,
+              start: "top bottom",
+              end: "top 50%",
+              scrub: 0.4,
+            },
+          }
+        );
+
+        // Flotación del polvo
+        gsap.to(crystal, {
+          y: gsap.utils.random(-100, 100),
+          x: gsap.utils.random(-50, 50),
+          rotation: gsap.utils.random(-360, 360),
+          duration: gsap.utils.random(5, 12),
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: Math.random() * 3,
+        });
+      }
+
+      // 8. Gradiente de refracción en el fondo
+      const refractions = document.querySelectorAll('.refraction-layer');
+      
+      refractions.forEach((refraction, index) => {
+        gsap.to(refraction, {
+          backgroundPosition: `${100 + index * 50}% ${100 + index * 30}%`,
+          duration: 10 + index * 3,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          scrollTrigger: {
+            trigger: container,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 0.2,
+          },
+        });
+      });
+
+    }, container);
+
+    return () => ctx.revert();
+  }, []);
+
+  const facetsData = [
+    { title: "Claridad", value: "99.9%", color: "#2a2520" },
+    { title: "Pureza", value: "VVS1", color: "#3a3530" },
+    { title: "Talla", value: "Excellent", color: "#4a4540" },
+    { title: "Quilates", value: "∞", color: "#5a5550" },
+  ];
+
+  const timeline = [
+    { year: "2020", event: "Formación del Cristal" },
+    { year: "2021", event: "Primera Refracción" },
+    { year: "2022", event: "Expansión Prismática" },
+    { year: "2023", event: "Cristalización Total" },
+    { year: "2024", event: "Resonancia Lumínica" },
+  ];
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative mx-auto mb-32 mt-10 max-w-6xl overflow-hidden rounded-[40px]"
+      style={{
+        minHeight: "800px",
+        background: "linear-gradient(180deg, #0a0a0a 0%, #111111 30%, #0d0d0d 70%, #0a0a0a 100%)",
+      }}
+    >
+      {/* Capas de refracción */}
+      <div className="refraction-layer absolute inset-0 opacity-5"
+        style={{
+          background: "radial-gradient(circle at 30% 50%, #a19177 0%, transparent 50%)",
+          backgroundSize: "200% 200%",
+        }}
+      />
+      <div className="refraction-layer absolute inset-0 opacity-3"
+        style={{
+          background: "radial-gradient(circle at 70% 30%, #c4b9a8 0%, transparent 50%)",
+          backgroundSize: "200% 200%",
+        }}
+      />
+      <div className="refraction-layer absolute inset-0 opacity-4"
+        style={{
+          background: "radial-gradient(circle at 50% 70%, #8a7f6e 0%, transparent 50%)",
+          backgroundSize: "200% 200%",
+        }}
+      />
+
+      {/* Líneas de guía cristalográficas */}
+      <div className="absolute inset-0 opacity-[0.02]">
+        {[...Array(6)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute h-px w-full"
+            style={{
+              top: `${20 + i * 15}%`,
+              background: `linear-gradient(90deg, transparent, white, transparent)`,
+              transform: `rotate(${i % 2 === 0 ? 5 : -3}deg)`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Contenido principal */}
+      <div className="relative z-10 px-8 py-16 md:px-16 md:py-24">
+        {/* Prisma central */}
+        <div className="flex justify-center mb-16" style={{ perspective: "1000px" }}>
+          <div
+            ref={prismRef}
+            className="relative"
+            style={{
+              width: "120px",
+              height: "120px",
+              transformStyle: "preserve-3d",
+            }}
+          >
+            {/* Caras del prisma */}
+            {[...Array(6)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute inset-0 rounded-2xl border border-white/20"
+                style={{
+                  background: `linear-gradient(135deg, 
+                    rgba(161, 145, 119, ${0.1 + i * 0.05}), 
+                    rgba(196, 185, 168, ${0.05 + i * 0.03})
+                  )`,
+                  backdropFilter: "blur(10px)",
+                  transform: `rotateY(${i * 60}deg) translateZ(60px)`,
+                  boxShadow: "0 0 30px rgba(161, 145, 119, 0.2) inset",
+                }}
+              />
+            ))}
+            
+            {/* Luz central */}
+            <div className="absolute inset-0 flex items-center justify-center"
+              style={{
+                transform: "translateZ(61px)",
+              }}
+            >
+              <div className="w-8 h-8 rounded-full bg-white/80 animate-pulse"
+                style={{
+                  boxShadow: "0 0 20px white, 0 0 60px rgba(196, 185, 168, 0.6)",
+                }}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Título cristalográfico */}
+        <div className="text-center mb-12">
+          <h2
+            ref={titleRef}
+            className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6"
+            style={{ fontFamily: editorialFont }}
+          >
+            {"CRISTALOGRAFÍA".split("").map((char, i) => (
+              <span
+                key={i}
+                className="crystal-char inline-block"
+                style={{
+                  display: "inline-block",
+                  textShadow: "0 0 40px rgba(196, 185, 168, 0.4)",
+                }}
+              >
+                {char === " " ? "\u00A0" : char}
+              </span>
+            ))}
+          </h2>
+          
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto" style={{ fontFamily: editorialFont }}>
+            La luz se descompone en infinitas posibilidades al atravesar el prisma del tiempo
+          </p>
+        </div>
+
+        {/* Grid de cristal */}
+        <div
+          ref={crystalGridRef}
+          className="grid grid-cols-5 gap-2 mb-16 max-w-md mx-auto opacity-40"
+        >
+          {[...Array(25)].map((_, i) => (
+            <div
+              key={i}
+              className="crystal-cell aspect-square rounded"
+              style={{
+                background: `linear-gradient(135deg, 
+                  rgba(161, 145, 119, ${0.1 + (i % 5) * 0.02}), 
+                  rgba(196, 185, 168, ${0.05 + (i % 3) * 0.02})
+                )`,
+                border: "1px solid rgba(255,255,255,0.1)",
+                boxShadow: "0 0 10px rgba(161, 145, 119, 0.2)",
+                backdropFilter: "blur(5px)",
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Facetas de diamante */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+          {facetsData.map((facet, index) => (
+            <div
+              key={index}
+              ref={(el) => { facetsRef.current[index] = el; }}
+              className="group relative cursor-pointer"
+            >
+              <div
+                className="relative p-8 rounded-2xl overflow-hidden transition-all duration-500"
+                style={{
+                  background: `linear-gradient(135deg, ${facet.color}11, ${facet.color}05)`,
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  backdropFilter: "blur(20px)",
+                  backgroundSize: "200% 200%",
+                  backgroundPosition: "0% 0%",
+                }}
+              >
+                {/* Brillo de faceta */}
+                <div className="absolute -top-10 -right-10 w-20 h-20 rounded-full bg-white/5 blur-xl group-hover:bg-white/10 transition-all duration-500" />
+                
+                <div className="relative z-10">
+                  <h3 className="text-sm text-gray-500 uppercase tracking-[0.2em] mb-3" style={{ fontFamily: editorialFont }}>
+                    {facet.title}
+                  </h3>
+                  <p className="text-3xl font-bold text-white" style={{ fontFamily: editorialFont }}>
+                    {facet.value}
+                  </p>
+                </div>
+
+                {/* Borde cristalino */}
+                <div className="absolute inset-0 rounded-2xl border border-transparent group-hover:border-white/20 transition-all duration-500"
+                  style={{
+                    clipPath: "polygon(0 0, 100% 0, 85% 100%, 15% 100%)",
+                  }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Haces de luz */}
+        <div ref={lightBeamsRef} className="relative h-32 mb-16" />
+
+        {/* Timeline cristalográfico */}
+        <div ref={timeMarkersRef} className="relative max-w-3xl mx-auto">
+          <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent" />
+          
+          {timeline.map((item, index) => (
+            <div key={index} className="time-marker relative pl-20 pb-8 last:pb-0">
+              {/* Punto marcador */}
+              <div className="marker-dot absolute left-7 w-3 h-3 rounded-full bg-[#a19177]"
+                style={{
+                  transform: "translateX(-50%)",
+                  boxShadow: "0 0 10px #a19177, 0 0 20px #c4b9a8",
+                }}
+              />
+              
+              {/* Línea horizontal */}
+              <div className="absolute left-10 top-1.5 w-6 h-px bg-gradient-to-r from-white/30 to-transparent" />
+              
+              {/* Contenido */}
+              <div className="group cursor-pointer">
+                <span className="text-xs text-[#a19177] tracking-[0.3em] uppercase" style={{ fontFamily: editorialFont }}>
+                  {item.year}
+                </span>
+                <h4 className="text-lg font-bold text-white mt-1 group-hover:text-[#c4b9a8] transition-colors duration-300" style={{ fontFamily: editorialFont }}>
+                  {item.event}
+                </h4>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Botón cristalino */}
+        <div className="text-center mt-16">
+          <button
+            className="group relative px-12 py-5 rounded-full overflow-hidden transition-all duration-500"
+            style={{
+              background: "linear-gradient(135deg, rgba(161, 145, 119, 0.2), rgba(196, 185, 168, 0.1))",
+              border: "1px solid rgba(255,255,255,0.1)",
+              backdropFilter: "blur(20px)",
+            }}
+            onMouseEnter={(e) => {
+              gsap.to(e.currentTarget, {
+                borderColor: "rgba(196, 185, 168, 0.5)",
+                boxShadow: "0 0 40px rgba(161, 145, 119, 0.3), 0 0 80px rgba(196, 185, 168, 0.1)",
+                scale: 1.05,
+                duration: 0.4,
+                ease: "power2.out",
+              });
+            }}
+            onMouseLeave={(e) => {
+              gsap.to(e.currentTarget, {
+                borderColor: "rgba(255,255,255,0.1)",
+                boxShadow: "none",
+                scale: 1,
+                duration: 0.4,
+                ease: "power2.out",
+              });
+            }}
+          >
+            <span className="relative z-10 text-white font-medium" style={{ fontFamily: editorialFont }}>
+              Iniciar Cristalización
+            </span>
+            {/* Brillo que se mueve */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 translate-x-[-150%] group-hover:translate-x-[150%] transition-transform duration-700" />
+          </button>
+        </div>
+      </div>
+
+      {/* Indicador de pureza */}
+      <div className="absolute top-6 right-6 flex items-center gap-3">
+        <div className="flex items-center gap-1">
+          {[...Array(5)].map((_, i) => (
+            <div
+              key={i}
+              className="w-1 h-4 bg-gradient-to-b from-white to-transparent"
+              style={{
+                opacity: 0.3 + i * 0.15,
+                transform: `rotate(${i * 2}deg)`,
+              }}
+            />
+          ))}
+        </div>
+        <span className="text-xs text-gray-500 tracking-[0.2em]" style={{ fontFamily: editorialFont }}>
+          VVS1
+        </span>
+      </div>
+
+      <style>{`
+        @keyframes prism-rotate {
+          from { transform: rotateY(0deg); }
+          to { transform: rotateY(360deg); }
+        }
+        
+        .crystal-dust {
+          animation: dust-float 6s ease-in-out infinite;
+        }
+        
+        @keyframes dust-float {
+          0%, 100% { transform: translate(0, 0) rotate(0deg); }
+          25% { transform: translate(10px, -20px) rotate(90deg); }
+          50% { transform: translate(-5px, -40px) rotate(180deg); }
+          75% { transform: translate(-15px, -10px) rotate(270deg); }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+// FIN PRUEBAS JOSE
+
 // ── Floating particles ────────────────────────────────────────────────────
 function pseudoRandom(seed: number) {
   const x = Math.sin(seed * 999.91) * 43758.5453123;
@@ -631,6 +3832,13 @@ export default function ProjectsPage() {
   const [scrolled, setScrolled] = useState<boolean>(false);
   const heroRef = useRef<HTMLDivElement>(null);
 
+  const projectsSectionRef = useRef<HTMLElement>(null);
+  const projectsHeaderRef = useRef<HTMLDivElement>(null);
+  const projectsTitleRef = useRef<HTMLHeadingElement>(null);
+  const projectsTextRef = useRef<HTMLParagraphElement>(null);
+  const projectsLineRef = useRef<HTMLDivElement>(null);
+  const projectsCardsRef = useRef<HTMLDivElement[]>([]);
+
   const { language, toggleLanguage, t } = useLanguage();
   const parallaxOffset = useParallax(0.06);
 
@@ -708,6 +3916,127 @@ export default function ProjectsPage() {
 
     return () => observers.forEach((o) => o.disconnect());
   }, []);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const section = projectsSectionRef.current;
+    const header = projectsHeaderRef.current;
+    const title = projectsTitleRef.current;
+    const text = projectsTextRef.current;
+    const line = projectsLineRef.current;
+    const cards = projectsCardsRef.current;
+
+    if (!section || !header || !title || !text || !line || cards.length === 0) {
+      return;
+    }
+
+    const ctx = gsap.context(() => {
+      gsap.set(header, {
+        y: 26,
+        opacity: 0,
+        filter: "blur(6px)",
+      });
+
+      gsap.set(title, {
+        yPercent: 105,
+        rotate: 1.2,
+      });
+
+      gsap.set(text, {
+        y: 22,
+        opacity: 0,
+        filter: "blur(4px)",
+      });
+
+      gsap.set(line, {
+        scaleX: 0,
+        transformOrigin: "left center",
+      });
+
+      gsap.set(cards, {
+        y: 46,
+        opacity: 0,
+        scale: 0.985,
+        filter: "blur(5px)",
+      });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top 70%",
+          end: "top 25%",
+          scrub: 0.7,
+        },
+      });
+
+      tl.to(header, {
+        y: 0,
+        opacity: 1,
+        filter: "blur(0px)",
+        duration: 0.8,
+        ease: "power3.out",
+      })
+        .to(
+          title,
+          {
+            yPercent: 0,
+            rotate: 0,
+            duration: 0.9,
+            ease: "power3.out",
+          },
+          "-=0.55"
+        )
+        .to(
+          line,
+          {
+            scaleX: 1,
+            duration: 0.8,
+            ease: "power2.out",
+          },
+          "-=0.45"
+        )
+        .to(
+          text,
+          {
+            y: 0,
+            opacity: 1,
+            filter: "blur(0px)",
+            duration: 0.85,
+            ease: "power3.out",
+          },
+          "-=0.65"
+        )
+        .to(
+          cards,
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            filter: "blur(0px)",
+            stagger: 0.08,
+            duration: 0.9,
+            ease: "power3.out",
+          },
+          "-=0.4"
+        );
+
+      cards.forEach((card, index) => {
+        gsap.to(card, {
+          y: index % 2 === 0 ? -18 : -10,
+          ease: "none",
+          scrollTrigger: {
+            trigger: card,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      });
+    }, section);
+
+    return () => ctx.revert();
+  }, [projects.length]);
 
   const navLinks = useMemo(
     () => [
@@ -1361,9 +4690,11 @@ export default function ProjectsPage() {
         </section>
 
         <section
+          ref={projectsSectionRef}
           id="projects"
           className="relative overflow-hidden scroll-mt-28 bg-[#f7f6f3] py-32"
         >
+
           <motion.div
             className="pointer-events-none absolute -left-40 top-1/3 h-[600px] w-[600px] rounded-full"
             animate={{ x: [0, 40, 0], y: [0, -30, 0] }}
@@ -1415,7 +4746,35 @@ export default function ProjectsPage() {
           </div>
 
           <div className="mx-auto max-w-6xl px-6 sm:px-8">
-            <div className="mb-20 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            {/* PRUEBAS JOSE */}
+            <GSAPScrollShowcase />
+
+            <div className="h-20" />
+
+            {/* Segundo efecto - Holográfico */}
+            <GSAPHolographicReveal />
+
+            <div className="h-20" />
+
+            <GSAPGeometricDeconstruction />
+
+            <div className="h-20" />
+
+            <GSAPLiquidDimension />
+
+            <div className="h-20" />
+
+            <GSAPCosmicWeave />
+
+            <div className="h-20" />
+
+            <GSAPCrystalTemporal/>
+
+            {/* FIN PRUEBAS JOSE */}
+            <div
+              ref={projectsHeaderRef}
+              className="mb-20 flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
+            >
               <div>
                 <motion.div
                   className="overflow-hidden"
@@ -1436,61 +4795,46 @@ export default function ProjectsPage() {
                 </motion.div>
 
                 <div className="mt-3 overflow-hidden">
-                  <motion.h2
+                  <h2
+                    ref={projectsTitleRef}
                     className="text-[clamp(1.9rem,4vw,3.25rem)] font-normal leading-tight text-[#171717]"
                     style={{ fontFamily: editorialFont }}
-                    initial={{ y: "100%" }}
-                    whileInView={{ y: "0%" }}
-                    transition={{
-                      duration: 0.9,
-                      delay: 0.1,
-                      ease: [0.16, 1, 0.3, 1],
-                    }}
-                    viewport={{ once: true }}
                   >
                     {page.projectsTitle}
-                  </motion.h2>
+                  </h2>
                 </div>
 
-                <motion.div
+                <div
+                  ref={projectsLineRef}
                   className="mt-4 h-px bg-gradient-to-r from-[#b8ae9f] to-transparent"
-                  initial={{ width: 0 }}
-                  whileInView={{ width: "100%" }}
-                  transition={{
-                    duration: 1.1,
-                    delay: 0.4,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                  viewport={{ once: true }}
                   style={{ maxWidth: "280px" }}
                 />
               </div>
 
-              <motion.p
+              <p
+                ref={projectsTextRef}
                 className="max-w-xl text-sm leading-[1.95] text-[#66615c]"
                 style={{ fontFamily: editorialFont }}
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.2,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                viewport={{ once: true }}
               >
                 {page.projectsSubtitle}
-              </motion.p>
+              </p>
             </div>
 
             <div className="grid gap-5">
               {projects.map((project, index) => (
-                <ProjectCard
+                <div
                   key={project.id}
-                  project={project}
-                  index={index}
-                  page={page}
-                  focusOnWhite={focusOnWhite}
-                />
+                  ref={(el) => {
+                    if (el) projectsCardsRef.current[index] = el;
+                  }}
+                >
+                  <ProjectCard
+                    project={project}
+                    index={index}
+                    page={page}
+                    focusOnWhite={focusOnWhite}
+                  />
+                </div>
               ))}
             </div>
 
@@ -1831,3 +5175,4 @@ function HeroInteractiveLayerSection() {
     </div>
   );
 }
+
