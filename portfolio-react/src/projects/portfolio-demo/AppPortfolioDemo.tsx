@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import {
   NavLink,
   Route,
@@ -13,15 +13,24 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 
-import OperationsOverviewPage from "./modules/operations-overview/OperationsOverviewPage";
-import PerformanceAnalyticsPage from "./modules/performance-analytics/PerformanceAnalyticsPage";
-import MobileOrdersListPage from "./modules/mobile-orders/MobileOrdersListPage";
-import MobileOrderDetailPage from "./modules/mobile-orders/MobileOrderDetailPage";
-import ProductionMonitoringPage from "./modules/production-monitoring/productionMonitoringPage";
-
 import PortfolioDemoIntroModal from "./components/PortfolioDemoIntroModal";
-
 import { useLanguage } from "../../translations/LanguageContext";
+
+const OperationsOverviewPage = lazy(
+  () => import("./modules/operations-overview/OperationsOverviewPage")
+);
+const PerformanceAnalyticsPage = lazy(
+  () => import("./modules/performance-analytics/PerformanceAnalyticsPage")
+);
+const MobileOrdersListPage = lazy(
+  () => import("./modules/mobile-orders/MobileOrdersListPage")
+);
+const MobileOrderDetailPage = lazy(
+  () => import("./modules/mobile-orders/MobileOrderDetailPage")
+);
+const ProductionMonitoringPage = lazy(
+  () => import("./modules/production-monitoring/productionMonitoringPage")
+);
 
 const navLinkClass = ({ isActive }: NavLinkRenderProps): string =>
   `rounded-xl border px-4 py-2 text-sm font-semibold transition whitespace-nowrap ${
@@ -29,6 +38,17 @@ const navLinkClass = ({ isActive }: NavLinkRenderProps): string =>
       ? "border-zinc-300 bg-white text-zinc-900 shadow-sm"
       : "border-transparent bg-transparent text-zinc-700 hover:border-zinc-200 hover:bg-white hover:text-zinc-900"
   }`;
+
+function ProjectPageFallback() {
+  return (
+    <div className="flex min-h-[55vh] items-center justify-center" role="status">
+      <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">
+        <span className="h-2 w-2 animate-pulse rounded-full bg-zinc-500" />
+        Cargando módulo
+      </div>
+    </div>
+  );
+}
 
 function Header() {
   const navigate = useNavigate();
@@ -91,9 +111,10 @@ function Header() {
           </button>
 
           <button
-            onClick={() => setMenuOpen((o) => !o)}
+            onClick={() => setMenuOpen((open) => !open)}
             type="button"
-            aria-label="Toggle menu"
+            aria-label={language === "es" ? "Alternar menú" : "Toggle menu"}
+            aria-expanded={menuOpen}
             className="inline-flex items-center justify-center rounded-xl border border-zinc-200 bg-white p-2 text-zinc-700 shadow-sm transition hover:bg-zinc-50 lg:hidden"
           >
             {menuOpen ? (
@@ -135,35 +156,22 @@ function Header() {
 export default function AppPortfolioDemo() {
   return (
     <div className="min-h-screen bg-zinc-50">
-      {/* Modal informativo — se muestra solo la primera vez */}
       <PortfolioDemoIntroModal />
-
       <Header />
 
       <main className="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6">
-        <Routes>
-          <Route index element={<OperationsOverviewPage />} />
-
-          <Route
-            path="performance"
-            element={<PerformanceAnalyticsPage />}
-          />
-
-          <Route
-            path="mobile-orders"
-            element={<MobileOrdersListPage />}
-          />
-
-          <Route
-            path="mobile-orders/:id"
-            element={<MobileOrderDetailPage />}
-          />
-
-          <Route
-            path="production-monitoring"
-            element={<ProductionMonitoringPage />}
-          />
-        </Routes>
+        <Suspense fallback={<ProjectPageFallback />}>
+          <Routes>
+            <Route index element={<OperationsOverviewPage />} />
+            <Route path="performance" element={<PerformanceAnalyticsPage />} />
+            <Route path="mobile-orders" element={<MobileOrdersListPage />} />
+            <Route path="mobile-orders/:id" element={<MobileOrderDetailPage />} />
+            <Route
+              path="production-monitoring"
+              element={<ProductionMonitoringPage />}
+            />
+          </Routes>
+        </Suspense>
       </main>
     </div>
   );

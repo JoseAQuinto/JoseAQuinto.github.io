@@ -14,6 +14,13 @@ export const translations = {
             subtitle: "Junior Full-Stack con foco en React",
             intro:
                 "1 año de experiencia desarrollando aplicaciones empresariales en entornos profesionales. Especializado en React y backend con .NET.",
+            skipToContent: "Saltar al contenido",
+            viewSelectedWork: "Ver proyectos seleccionados",
+            availabilityLabel: "Disponibilidad",
+            availabilityText:
+                "Abierto a oportunidades frontend y full-stack con foco en producto.",
+            experienceLabel: "Años de experiencia",
+            selectedProjectsLabel: "Proyectos",
             aboutTitle: "Sobre mí",
             projectsTitle: "Proyectos",
             projectsSubtitle:
@@ -81,6 +88,24 @@ export const translations = {
                     href: "/portfolio-demo",
                     cta: "Ver demo",
                     tags: ["React", "TypeScript", "Tailwind", "Mock API"],
+                },
+                {
+                    id: "stock-system",
+                    title: "Stock System",
+                    description:
+                        "Sistema de stock con React, TypeScript y Supabase. Incluye filtros, tabla, alta, edición, borrado y configuración visual persistente.",
+                    tags: ["React", "TypeScript", "Supabase", "Stock"],
+                    href: "/stock-system",
+                    cta: "Ver proyecto",
+                },
+                {
+                    id: "api-utilities",
+                    title: "API Utilities",
+                    description:
+                        "Módulo visual estilo Swagger para documentar y probar utilidades API con React y Supabase. Incluye ejemplos de peticiones, respuestas JSON y una estructura preparada para Edge Functions.",
+                    tags: ["React", "TypeScript", "Supabase", "API", "Swagger UI"],
+                    href: "/api-utilities",
+                    cta: "Ver proyecto",
                 },
             ],
         },
@@ -400,6 +425,13 @@ export const translations = {
             subtitle: "Junior Full-Stack focused on React",
             intro:
                 "1 year of experience building enterprise applications in professional environments. Specialized in React and backend with .NET.",
+            skipToContent: "Skip to content",
+            viewSelectedWork: "View selected projects",
+            availabilityLabel: "Availability",
+            availabilityText:
+                "Open to frontend and full-stack product-focused opportunities.",
+            experienceLabel: "Years of experience",
+            selectedProjectsLabel: "Projects",
             aboutTitle: "About me",
             projectsTitle: "Projects",
             projectsSubtitle:
@@ -467,6 +499,24 @@ export const translations = {
                     href: "/portfolio-demo",
                     cta: "View demo",
                     tags: ["React", "TypeScript", "Tailwind", "Mock API"],
+                },
+                {
+                    id: "stock-system",
+                    title: "Stock System",
+                    description:
+                        "Stock management system built with React, TypeScript and Supabase. Includes filters, tables, create, edit and delete flows, plus persistent visual settings.",
+                    tags: ["React", "TypeScript", "Supabase", "Stock"],
+                    href: "/stock-system",
+                    cta: "View project",
+                },
+                {
+                    id: "api-utilities",
+                    title: "API Utilities",
+                    description:
+                        "Swagger-inspired interface for documenting and testing API utilities with React and Supabase. Includes request examples, JSON responses and an Edge Functions-ready structure.",
+                    tags: ["React", "TypeScript", "Supabase", "API", "Swagger UI"],
+                    href: "/api-utilities",
+                    cta: "View project",
                 },
             ],
         },

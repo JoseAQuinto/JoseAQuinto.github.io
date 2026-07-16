@@ -1,14 +1,21 @@
 @import "tailwindcss";
 
-/* fuerza estrategia "class" para dark: */
+/* Fuerza estrategia "class" para dark. */
 @custom-variant dark (&:where(.dark, .dark *));
-
 
 html,
 body {
   height: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html,
+  body {
+    scroll-behavior: auto;
+  }
 }
