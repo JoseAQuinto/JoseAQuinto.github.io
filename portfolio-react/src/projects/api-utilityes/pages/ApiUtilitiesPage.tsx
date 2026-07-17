@@ -1,16 +1,16 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import ApiEndpointCard from "../components/ApiEndpointCard";
 import ApiHeader from "../components/ApiHeader";
 import NotesTablePanel from "../components/NotesTablePanel";
 import PlaygroundPanel from "../components/PlaygroundPanel";
 import SectionTabs from "../components/SectionTabs";
+import UserSessionInfo from "../components/UserSessionInfo";
 import UtilitySidebar from "../components/UtilitySidebar";
 import { getCrudEndpoints } from "../data/crudEndpoints";
 import { getUtilityEndpoints } from "../data/utilityEndpoints";
 import { executeCrudEndpoint } from "../services/notesApi";
-import type { ApiEndpoint, ApiSection } from "../types/api";
-import UserSessionInfo from "../components/UserSessionInfo";
 import { useApiUtilitiesLanguage } from "../translations/ApiUtilitiesLanguageProvider";
+import type { ApiEndpoint, ApiSection } from "../types/api";
 
 type NoteRow = {
   id: number;
@@ -21,101 +21,70 @@ type NoteRow = {
 
 export default function ApiUtilitiesPage() {
   const { language, t } = useApiUtilitiesLanguage();
-
-  const initialUtilityEndpoints = getUtilityEndpoints();
-
-  const [activeSection, setActiveSection] =
-    useState<ApiSection>("utilities");
-
-  const [selectedId, setSelectedId] =
-    useState<string>(initialUtilityEndpoints[0]?.id ?? "");
-
+  const [activeSection, setActiveSection] = useState<ApiSection>("utilities");
+  const [selectedId, setSelectedId] = useState("");
   const [notesRows, setNotesRows] = useState<NoteRow[]>([]);
   const [notesLoading, setNotesLoading] = useState(false);
   const [notesError, setNotesError] = useState("");
 
   const endpoints = useMemo<ApiEndpoint[]>(() => {
+    // Endpoint copy is read from the same persisted language key.
+    void language;
     return activeSection === "utilities"
       ? getUtilityEndpoints()
       : getCrudEndpoints();
   }, [activeSection, language]);
 
-  useEffect(() => {
-    setSelectedId(endpoints[0]?.id ?? "");
-  }, [activeSection, endpoints]);
+  const selectedEndpoint = useMemo(
+    () => endpoints.find((item) => item.id === selectedId) ?? endpoints[0],
+    [endpoints, selectedId]
+  );
 
-  const selectedEndpoint = useMemo(() => {
-    return (
-      endpoints.find((item) => item.id === selectedId) ??
-      endpoints[0]
-    );
-  }, [endpoints, selectedId]);
-
-  const loadNotesTable = async () => {
+  const loadNotesTable = useCallback(async () => {
     setNotesLoading(true);
     setNotesError("");
 
     try {
       const result = await executeCrudEndpoint("get-notes", {});
-      const normalizedRows = Array.isArray(result)
-        ? (result as NoteRow[])
-        : [];
-
-      setNotesRows(normalizedRows);
+      setNotesRows(Array.isArray(result) ? (result as NoteRow[]) : []);
     } catch (error) {
-      const message =
-        error instanceof Error ? error.message : t.unknownError;
-      setNotesError(message);
+      setNotesError(error instanceof Error ? error.message : t.unknownError);
     } finally {
       setNotesLoading(false);
     }
-  };
+  }, [t.unknownError]);
 
   useEffect(() => {
-    if (activeSection === "crud") {
-      void loadNotesTable();
-    }
-  }, [activeSection]);
+    if (activeSection === "crud") void loadNotesTable();
+  }, [activeSection, loadNotesTable]);
 
-  if (!selectedEndpoint) {
-    return null;
-  }
+  if (!selectedEndpoint) return null;
 
   return (
-    <div className="min-h-screen bg-[#f7f6f3] text-[#1a1a1a]">
-      <div
-        className="pointer-events-none absolute inset-0 opacity-100"
-        style={{
-          background:
-            "radial-gradient(circle at 80% 20%, rgba(186,176,163,0.12), transparent 60%)",
-        }}
-      />
+    <div className="min-h-screen bg-slate-100 font-sans text-slate-900">
+      <ApiHeader />
 
-      <div className="relative mx-auto max-w-7xl px-6 py-10 sm:px-8">
-        <ApiHeader />
+      <main className="mx-auto max-w-[1440px] px-4 py-5 sm:px-6 sm:py-7 lg:px-8">
+        <div className="mb-5 flex flex-col gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-5">
+          <SectionTabs activeSection={activeSection} onChange={setActiveSection} />
+          <UserSessionInfo />
+        </div>
 
-        <UserSessionInfo />
-
-        <SectionTabs
-          activeSection={activeSection}
-          onChange={setActiveSection}
-        />
-
-        <div className="grid gap-6 lg:grid-cols-[300px_minmax(0,1fr)]">
+        <div className="grid min-w-0 gap-5 xl:grid-cols-[290px_minmax(0,1fr)]">
           <UtilitySidebar
             endpoints={endpoints}
-            selectedId={selectedId}
+            selectedId={selectedEndpoint.id}
             onSelect={setSelectedId}
           />
 
-          <div className="grid gap-6">
+          <div className="grid min-w-0 gap-5">
             <ApiEndpointCard endpoint={selectedEndpoint} />
-
             <PlaygroundPanel
               endpoint={selectedEndpoint}
-              onCrudMutationSuccess={activeSection === "crud" ? loadNotesTable : undefined}
+              onCrudMutationSuccess={
+                activeSection === "crud" ? loadNotesTable : undefined
+              }
             />
-
             {activeSection === "crud" ? (
               <NotesTablePanel
                 rows={notesRows}
@@ -126,7 +95,7 @@ export default function ApiUtilitiesPage() {
             ) : null}
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

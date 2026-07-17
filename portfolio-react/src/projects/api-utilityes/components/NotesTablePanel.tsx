@@ -1,14 +1,6 @@
 import { useApiUtilitiesLanguage } from "../translations/ApiUtilitiesLanguageProvider";
 
-const editorialFont = "'Georgia', 'Times New Roman', serif";
-
-type NoteRow = {
-  id: number;
-  title: string;
-  content: string;
-  created_at: string;
-};
-
+type NoteRow = { id: number; title: string; content: string; created_at: string };
 type Props = {
   rows: NoteRow[];
   isLoading: boolean;
@@ -18,11 +10,7 @@ type Props = {
 
 function formatDate(value: string) {
   const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) {
-    return value;
-  }
-
+  if (Number.isNaN(date.getTime())) return value;
   return new Intl.DateTimeFormat(undefined, {
     dateStyle: "short",
     timeStyle: "short",
@@ -38,139 +26,59 @@ export default function NotesTablePanel({
   const { t } = useApiUtilitiesLanguage();
 
   return (
-    <section className="rounded-md border border-[#e3ddd3] bg-white p-6 shadow-sm">
-      {/* Header */}
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4 border-b border-[#e6e0d7] pb-4">
+    <section className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+      <div className="flex flex-col gap-4 border-b border-slate-200 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
         <div>
-          <p
-            className="text-[11px] uppercase tracking-wider text-[#8e877f]"
-            style={{ fontFamily: editorialFont }}
-          >
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
             {t.notesTableEyebrow}
           </p>
-
-          <h3
-            className="mt-1 text-lg font-semibold text-[#1c1a18]"
-            style={{ fontFamily: editorialFont }}
-          >
-            {t.notesTableTitle}
-          </h3>
-
-          <p
-            className="mt-1 text-sm text-[#6f6861]"
-            style={{ fontFamily: editorialFont }}
-          >
-            {t.notesTableDescription}
-          </p>
+          <h3 className="mt-1 text-lg font-semibold text-slate-950">{t.notesTableTitle}</h3>
+          <p className="mt-1 text-sm text-slate-600">{t.notesTableDescription}</p>
         </div>
-
         <button
           type="button"
           onClick={() => void onRefresh()}
-          className="
-            inline-flex items-center
-            rounded-md
-            border border-[#d6cfc6]
-            bg-[#f7f4ef]
-            px-4 py-2
-            text-xs font-medium
-            uppercase tracking-wide
-            text-[#5f5953]
-            transition
-            hover:bg-[#f0ebe4]
-            hover:border-[#c9c1b7]
-            active:bg-[#e8e1d8]
-          "
-          style={{ fontFamily: editorialFont }}
+          disabled={isLoading}
+          className="h-10 rounded-lg border border-slate-300 bg-white px-4 text-xs font-semibold text-slate-700 transition hover:bg-slate-50 disabled:opacity-60"
         >
           {t.refreshTable}
         </button>
       </div>
 
-      {/* Error */}
       {errorMessage ? (
-        <div className="mb-4 rounded-md border border-[#f0cfcf] bg-[#fff5f5] px-4 py-3 text-sm text-[#9b3a3a]">
+        <div className="m-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
           {errorMessage}
         </div>
       ) : null}
 
-      {/* Table */}
-      <div className="overflow-hidden rounded-md border border-[#e3ddd3]">
-        <div className="overflow-x-auto">
-          <table className="min-w-full border-collapse text-left">
-            <thead>
-              <tr className="bg-[#f6f3ee] border-b border-[#e3ddd3]">
-                <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-[#857f78]">
-                  ID
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[720px] border-collapse text-left">
+          <thead>
+            <tr className="border-b border-slate-200 bg-slate-50">
+              {["ID", t.notesTableTitleColumn, t.notesTableContentColumn, t.notesTableCreatedAtColumn].map((label) => (
+                <th key={label} className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                  {label}
                 </th>
-
-                <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-[#857f78]">
-                  {t.notesTableTitleColumn}
-                </th>
-
-                <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-[#857f78]">
-                  {t.notesTableContentColumn}
-                </th>
-
-                <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-[#857f78]">
-                  {t.notesTableCreatedAtColumn}
-                </th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {isLoading ? (
-                <tr>
-                  <td
-                    colSpan={4}
-                    className="px-4 py-10 text-center text-sm text-[#8e877f]"
-                  >
-                    {t.loadingTable}
-                  </td>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100">
+            {isLoading ? (
+              <tr><td colSpan={4} className="px-5 py-12 text-center text-sm text-slate-500">{t.loadingTable}</td></tr>
+            ) : rows.length === 0 ? (
+              <tr><td colSpan={4} className="px-5 py-12 text-center text-sm text-slate-500">{t.noNotesAvailable}</td></tr>
+            ) : (
+              rows.map((row) => (
+                <tr key={row.id} className="transition hover:bg-slate-50/70">
+                  <td className="px-5 py-4 font-mono text-xs text-slate-600">{row.id}</td>
+                  <td className="px-5 py-4 text-sm font-semibold text-slate-900">{row.title}</td>
+                  <td className="max-w-md px-5 py-4 text-sm text-slate-600"><p className="truncate">{row.content}</p></td>
+                  <td className="whitespace-nowrap px-5 py-4 text-sm text-slate-500">{formatDate(row.created_at)}</td>
                 </tr>
-              ) : rows.length === 0 ? (
-                <tr>
-                  <td
-                    colSpan={4}
-                    className="px-4 py-10 text-center text-sm text-[#8e877f]"
-                  >
-                    {t.noNotesAvailable}
-                  </td>
-                </tr>
-              ) : (
-                rows.map((row) => (
-                  <tr
-                    key={row.id}
-                    className="
-                      border-b border-[#ece6dd]
-                      even:bg-[#fbf9f6]
-                      hover:bg-[#f6f2ec]
-                      transition
-                    "
-                  >
-                    <td className="px-4 py-3 text-sm font-medium text-[#3f3a35]">
-                      {row.id}
-                    </td>
-
-                    <td className="px-4 py-3 text-sm text-[#2b2927]">
-                      {row.title}
-                    </td>
-
-                    <td className="px-4 py-3 text-sm text-[#5f5953]">
-                      <div className="max-w-[420px] truncate">
-                        {row.content}
-                      </div>
-                    </td>
-
-                    <td className="px-4 py-3 text-sm text-[#5f5953]">
-                      {formatDate(row.created_at)}
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
     </section>
   );

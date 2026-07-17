@@ -30,22 +30,13 @@ export default function MobilePageShell({
 
   useLayoutEffect(() => {
     if (!fixedHeader || !hasHeader) return;
-
-    const updateHeight = () => {
+    const updateHeight = () =>
       setHeaderHeight(headerRef.current?.getBoundingClientRect().height ?? 0);
-    };
 
     updateHeight();
-
-    const resizeObserver = new ResizeObserver(updateHeight);
-    if (headerRef.current) resizeObserver.observe(headerRef.current);
-
-    window.addEventListener("resize", updateHeight);
-
-    return () => {
-      resizeObserver.disconnect();
-      window.removeEventListener("resize", updateHeight);
-    };
+    const observer = new ResizeObserver(updateHeight);
+    if (headerRef.current) observer.observe(headerRef.current);
+    return () => observer.disconnect();
   }, [fixedHeader, hasHeader]);
 
   useEffect(() => {
@@ -54,49 +45,33 @@ export default function MobilePageShell({
 
   const pageContent = (
     <div
-      className={[
-        "relative min-h-[780px] overflow-hidden bg-[linear-gradient(180deg,#f8fafc_0%,#eef2ff_100%)] text-slate-900",
-        className,
-      ].join(" ")}
+      className={`relative min-h-full overflow-hidden bg-slate-100 text-slate-900 sm:min-h-[780px] ${className}`}
     >
       {hasHeader ? (
         <div
           ref={headerRef}
-          className={`${
-            fixedHeader ? "absolute inset-x-0 top-0 z-20" : "sticky top-0 z-20"
-          } px-3 pt-3`}
+          className={`${fixedHeader ? "absolute inset-x-0 top-0 z-20" : "sticky top-0 z-20"} px-2 pt-2 sm:px-3 sm:pt-3`}
         >
-          <div
-            className={[
-              "overflow-hidden rounded-2xl border border-slate-200 bg-white/95 shadow-sm backdrop-blur-sm",
-              headerContainerClassName,
-            ].join(" ")}
-          >
+          <div className={`overflow-hidden rounded-xl border border-slate-200 bg-white/95 shadow-sm backdrop-blur-sm sm:rounded-2xl ${headerContainerClassName}`}>
             {header}
           </div>
         </div>
-      ) : !!title ? (
+      ) : title ? (
         <div className="sticky top-0 z-20 px-3 pt-3">
-          <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3 font-semibold text-slate-900 shadow-sm">
+          <div className="rounded-xl border border-slate-200 bg-white px-4 py-3 font-semibold shadow-sm">
             {title}
           </div>
         </div>
       ) : null}
 
       <div
-        className={["relative z-10 px-3 pb-5", contentClassName].join(" ")}
-        style={{
-          paddingTop: fixedHeader && hasHeader ? headerHeight + 12 : 12,
-        }}
+        className={`relative z-10 px-2 pb-5 sm:px-3 ${contentClassName}`}
+        style={{ paddingTop: fixedHeader && hasHeader ? headerHeight + 10 : 10 }}
       >
         {children}
       </div>
     </div>
   );
 
-  if (!useDeviceFrame) {
-    return pageContent;
-  }
-
-  return <MobileDeviceFrame>{pageContent}</MobileDeviceFrame>;
+  return useDeviceFrame ? <MobileDeviceFrame>{pageContent}</MobileDeviceFrame> : pageContent;
 }

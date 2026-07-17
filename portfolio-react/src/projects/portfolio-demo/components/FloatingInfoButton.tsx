@@ -165,7 +165,7 @@ function InfoModal({
 
     return (
         <div
-            className="fixed inset-0 z-[140] flex items-center justify-center px-5 py-8"
+            className="fixed inset-0 z-[140] flex items-center justify-center overflow-y-auto p-4 sm:p-6"
             aria-modal="true"
             role="dialog"
             aria-labelledby="floating-info-modal-title"
@@ -179,7 +179,7 @@ function InfoModal({
 
             <div
                 className={cx(
-                    "relative z-10 w-full max-w-[700px] overflow-hidden rounded-[30px]",
+              "relative z-10 max-h-[calc(100svh-2rem)] w-full max-w-[700px] overflow-y-auto rounded-2xl sm:rounded-[30px]",
                     "border border-[#d8d0c6] bg-[#f9f7f4]",
                     "shadow-[0_30px_80px_rgba(0,0,0,0.20)]"
                 )}

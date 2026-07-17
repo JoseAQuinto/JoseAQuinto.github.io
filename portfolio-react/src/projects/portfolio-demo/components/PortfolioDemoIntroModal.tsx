@@ -140,7 +140,7 @@ function Modal({
 
   return (
     <div
-      className="fixed inset-0 z-[120] flex items-center justify-center px-5 py-8"
+      className="fixed inset-0 z-[120] flex items-center justify-center overflow-y-auto p-4 sm:p-6"
       aria-modal="true"
       role="dialog"
       aria-labelledby="portfolio-demo-intro-title"
@@ -156,7 +156,7 @@ function Modal({
       {/* Panel */}
       <div
         className={cx(
-          "relative z-10 w-full max-w-[640px] overflow-hidden rounded-[28px]",
+          "relative z-10 max-h-[calc(100svh-2rem)] w-full max-w-[640px] overflow-y-auto rounded-2xl sm:rounded-[28px]",
           "border border-[#d9ddd9] bg-[#f5f6f4]",
           "shadow-[0_28px_70px_rgba(0,0,0,0.18)]"
         )}

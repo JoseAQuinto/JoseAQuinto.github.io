@@ -1,195 +1,108 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../services/supabaseClient";
 import { useLockBodyScroll } from "../hooks/useLockBodyScroll";
+import { supabase } from "../services/supabaseClient";
 import { useApiUtilitiesLanguage } from "../translations/ApiUtilitiesLanguageProvider";
-
-const editorialFont = "'Georgia', 'Times New Roman', serif";
 
 export default function LoginModal() {
   useLockBodyScroll(true);
-
   const navigate = useNavigate();
   const { t } = useApiUtilitiesLanguage();
-
   const [email, setEmail] = useState("user@demo.com");
   const [password, setPassword] = useState("1234");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleLogin = async () => {
+  async function handleLogin(event: React.FormEvent) {
+    event.preventDefault();
     setErrorMessage("");
     setIsLoading(true);
 
     try {
-      if (!supabase) {
-        throw new Error(t.supabaseNotConfigured);
-      }
-
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) {
-        throw new Error(error.message);
-      }
-    } catch (err) {
-      const message =
-        err instanceof Error ? err.message : t.loginError;
-
-      setErrorMessage(message);
+      if (!supabase) throw new Error(t.supabaseNotConfigured);
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw new Error(error.message);
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : t.loginError);
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      handleLogin();
-    }
-  };
-
-  const handleBack = () => {
-    navigate("/");
-  };
+  }
 
   return (
-  <div className="fixed inset-0 z-50 flex items-center justify-center">
-    <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" />
-
-    <div className="relative w-full max-w-md rounded-[32px] border border-[#e5dfd6] bg-white p-8 shadow-xl">
-      {/* HEADER */}
-      <div className="mb-6 grid grid-cols-[auto_1fr_auto] items-center gap-2">
-
-        <button
-          onClick={handleBack}
-          className="
-            inline-flex items-center gap-2
-            rounded-full
-            border border-[#e2ddd4]
-            bg-white/80
-            px-3 py-1.5
-            text-sm font-medium
-            text-[#6d655f]
-            backdrop-blur
-            transition
-            duration-200
-            hover:border-[#cfc6ba]
-            hover:bg-[#f3eee7]
-            hover:text-[#171717]
-            active:scale-[0.98]
-            focus:outline-none
-            focus:ring-2
-            focus:ring-[#d9d2c7]
-            shrink-0
-            whitespace-nowrap
-          "
-        >
-          <span className="text-base leading-none">←</span>
-          {t.back}
-        </button>
-
-        <div className="flex min-w-0 items-center justify-center gap-2">
-          <h2
-            className="truncate text-center text-[clamp(1.1rem,4vw,1.6rem)] text-[#171717]"
-            style={{ fontFamily: editorialFont }}
-          >
-            {t.loginRequired}
-          </h2>
-
-          <div className="group relative shrink-0">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/65 p-4 backdrop-blur-sm sm:p-6">
+      <div className="flex min-h-full items-center justify-center">
+        <div className="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+          <div className="border-b border-slate-200 bg-slate-50 px-5 py-5 sm:px-6">
             <button
               type="button"
-              className="flex h-7 w-7 items-center justify-center rounded-full border border-[#d8d2c8] text-sm font-medium text-[#6d655f] transition hover:bg-[#f3eee7]"
-              aria-label={t.loginInfoAriaLabel}
+              onClick={() => navigate("/")}
+              className="mb-5 inline-flex items-center gap-2 text-xs font-semibold text-slate-600 transition hover:text-slate-950"
             >
-              i
+              ← {t.back}
             </button>
-
-            <div
-              className="
-                pointer-events-none
-                absolute
-                left-1/2
-                top-full
-                z-50
-                mt-3
-                w-72
-                -translate-x-1/2
-                rounded-xl
-                border
-                border-[#e5dfd6]
-                bg-white/95
-                p-4
-                text-left
-                text-sm
-                text-[#3d3d3d]
-                shadow-lg
-                opacity-0
-                backdrop-blur-sm
-                transition
-                duration-200
-                group-hover:opacity-100
-                group-focus-within:opacity-100
-              "
-            >
-              <div className="space-y-2">
-                <div className="font-medium text-[#171717]">
-                  {t.demoAuthenticationTitle}
-                </div>
-                <p className="leading-relaxed text-[#5f5a55]">
+            <div className="flex items-start gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-slate-950 font-mono text-sm font-bold text-cyan-300">
+                API
+              </div>
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-blue-700">
+                  Secure workspace
+                </p>
+                <h2 className="mt-1 text-xl font-semibold text-slate-950">{t.loginRequired}</h2>
+                <p className="mt-1 text-sm leading-6 text-slate-600">
                   {t.demoAuthenticationDescription}
                 </p>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="w-[72px] shrink-0" />
-      </div>
+          <form onSubmit={handleLogin} className="p-5 sm:p-6">
+            <label className="block">
+              <span className="text-sm font-semibold text-slate-700">Email</span>
+              <input
+                type="email"
+                autoComplete="username"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder={t.emailPlaceholder}
+                className="mt-2 h-11 w-full rounded-lg border border-slate-300 px-3.5 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+              />
+            </label>
 
-      {/* FORM */}
-      <div className="space-y-4">
-        <input
-          type="email"
-          placeholder={t.emailPlaceholder}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          onKeyDown={handleKeyDown}
-          className="w-full rounded-[18px] border border-[#e4dfd8] px-4 py-3 text-sm outline-none focus:border-[#cfc6ba]"
-        />
+            <label className="mt-4 block">
+              <span className="text-sm font-semibold text-slate-700">Password</span>
+              <input
+                type="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder={t.passwordPlaceholder}
+                className="mt-2 h-11 w-full rounded-lg border border-slate-300 px-3.5 text-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+              />
+            </label>
 
-        <input
-          type="password"
-          placeholder={t.passwordPlaceholder}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          onKeyDown={handleKeyDown}
-          className="w-full rounded-[18px] border border-[#e4dfd8] px-4 py-3 text-sm outline-none focus:border-[#cfc6ba]"
-        />
+            {errorMessage ? (
+              <div className="mt-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-700" role="alert">
+                {errorMessage}
+              </div>
+            ) : null}
 
-        <button
-          onClick={handleLogin}
-          disabled={isLoading}
-          className="w-full rounded-full border border-[#cfc5b9] bg-[#f9f7f4] px-4 py-3 text-sm font-medium hover:bg-[#f3eee7] disabled:opacity-60"
-        >
-          {isLoading ? t.loggingIn : t.login}
-        </button>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="mt-5 h-11 w-full rounded-lg bg-blue-700 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {isLoading ? t.loggingIn : t.login}
+            </button>
 
-        {errorMessage && (
-          <div className="text-center text-sm text-red-600">
-            {errorMessage}
-          </div>
-        )}
-
-        <div className="mt-2 text-center text-xs text-[#8f887f]">
-          {t.demoCredentialsLabel}:
-          <br />
-          user@demo.com / 1234
+            <div className="mt-5 rounded-lg border border-slate-200 bg-slate-50 p-3 text-center font-mono text-xs text-slate-600">
+              <p className="mb-1 font-sans font-semibold text-slate-700">{t.demoCredentialsLabel}</p>
+              user@demo.com / 1234
+            </div>
+          </form>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
 }

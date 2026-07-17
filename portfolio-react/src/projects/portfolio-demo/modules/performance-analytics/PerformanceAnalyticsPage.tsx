@@ -363,7 +363,7 @@ const PerformanceAnalyticsPage = () => {
       />
       <div className="min-h-screen bg-[#f8fafc] pb-12 font-sans text-slate-800">
         <header className="sticky top-0 z-20 border-b border-slate-200/80 bg-white/90 backdrop-blur-sm">
-          <div className="mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-6">
+          <div className="mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-4 sm:px-6">
             <div className="flex items-center gap-3">
               <span className="flex h-7 w-1 rounded-full bg-gradient-to-b from-indigo-500 to-violet-600" />
               <h1 className="text-[15px] font-bold tracking-tight text-slate-900">
@@ -376,7 +376,7 @@ const PerformanceAnalyticsPage = () => {
           </div>
         </header>
 
-        <main className="mx-auto max-w-screen-2xl space-y-5 p-6">
+        <main className="mx-auto max-w-screen-2xl space-y-4 px-4 py-5 sm:space-y-5 sm:px-6 sm:py-6">
           <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
             <div className="border-b border-slate-100 px-6 py-4">
               <h2 className="text-[13px] font-semibold uppercase tracking-widest text-slate-400">

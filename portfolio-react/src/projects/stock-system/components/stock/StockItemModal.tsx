@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import type {
   CreateStockItemDto,
   StockItemDto,
@@ -19,63 +19,59 @@ type FormState = {
   minStock: string;
 };
 
-const emptyForm: FormState = {
-  description: "",
-  reference: "",
-  quantity: "",
-  minStock: "",
-};
+const inputClass =
+  "mt-2 h-11 w-full rounded-lg border border-slate-300 bg-white px-3.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100";
 
-export default function StockItemModal({
-  open,
-  item,
-  onClose,
-  onSave,
-}: Props) {
-  const [form, setForm] = useState<FormState>(emptyForm);
+function getInitialForm(item: StockItemDto | null): FormState {
+  return item
+    ? {
+        description: item.description,
+        reference: item.reference,
+        quantity: String(item.quantity),
+        minStock: String(item.minStock),
+      }
+    : {
+        description: "",
+        reference: "",
+        quantity: "",
+        minStock: "",
+      };
+}
+
+type ModalContentProps = Omit<Props, "open">;
+
+function ModalContent({ item, onClose, onSave }: ModalContentProps) {
+  const [form, setForm] = useState<FormState>(() => getInitialForm(item));
   const [saving, setSaving] = useState(false);
+  const titleId = useId();
+  const isEdit = Boolean(item);
 
   useEffect(() => {
-    if (!open) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
 
-    if (!item) {
-      setForm(emptyForm);
-      return;
-    }
+    document.addEventListener("keydown", onKeyDown);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [onClose]);
 
-    setForm({
-      description: item.description,
-      reference: item.reference,
-      quantity: String(item.quantity),
-      minStock: String(item.minStock),
-    });
-  }, [item, open]);
-
-  if (!open) return null;
-
-  const isEdit = !!item;
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-
+  async function handleSubmit(event: React.FormEvent) {
+    event.preventDefault();
     setSaving(true);
+
     try {
-      const basePayload = {
+      const payload = {
         description: form.description.trim(),
         reference: form.reference.trim(),
         quantity: Number(form.quantity),
         minStock: Number(form.minStock),
       };
 
-      if (isEdit && item) {
-        await onSave({
-          id: item.id,
-          ...basePayload,
-        });
-      } else {
-        await onSave(basePayload);
-      }
-
+      await onSave(isEdit && item ? { id: item.id, ...payload } : payload);
       onClose();
     } finally {
       setSaving(false);
@@ -83,76 +79,124 @@ export default function StockItemModal({
   }
 
   return (
-    <div style={overlayStyle}>
-      <div style={modalStyle}>
-        <div style={headerStyle}>
-          <h2 style={{ margin: 0 }}>
-            {isEdit ? "Modificar artículo" : "Nuevo artículo"}
-          </h2>
-          <button onClick={onClose} style={closeBtnStyle}>
-            X
+    <div
+      className="fixed inset-0 z-[1000] overflow-y-auto bg-slate-950/45 p-4 backdrop-blur-sm sm:p-6"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={titleId}
+    >
+      <button
+        type="button"
+        aria-label="Cerrar modal"
+        onClick={onClose}
+        className="absolute inset-0 h-full w-full cursor-default"
+      />
+
+      <div className="relative mx-auto my-[max(1rem,6vh)] w-full max-w-xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+        <div className="flex items-start justify-between gap-5 border-b border-slate-200 px-5 py-5 sm:px-6">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-blue-700">
+              Inventario
+            </p>
+            <h2 id={titleId} className="mt-1 text-xl font-semibold text-slate-950">
+              {isEdit ? "Editar artículo" : "Nuevo artículo"}
+            </h2>
+            <p className="mt-1 text-sm text-slate-500">
+              Completa los datos operativos del artículo.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Cerrar"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-slate-300 text-slate-500 transition hover:bg-slate-50 hover:text-slate-900"
+          >
+            ×
           </button>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <div style={fieldStyle}>
-            <label style={labelStyle}>Descripción</label>
-            <input
-              value={form.description}
-              onChange={(e) =>
-                setForm((prev) => ({ ...prev, description: e.target.value }))
-              }
-              required
-              style={inputStyle}
-            />
+        <form onSubmit={handleSubmit} className="px-5 py-5 sm:px-6 sm:py-6">
+          <div className="grid gap-5 sm:grid-cols-2">
+            <label className="sm:col-span-2">
+              <span className="text-sm font-semibold text-slate-700">Descripción</span>
+              <input
+                autoFocus
+                value={form.description}
+                onChange={(event) =>
+                  setForm((current) => ({
+                    ...current,
+                    description: event.target.value,
+                  }))
+                }
+                required
+                className={inputClass}
+              />
+            </label>
+
+            <label className="sm:col-span-2">
+              <span className="text-sm font-semibold text-slate-700">Referencia</span>
+              <input
+                value={form.reference}
+                onChange={(event) =>
+                  setForm((current) => ({
+                    ...current,
+                    reference: event.target.value,
+                  }))
+                }
+                required
+                className={inputClass}
+              />
+            </label>
+
+            <label>
+              <span className="text-sm font-semibold text-slate-700">Cantidad</span>
+              <input
+                type="number"
+                min={0}
+                value={form.quantity}
+                onChange={(event) =>
+                  setForm((current) => ({
+                    ...current,
+                    quantity: event.target.value,
+                  }))
+                }
+                required
+                className={inputClass}
+              />
+            </label>
+
+            <label>
+              <span className="text-sm font-semibold text-slate-700">Stock mínimo</span>
+              <input
+                type="number"
+                min={0}
+                value={form.minStock}
+                onChange={(event) =>
+                  setForm((current) => ({
+                    ...current,
+                    minStock: event.target.value,
+                  }))
+                }
+                required
+                className={inputClass}
+              />
+            </label>
           </div>
 
-          <div style={fieldStyle}>
-            <label style={labelStyle}>Referencia</label>
-            <input
-              value={form.reference}
-              onChange={(e) =>
-                setForm((prev) => ({ ...prev, reference: e.target.value }))
-              }
-              required
-              style={inputStyle}
-            />
-          </div>
-
-          <div style={fieldStyle}>
-            <label style={labelStyle}>Cantidad</label>
-            <input
-              type="number"
-              min={0}
-              value={form.quantity}
-              onChange={(e) =>
-                setForm((prev) => ({ ...prev, quantity: e.target.value }))
-              }
-              required
-              style={inputStyle}
-            />
-          </div>
-
-          <div style={fieldStyle}>
-            <label style={labelStyle}>Stock mínimo</label>
-            <input
-              type="number"
-              min={0}
-              value={form.minStock}
-              onChange={(e) =>
-                setForm((prev) => ({ ...prev, minStock: e.target.value }))
-              }
-              required
-              style={inputStyle}
-            />
-          </div>
-
-          <div style={footerStyle}>
-            <button type="button" onClick={onClose} style={secondaryBtnStyle}>
+          <div className="mt-7 flex flex-col-reverse gap-3 border-t border-slate-200 pt-5 sm:flex-row sm:justify-end">
+            <button
+              type="button"
+              onClick={onClose}
+              className="h-11 rounded-lg border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+            >
               Cancelar
             </button>
-            <button type="submit" disabled={saving} style={primaryBtnStyle}>
-              {saving ? "Guardando..." : "Guardar"}
+            <button
+              type="submit"
+              disabled={saving}
+              className="h-11 rounded-lg bg-blue-700 px-5 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {saving ? "Guardando…" : isEdit ? "Guardar cambios" : "Crear artículo"}
             </button>
           </div>
         </form>
@@ -161,78 +205,15 @@ export default function StockItemModal({
   );
 }
 
-const overlayStyle: React.CSSProperties = {
-  position: "fixed",
-  inset: 0,
-  background: "rgba(0,0,0,0.35)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  zIndex: 1000,
-};
+export default function StockItemModal({ open, item, onClose, onSave }: Props) {
+  if (!open) return null;
 
-const modalStyle: React.CSSProperties = {
-  width: "100%",
-  maxWidth: 520,
-  background: "#fff",
-  borderRadius: 16,
-  padding: 24,
-  boxShadow: "0 20px 60px rgba(0,0,0,0.15)",
-};
-
-const headerStyle: React.CSSProperties = {
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  marginBottom: 16,
-};
-
-const fieldStyle: React.CSSProperties = {
-  display: "flex",
-  flexDirection: "column",
-  gap: 6,
-  marginBottom: 14,
-};
-
-const labelStyle: React.CSSProperties = {
-  fontWeight: 600,
-  fontSize: 14,
-};
-
-const inputStyle: React.CSSProperties = {
-  border: "1px solid #d1d5db",
-  borderRadius: 8,
-  padding: "10px 12px",
-};
-
-const footerStyle: React.CSSProperties = {
-  display: "flex",
-  justifyContent: "flex-end",
-  gap: 8,
-  marginTop: 20,
-};
-
-const primaryBtnStyle: React.CSSProperties = {
-  border: "none",
-  background: "#111827",
-  color: "#fff",
-  borderRadius: 8,
-  padding: "10px 14px",
-  cursor: "pointer",
-};
-
-const secondaryBtnStyle: React.CSSProperties = {
-  border: "1px solid #d1d5db",
-  background: "#fff",
-  borderRadius: 8,
-  padding: "10px 14px",
-  cursor: "pointer",
-};
-
-const closeBtnStyle: React.CSSProperties = {
-  border: "1px solid #e5e7eb",
-  background: "#fff",
-  borderRadius: 8,
-  padding: "6px 10px",
-  cursor: "pointer",
-};
+  return (
+    <ModalContent
+      key={item?.id ?? "new-item"}
+      item={item}
+      onClose={onClose}
+      onSave={onSave}
+    />
+  );
+}

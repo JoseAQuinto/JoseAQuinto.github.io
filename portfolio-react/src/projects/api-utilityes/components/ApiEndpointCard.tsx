@@ -3,57 +3,34 @@ import { useApiUtilitiesLanguage } from "../translations/ApiUtilitiesLanguagePro
 import CodeBlock from "./CodeBlock";
 import StatusBadge from "./StatusBadge";
 
-const editorialFont = "'Georgia', 'Times New Roman', serif";
-
-type Props = {
-  endpoint: ApiEndpoint;
-};
+type Props = { endpoint: ApiEndpoint };
 
 export default function ApiEndpointCard({ endpoint }: Props) {
   const { t } = useApiUtilitiesLanguage();
 
   return (
-    <section className="rounded-[30px] border border-[#e5dfd6] bg-white/88 p-6 backdrop-blur-sm transition-[box-shadow,border-color,background-color] duration-500 hover:border-[#cfc6ba] hover:bg-white hover:shadow-[0_20px_60px_rgba(0,0,0,0.06)]">
-      <div className="flex flex-col gap-4 border-b border-[#e8e2d9] pb-5">
-        <div className="flex flex-wrap items-center gap-3">
+    <section className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+      <div className="border-b border-slate-200 p-4 sm:p-6">
+        <div className="flex min-w-0 flex-wrap items-center gap-3">
           <StatusBadge method={endpoint.method} />
-
-          <code className="rounded-full border border-[#e7e0d7] bg-[#fbfaf7] px-3 py-1.5 text-sm text-[#4b453f]">
+          <code className="min-w-0 break-all rounded-md border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs text-slate-700 sm:text-sm">
             {endpoint.path}
           </code>
         </div>
-
-        <div>
-          <h2
-            className="text-[1.9rem] font-normal leading-[1.15] tracking-[-0.015em] text-[#171717]"
-            style={{ fontFamily: editorialFont }}
-          >
-            {endpoint.title}
-          </h2>
-
-          <p
-            className="mt-3 max-w-3xl text-sm leading-[1.95] text-[#6d655f]"
-            style={{ fontFamily: editorialFont }}
-          >
-            {endpoint.description}
-          </p>
-        </div>
+        <h2 className="mt-5 text-xl font-semibold tracking-tight text-slate-950 sm:text-2xl">
+          {endpoint.title}
+        </h2>
+        <p className="mt-2 max-w-4xl text-sm leading-6 text-slate-600">
+          {endpoint.description}
+        </p>
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-2">
+      <div className="grid min-w-0 gap-4 p-4 lg:grid-cols-2 sm:p-6">
         <CodeBlock
           title={t.requestExample}
-          code={
-            endpoint.requestExample ?? {
-              note: t.noRequestBody,
-            }
-          }
+          code={endpoint.requestExample ?? { note: t.noRequestBody }}
         />
-
-        <CodeBlock
-          title={t.responseExample}
-          code={endpoint.responseExample}
-        />
+        <CodeBlock title={t.responseExample} code={endpoint.responseExample} />
       </div>
     </section>
   );

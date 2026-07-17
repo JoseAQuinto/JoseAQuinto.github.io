@@ -4,31 +4,28 @@ import { useApiUtilitiesLanguage } from "../translations/ApiUtilitiesLanguagePro
 
 export default function UserSessionInfo() {
   const { t } = useApiUtilitiesLanguage();
-
   const [email, setEmail] = useState<string | null>(null);
 
   useEffect(() => {
     const loadUser = async () => {
       if (!supabase) return;
-
       const { data } = await supabase.auth.getUser();
-
       setEmail(data.user?.email ?? null);
     };
 
-    loadUser();
+    void loadUser();
   }, []);
 
   return (
-    <div className="text-sm text-[#6d655f]">
-      {email ? (
-        <>
-          {t.loggedAs}
-          <strong> {email}</strong>
-        </>
-      ) : (
-        <>{t.notAuthenticated}</>
-      )}
+    <div className="flex min-w-0 items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-600">
+      <span className={`h-2 w-2 shrink-0 rounded-full ${email ? "bg-emerald-500" : "bg-slate-400"}`} />
+      <span className="truncate">
+        {email ? (
+          <>{t.loggedAs} <strong className="text-slate-800">{email}</strong></>
+        ) : (
+          t.notAuthenticated
+        )}
+      </span>
     </div>
   );
 }

@@ -73,7 +73,7 @@ export default function MobileOrdersListPage() {
         fixedHeader
         title={listT.title}
         header={
-          <div className="flex items-center justify-between px-4 py-3">
+          <div className="flex flex-col items-stretch gap-3 px-3 py-3 min-[380px]:flex-row min-[380px]:items-center min-[380px]:justify-between sm:px-4">
             <div>
               <h1 className="text-base font-bold tracking-tight text-slate-900">{listT.title}</h1>
               <p className="mt-0.5 text-xs text-slate-400">{listT.subtitle}</p>
