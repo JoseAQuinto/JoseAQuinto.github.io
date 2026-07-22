@@ -2,6 +2,7 @@ import { domAnimation, LazyMotion } from "framer-motion";
 import { useMemo } from "react";
 import { useLanguage } from "../../translations/LanguageContext";
 import PortfolioHeader from "./components/PortfolioHeader";
+import PortfolioGalleryTeaser from "./components/PortfolioGalleryTeaser";
 import ProjectCard from "./components/ProjectCard";
 import Reveal from "./components/Reveal";
 import { useActiveSection } from "./hooks/useActiveSection";
@@ -19,7 +20,7 @@ const SOCIAL_LINKS = [
   },
 ] as const;
 
-const SECTION_IDS = ["hero", "about", "projects"] as const;
+const SECTION_IDS = ["hero", "about", "projects", "portfolio-websites"] as const;
 
 function SectionEyebrow({ children }: { children: string }) {
   return (
@@ -42,8 +43,12 @@ export default function ProjectsPage() {
     () => [
       { id: "about", label: page.aboutTitle },
       { id: "projects", label: page.projectsTitle },
+      {
+        id: "portfolio-websites",
+        label: language === "es" ? "Portfolios web" : "Web portfolios",
+      },
     ],
-    [page.aboutTitle, page.projectsTitle]
+    [language, page.aboutTitle, page.projectsTitle]
   );
 
   return (
@@ -263,6 +268,8 @@ export default function ProjectsPage() {
               </div>
             </div>
           </section>
+
+          <PortfolioGalleryTeaser />
         </main>
 
         <a

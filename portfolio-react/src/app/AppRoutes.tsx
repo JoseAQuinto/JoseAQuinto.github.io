@@ -2,6 +2,9 @@ import { lazy, Suspense, type ReactNode } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 const ProjectsPage = lazy(() => import("../modules/portfolio/ProjectsPage"));
+const PortfolioGalleryPage = lazy(
+  () => import("../modules/portfolio/PortfolioGalleryPage")
+);
 const AppPortfolioDemo = lazy(
   () => import("../projects/portfolio-demo/AppPortfolioDemo")
 );
@@ -47,6 +50,14 @@ export default function AppRoutes() {
         element={
           <LazyRoute>
             <AppPortfolioDemo />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/portfolio-gallery"
+        element={
+          <LazyRoute>
+            <PortfolioGalleryPage />
           </LazyRoute>
         }
       />
