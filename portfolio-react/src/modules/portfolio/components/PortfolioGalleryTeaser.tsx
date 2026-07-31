@@ -35,7 +35,7 @@ export default function PortfolioGalleryTeaser() {
         className="portfolio-wordmark pointer-events-none absolute -right-5 -top-3 text-[clamp(7rem,20vw,17rem)] leading-none tracking-[-0.06em]"
         aria-hidden="true"
       >
-        03
+        04
       </span>
 
       <div className="relative mx-auto grid max-w-6xl gap-14 px-5 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">

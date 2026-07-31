@@ -25,6 +25,14 @@ export const translations = {
             projectsTitle: "Proyectos",
             projectsSubtitle:
                 "Una selección de demos y proyectos donde muestro estructura, componentes reutilizables e interfaces conectadas a datos mock o APIs.",
+            operationalProjectsNavLabel: "Proyectos operativos",
+            operationalProjectsEyebrow: "En producción",
+            operationalProjectsTitle: "Proyectos operativos",
+            operationalProjectsSubtitle:
+                "Aplicaciones propias publicadas, disponibles para uso real y mantenidas como productos en evolución.",
+            operationalProjectsOnlineLabel: "En línea",
+            operationalProjectsTechLabel: "Tecnologías",
+            operationalProjectsCta: "Abrir aplicación",
             footer: "Jose Ángel Quinto Ferrández · Portafolio",
 
             heroAsideTitle: "Enfoque",
@@ -106,6 +114,16 @@ export const translations = {
                     tags: ["React", "TypeScript", "Supabase", "API", "Swagger UI"],
                     href: "/api-utilities",
                     cta: "Ver proyecto",
+                },
+            ],
+            operationalProjects: [
+                {
+                    id: "es-estafa",
+                    title: "¿Es Estafa?",
+                    description:
+                        "Aplicación web pública que analiza señales habituales de phishing y estafa en correos, SMS, WhatsApp y otros mensajes sospechosos, ofreciendo un resultado de riesgo explicable y recomendaciones prácticas.",
+                    href: "https://esestafaa.netlify.app/",
+                    tags: ["Next.js", "TypeScript", "Supabase", "Seguridad"],
                 },
             ],
         },
@@ -436,6 +454,14 @@ export const translations = {
             projectsTitle: "Projects",
             projectsSubtitle:
                 "A selection of demos and projects where I showcase structure, reusable components and interfaces connected to mock data or APIs.",
+            operationalProjectsNavLabel: "Live projects",
+            operationalProjectsEyebrow: "In production",
+            operationalProjectsTitle: "Live projects",
+            operationalProjectsSubtitle:
+                "Published applications available for real-world use and maintained as evolving products.",
+            operationalProjectsOnlineLabel: "Online",
+            operationalProjectsTechLabel: "Technologies",
+            operationalProjectsCta: "Open application",
             footer: "Jose Ángel Quinto Ferrández · Portfolio",
 
             heroAsideTitle: "Focus",
@@ -517,6 +543,16 @@ export const translations = {
                     tags: ["React", "TypeScript", "Supabase", "API", "Swagger UI"],
                     href: "/api-utilities",
                     cta: "View project",
+                },
+            ],
+            operationalProjects: [
+                {
+                    id: "es-estafa",
+                    title: "Is It a Scam?",
+                    description:
+                        "A public web application that analyzes common phishing and scam signals in emails, SMS, WhatsApp and other suspicious messages, providing an explainable risk result and practical recommendations.",
+                    href: "https://esestafaa.netlify.app/",
+                    tags: ["Next.js", "TypeScript", "Supabase", "Security"],
                 },
             ],
         },

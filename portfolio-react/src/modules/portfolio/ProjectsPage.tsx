@@ -20,7 +20,13 @@ const SOCIAL_LINKS = [
   },
 ] as const;
 
-const SECTION_IDS = ["hero", "about", "projects", "portfolio-websites"] as const;
+const SECTION_IDS = [
+  "hero",
+  "about",
+  "projects",
+  "operational-projects",
+  "portfolio-websites",
+] as const;
 
 function SectionEyebrow({ children }: { children: string }) {
   return (
@@ -44,11 +50,20 @@ export default function ProjectsPage() {
       { id: "about", label: page.aboutTitle },
       { id: "projects", label: page.projectsTitle },
       {
+        id: "operational-projects",
+        label: page.operationalProjectsNavLabel,
+      },
+      {
         id: "portfolio-websites",
         label: language === "es" ? "Portfolios web" : "Web portfolios",
       },
     ],
-    [language, page.aboutTitle, page.projectsTitle]
+    [
+      language,
+      page.aboutTitle,
+      page.operationalProjectsNavLabel,
+      page.projectsTitle,
+    ]
   );
 
   return (
@@ -160,7 +175,9 @@ export default function ProjectsPage() {
                         {page.selectedProjectsLabel}
                       </dt>
                       <dd className="mt-2 text-2xl text-[#211e1b]">
-                        {String(page.projects.length).padStart(2, "0")}
+                        {String(
+                          page.projects.length + page.operationalProjects.length
+                        ).padStart(2, "0")}
                       </dd>
                     </div>
                   </dl>
@@ -265,6 +282,87 @@ export default function ProjectsPage() {
                     />
                   )
                 )}
+              </div>
+            </div>
+          </section>
+
+          <section
+            id="operational-projects"
+            className="portfolio-section-lazy relative scroll-mt-20 overflow-hidden border-t border-[#37322e] bg-[#1d1a18] py-24 text-white sm:py-32"
+          >
+            <span
+              className="pointer-events-none absolute -right-5 -top-5 text-[clamp(7rem,20vw,17rem)] leading-none tracking-[-0.06em] text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.1)]"
+              aria-hidden="true"
+            >
+              03
+            </span>
+
+            <div className="relative mx-auto max-w-6xl px-5 sm:px-8">
+              <Reveal>
+                <div className="mb-14 grid gap-7 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+                  <div>
+                    <div className="mb-5 flex items-center gap-4">
+                      <span className="h-px w-8 bg-[#9f968d]" aria-hidden="true" />
+                      <span className="text-[10px] uppercase tracking-[0.22em] text-[#b8afa7]">
+                        {page.operationalProjectsEyebrow}
+                      </span>
+                    </div>
+                    <h2 className="text-[clamp(2.2rem,5vw,4.25rem)] leading-none tracking-[-0.035em] text-white">
+                      {page.operationalProjectsTitle}
+                    </h2>
+                  </div>
+                  <p className="max-w-2xl text-sm leading-7 text-[#c5bdb5] lg:justify-self-end">
+                    {page.operationalProjectsSubtitle}
+                  </p>
+                </div>
+              </Reveal>
+
+              <div className="grid gap-5 md:grid-cols-2">
+                {page.operationalProjects.map((project, index) => (
+                  <Reveal key={project.id} delay={index * 0.05}>
+                    <article className="group flex h-full flex-col rounded-[28px] border border-white/12 bg-white/[0.055] p-7 transition duration-300 hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.08] sm:p-9">
+                      <div className="flex items-center justify-between gap-4">
+                        <span className="text-[10px] tabular-nums tracking-[0.2em] text-[#8e857d]">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <span className="inline-flex items-center gap-2 rounded-full border border-[#65775e] bg-[#40503a]/35 px-3 py-1.5 text-[9px] uppercase tracking-[0.16em] text-[#c8d5c2]">
+                          <span className="h-1.5 w-1.5 rounded-full bg-[#91a889]" aria-hidden="true" />
+                          {page.operationalProjectsOnlineLabel}
+                        </span>
+                      </div>
+
+                      <h3 className="mt-8 text-[clamp(1.9rem,4vw,3.1rem)] leading-none tracking-[-0.035em] text-white">
+                        {project.title}
+                      </h3>
+                      <p className="mt-5 max-w-xl text-sm leading-7 text-[#c5bdb5]">
+                        {project.description}
+                      </p>
+
+                      <ul className="mt-7 flex flex-wrap gap-2" aria-label={page.operationalProjectsTechLabel}>
+                        {project.tags.map((tag) => (
+                          <li
+                            key={tag}
+                            className="rounded-full border border-white/10 px-3 py-1.5 text-[9px] uppercase tracking-[0.14em] text-[#a9a098]"
+                          >
+                            {tag}
+                          </li>
+                        ))}
+                      </ul>
+
+                      <a
+                        href={project.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-9 inline-flex w-fit items-center gap-3 border-b border-[#8f857c] pb-1 text-[10px] uppercase tracking-[0.17em] text-white transition hover:border-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b8aea4]"
+                      >
+                        {page.operationalProjectsCta}
+                        <span className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" aria-hidden="true">
+                          {"\u2197"}
+                        </span>
+                      </a>
+                    </article>
+                  </Reveal>
+                ))}
               </div>
             </div>
           </section>
