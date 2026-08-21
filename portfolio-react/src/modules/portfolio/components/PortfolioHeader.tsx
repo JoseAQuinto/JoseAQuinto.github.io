@@ -6,17 +6,21 @@ type NavItem = {
 type PortfolioHeaderProps = {
   activeSection: string;
   changeLanguageLabel: string;
+  isTechnoStyle: boolean;
   language: "es" | "en";
   navItems: readonly NavItem[];
   onToggleLanguage: () => void;
+  onToggleTechnoStyle: () => void;
 };
 
 export default function PortfolioHeader({
   activeSection,
   changeLanguageLabel,
+  isTechnoStyle,
   language,
   navItems,
   onToggleLanguage,
+  onToggleTechnoStyle,
 }: PortfolioHeaderProps) {
   return (
     <nav
@@ -31,7 +35,7 @@ export default function PortfolioHeader({
           José Ángel Quinto
         </a>
 
-        <div className="flex items-center gap-4 sm:gap-8">
+        <div className="flex items-center gap-2 sm:gap-5">
           <div className="hidden items-center gap-7 sm:flex">
             {navItems.map((item) => (
               <a
@@ -45,6 +49,21 @@ export default function PortfolioHeader({
               </a>
             ))}
           </div>
+
+          <button
+            type="button"
+            onClick={onToggleTechnoStyle}
+            aria-label={
+              language === "es"
+                ? "Alternar estilo tecnológico"
+                : "Toggle techno style"
+            }
+            aria-pressed={isTechnoStyle}
+            className="portfolio-theme-toggle"
+          >
+            <span className="portfolio-theme-toggle__signal" aria-hidden="true" />
+            Tecno style
+          </button>
 
           <button
             type="button"

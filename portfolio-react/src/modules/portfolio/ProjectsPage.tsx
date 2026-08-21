@@ -1,5 +1,5 @@
 import { domAnimation, LazyMotion } from "framer-motion";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useLanguage } from "../../translations/LanguageContext";
 import PortfolioHeader from "./components/PortfolioHeader";
 import PortfolioGalleryTeaser from "./components/PortfolioGalleryTeaser";
@@ -28,6 +28,8 @@ const SECTION_IDS = [
   "portfolio-websites",
 ] as const;
 
+const STYLE_STORAGE_KEY = "portfolio-visual-style";
+
 function SectionEyebrow({ children }: { children: string }) {
   return (
     <div className="mb-5 flex items-center gap-4">
@@ -41,6 +43,9 @@ function SectionEyebrow({ children }: { children: string }) {
 
 export default function ProjectsPage() {
   const { language, toggleLanguage, t } = useLanguage();
+  const [isTechnoStyle, setIsTechnoStyle] = useState(
+    () => localStorage.getItem(STYLE_STORAGE_KEY) === "techno"
+  );
   const activeSection = useActiveSection(SECTION_IDS);
   const page = t.projectsPage;
   const common = t.common;
@@ -66,9 +71,24 @@ export default function ProjectsPage() {
     ]
   );
 
+  function toggleTechnoStyle() {
+    setIsTechnoStyle((current) => {
+      const nextStyle = !current;
+      localStorage.setItem(
+        STYLE_STORAGE_KEY,
+        nextStyle ? "techno" : "classic"
+      );
+      return nextStyle;
+    });
+  }
+
   return (
     <LazyMotion features={domAnimation} strict>
-      <div className="portfolio-page min-h-screen overflow-x-hidden">
+      <div
+        className={`portfolio-page min-h-screen overflow-x-hidden ${
+          isTechnoStyle ? "portfolio-page--techno" : ""
+        }`}
+      >
         <a className="portfolio-skip-link" href="#main-content">
           {page.skipToContent}
         </a>
@@ -78,7 +98,9 @@ export default function ProjectsPage() {
           changeLanguageLabel={common.changeLanguageAriaLabel}
           language={language}
           navItems={navItems}
+          isTechnoStyle={isTechnoStyle}
           onToggleLanguage={toggleLanguage}
+          onToggleTechnoStyle={toggleTechnoStyle}
         />
 
         <main id="main-content">
