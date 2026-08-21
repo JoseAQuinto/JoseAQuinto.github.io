@@ -168,7 +168,8 @@ export default function ProjectsPage() {
                         href={link.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="border-b border-transparent pb-1 text-[10px] uppercase tracking-[0.16em] text-[#706961] transition hover:border-[#706961] hover:text-[#1d1a18] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#94887b]"
+                        data-social={link.label.toLowerCase()}
+                        className="portfolio-social-link pb-1 text-[10px] uppercase tracking-[0.16em] text-[#706961] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#94887b]"
                       >
                         {link.label}
                       </a>
@@ -424,7 +425,8 @@ export default function ProjectsPage() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[10px] uppercase tracking-[0.16em] text-[#8f877f] transition hover:text-[#211e1b]"
+                  data-social={link.label.toLowerCase()}
+                  className="portfolio-social-link pb-1 text-[10px] uppercase tracking-[0.16em] text-[#8f877f] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#94887b]"
                 >
                   {link.label}
                 </a>
