@@ -1,5 +1,5 @@
 import { domAnimation, LazyMotion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLanguage } from "../../translations/LanguageContext";
 import PortfolioHeader from "./components/PortfolioHeader";
 import PortfolioGalleryTeaser from "./components/PortfolioGalleryTeaser";
@@ -49,6 +49,14 @@ export default function ProjectsPage() {
   const activeSection = useActiveSection(SECTION_IDS);
   const page = t.projectsPage;
   const common = t.common;
+
+  useEffect(() => {
+    document.body.classList.toggle("portfolio-techno-active", isTechnoStyle);
+
+    return () => {
+      document.body.classList.remove("portfolio-techno-active");
+    };
+  }, [isTechnoStyle]);
 
   const navItems = useMemo(
     () => [

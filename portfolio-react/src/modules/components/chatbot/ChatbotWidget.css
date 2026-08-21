@@ -488,6 +488,220 @@
   transform: translateY(1px);
 }
 
+/* Tecno style: visual layer only, enabled by the portfolio home page. */
+body.portfolio-techno-active .chatbot,
+body.portfolio-techno-active .chatbot-inline-anchor {
+  --chatbot-techno-cyan: #61f6ff;
+  --chatbot-techno-magenta: #ff4fd8;
+  --chatbot-techno-violet: #8b7dff;
+  font-family: "Segoe UI", Inter, Arial, sans-serif;
+}
+
+body.portfolio-techno-active .chatbot-mini-launcher {
+  border-color: rgba(97, 246, 255, 0.5);
+  background:
+    radial-gradient(circle at 35% 28%, rgba(97, 246, 255, 0.18), transparent 38%),
+    rgba(6, 13, 25, 0.94);
+  color: var(--chatbot-techno-cyan);
+  box-shadow:
+    0 0 0 1px rgba(255, 79, 216, 0.12),
+    0 0 24px rgba(97, 246, 255, 0.2),
+    inset 0 0 18px rgba(97, 246, 255, 0.08);
+  animation: chatbotTechnoLauncher 2.6s ease-in-out infinite;
+}
+
+body.portfolio-techno-active .chatbot-mini-launcher::before {
+  position: absolute;
+  inset: -6px;
+  border: 1px solid rgba(97, 246, 255, 0.18);
+  border-radius: inherit;
+  content: "";
+  animation: chatbotTechnoOrbit 3.4s linear infinite;
+}
+
+body.portfolio-techno-active .chatbot-mini-launcher:hover {
+  border-color: var(--chatbot-techno-cyan);
+  background: rgba(9, 22, 37, 0.98);
+  color: #eaffff;
+  box-shadow:
+    0 0 0 4px rgba(97, 246, 255, 0.07),
+    0 0 34px rgba(97, 246, 255, 0.34),
+    inset 0 0 22px rgba(97, 246, 255, 0.12);
+}
+
+body.portfolio-techno-active .chatbot__window {
+  border-color: rgba(97, 246, 255, 0.32);
+  background: #070b16;
+  color: #e8fcff;
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 79, 216, 0.08),
+    0 0 42px rgba(97, 246, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.045);
+}
+
+body.portfolio-techno-active .chatbot__header {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(97, 246, 255, 0.18);
+  background:
+    radial-gradient(circle at 12% 0%, rgba(97, 246, 255, 0.14), transparent 36%),
+    linear-gradient(110deg, rgba(11, 23, 39, 0.98), rgba(18, 10, 30, 0.98));
+  color: #e9fdff;
+}
+
+body.portfolio-techno-active .chatbot__header::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, transparent, var(--chatbot-techno-cyan), var(--chatbot-techno-magenta), transparent);
+  background-size: 220% 100%;
+  animation: chatbotTechnoLine 4s linear infinite;
+}
+
+body.portfolio-techno-active .chatbot__header-icon {
+  border-color: rgba(97, 246, 255, 0.36);
+  background: rgba(97, 246, 255, 0.07);
+  color: var(--chatbot-techno-cyan);
+  box-shadow: inset 0 0 14px rgba(97, 246, 255, 0.08), 0 0 18px rgba(97, 246, 255, 0.1);
+}
+
+body.portfolio-techno-active .chatbot__title {
+  color: #effeff;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+body.portfolio-techno-active .chatbot__subtitle {
+  color: #829aaa;
+  letter-spacing: 0.04em;
+}
+
+body.portfolio-techno-active .chatbot__header-button {
+  border-color: rgba(139, 125, 255, 0.3);
+  background: rgba(139, 125, 255, 0.07);
+  color: #c8c2ff;
+}
+
+body.portfolio-techno-active .chatbot__header-button:hover {
+  border-color: var(--chatbot-techno-cyan);
+  background: rgba(97, 246, 255, 0.1);
+  color: var(--chatbot-techno-cyan);
+  box-shadow: 0 0 18px rgba(97, 246, 255, 0.15);
+}
+
+body.portfolio-techno-active .chatbot__body {
+  background:
+    linear-gradient(rgba(97, 246, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(97, 246, 255, 0.035) 1px, transparent 1px),
+    radial-gradient(circle at 85% 10%, rgba(255, 79, 216, 0.06), transparent 35%),
+    #080d19;
+  background-size: 28px 28px, 28px 28px, auto, auto;
+}
+
+body.portfolio-techno-active .chatbot__body::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--chatbot-techno-cyan), var(--chatbot-techno-violet));
+}
+
+body.portfolio-techno-active .chatbot__message--bot {
+  border-color: rgba(97, 246, 255, 0.2);
+  background: rgba(13, 25, 41, 0.92);
+  color: #bdd1dd;
+  box-shadow: 0 7px 22px rgba(0, 0, 0, 0.18), inset 0 0 18px rgba(97, 246, 255, 0.025);
+}
+
+body.portfolio-techno-active .chatbot__message--user {
+  border-color: rgba(255, 79, 216, 0.42);
+  background: linear-gradient(125deg, rgba(89, 45, 112, 0.94), rgba(31, 39, 80, 0.96));
+  color: #fff1fc;
+  box-shadow: 0 8px 24px rgba(255, 79, 216, 0.1), inset 0 0 18px rgba(255, 79, 216, 0.05);
+}
+
+body.portfolio-techno-active .chatbot__message--support {
+  border-color: rgba(139, 125, 255, 0.35);
+  background: rgba(139, 125, 255, 0.1);
+  color: #d3ceff;
+}
+
+body.portfolio-techno-active .chatbot__message--error {
+  border-color: rgba(255, 105, 140, 0.42);
+  background: rgba(84, 18, 42, 0.65);
+  color: #ffc2d0;
+}
+
+body.portfolio-techno-active .chatbot__typing-dots {
+  color: var(--chatbot-techno-cyan);
+  filter: drop-shadow(0 0 5px rgba(97, 246, 255, 0.7));
+}
+
+body.portfolio-techno-active .chatbot__form,
+body.portfolio-techno-active .chatbot__reset-area {
+  border-color: rgba(97, 246, 255, 0.16);
+  background: #070b16;
+}
+
+body.portfolio-techno-active .chatbot__input {
+  border-color: rgba(97, 246, 255, 0.2);
+  background: rgba(13, 24, 39, 0.9);
+  color: #e5fbff;
+}
+
+body.portfolio-techno-active .chatbot__input::placeholder {
+  color: #637b8c;
+}
+
+body.portfolio-techno-active .chatbot__input:focus {
+  border-color: var(--chatbot-techno-cyan);
+  background: rgba(14, 28, 45, 0.98);
+  box-shadow: 0 0 0 3px rgba(97, 246, 255, 0.08), 0 0 18px rgba(97, 246, 255, 0.08);
+}
+
+body.portfolio-techno-active .chatbot__send-button {
+  border-color: rgba(97, 246, 255, 0.5);
+  background: linear-gradient(115deg, rgba(25, 89, 105, 0.92), rgba(67, 39, 104, 0.94));
+  color: #effeff;
+  box-shadow: inset 0 0 15px rgba(97, 246, 255, 0.07);
+}
+
+body.portfolio-techno-active .chatbot__send-button:hover:not(:disabled) {
+  border-color: var(--chatbot-techno-cyan);
+  background: linear-gradient(115deg, rgba(27, 112, 127, 0.96), rgba(87, 44, 119, 0.96));
+  box-shadow: 0 0 22px rgba(97, 246, 255, 0.18);
+}
+
+body.portfolio-techno-active .chatbot__reset-link {
+  color: #70899a;
+}
+
+body.portfolio-techno-active .chatbot__reset-link:hover {
+  background: rgba(97, 246, 255, 0.06);
+  color: var(--chatbot-techno-cyan);
+}
+
+@keyframes chatbotTechnoLauncher {
+  0%, 100% { box-shadow: 0 0 18px rgba(97, 246, 255, 0.14), inset 0 0 18px rgba(97, 246, 255, 0.08); }
+  50% { box-shadow: 0 0 30px rgba(97, 246, 255, 0.28), inset 0 0 22px rgba(97, 246, 255, 0.12); }
+}
+
+@keyframes chatbotTechnoOrbit {
+  0% { opacity: 0.35; transform: rotate(0deg) scale(0.96); }
+  50% { opacity: 0.8; border-color: rgba(255, 79, 216, 0.28); }
+  100% { opacity: 0.35; transform: rotate(360deg) scale(0.96); }
+}
+
+@keyframes chatbotTechnoLine {
+  to { background-position: -220% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.portfolio-techno-active .chatbot-mini-launcher,
+  body.portfolio-techno-active .chatbot-mini-launcher::before,
+  body.portfolio-techno-active .chatbot__header::after {
+    animation: none !important;
+  }
+}
+
 /* Responsive */
 @media (max-width: 480px) {
   .chatbot {
