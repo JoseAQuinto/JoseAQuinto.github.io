@@ -5,6 +5,9 @@ export const apiUtilitiesTranslations = {
     apiDocumentationDescription:
       "Documentación visual de utilidades API preparada para Supabase. Incluye ejemplos de peticiones, respuestas JSON y un playground interactivo para mostrar cómo se consumirían los endpoints.",
     backToPortfolio: "Volver al portfolio",
+    frontendDemoInfoAriaLabel: "Información sobre el modo frontend",
+    frontendDemoInfo:
+      "Esta demo funciona solo en el navegador y persiste los cambios localmente. Supabase está desactivado para evitar depender de un servicio que puede pausarse; la conexión real se conserva y está señalada en el código del repositorio.",
 
     loadingSession: "Cargando sesión...",
 
@@ -15,9 +18,9 @@ export const apiUtilitiesTranslations = {
     back: "Volver",
     loginRequired: "Inicio de sesión requerido",
     loginInfoAriaLabel: "Información sobre este acceso",
-    demoAuthenticationTitle: "Autenticación real",
+    demoAuthenticationTitle: "Autenticación simulada",
     demoAuthenticationDescription:
-      "Este módulo utiliza autenticación real con Supabase. El acceso protege las utilidades y demuestra control de sesión.",
+      "Este módulo simula en el navegador el flujo de autenticación y el control de sesión de la integración original con Supabase.",
     emailPlaceholder: "Correo electrónico",
     passwordPlaceholder: "Contraseña",
     login: "Entrar",
@@ -29,11 +32,11 @@ export const apiUtilitiesTranslations = {
     playgroundLabel: "Playground",
     interactiveRequestPreview: "Vista previa interactiva de la petición",
     playgroundUtilitiesDescription:
-      "Este panel ejecuta utilidades. Si Supabase está configurado, podrá invocar Edge Functions; si no, usa modo mock.",
+      "Este panel simula localmente la ejecución de las Edge Functions incluidas como referencia en el repositorio.",
     playgroundCrudDescription:
-      "Este panel ejecuta operaciones CRUD sobre la tabla notes. Si Supabase no está configurado todavía, usa datos mock locales.",
+      "Este panel simula operaciones CRUD sobre la tabla notes y guarda los cambios en este navegador.",
     supabaseMode: "Modo Supabase",
-    mockMode: "Modo mock",
+    mockMode: "Modo frontend local",
     statusOk: "200 OK",
     statusLoading: "Cargando...",
     statusError: "400 ERROR",
@@ -94,10 +97,10 @@ export const apiUtilitiesTranslations = {
     utilityCountWordsTitle: "Contar palabras en un texto",
     utilityCountWordsDescription:
       "Devuelve el número total de palabras y caracteres del texto de entrada.",
-    notesTableEyebrow: "Live data",
+    notesTableEyebrow: "Datos locales",
     notesTableTitle: "Tabla de notas",
     notesTableDescription:
-      "Vista de los registros actuales. Se actualiza tras las operaciones CRUD para reflejar el estado real de los datos.",
+      "Vista de los registros de esta demo. Se actualiza tras cada operación CRUD y persiste en este navegador.",
     refreshTable: "Actualizar tabla",
     notesTableTitleColumn: "Título",
     notesTableContentColumn: "Contenido",
@@ -112,6 +115,9 @@ export const apiUtilitiesTranslations = {
     apiDocumentationDescription:
       "Visual API utilities documentation prepared for Supabase. It includes request examples, JSON responses, and an interactive playground to show how the endpoints would be consumed.",
     backToPortfolio: "Back to portfolio",
+    frontendDemoInfoAriaLabel: "Information about frontend mode",
+    frontendDemoInfo:
+      "This demo runs entirely in the browser and persists changes locally. Supabase is disabled to avoid relying on a service that may be paused; the real connection remains clearly marked in the repository code.",
 
     loadingSession: "Loading session...",
 
@@ -122,9 +128,9 @@ export const apiUtilitiesTranslations = {
     back: "Back",
     loginRequired: "Login required",
     loginInfoAriaLabel: "Information about this login",
-    demoAuthenticationTitle: "Real authentication",
+    demoAuthenticationTitle: "Simulated authentication",
     demoAuthenticationDescription:
-      "This module uses real authentication powered by Supabase. The login protects the utilities and demonstrates session-based access control.",
+      "This module simulates the authentication and session-control flow from the original Supabase integration in the browser.",
     emailPlaceholder: "Email",
     passwordPlaceholder: "Password",
     login: "Login",
@@ -136,11 +142,11 @@ export const apiUtilitiesTranslations = {
     playgroundLabel: "Playground",
     interactiveRequestPreview: "Interactive request preview",
     playgroundUtilitiesDescription:
-      "This panel runs utilities. If Supabase is configured, it can invoke Edge Functions; otherwise, it uses mock mode.",
+      "This panel locally simulates the Edge Functions kept as a reference in the repository.",
     playgroundCrudDescription:
-      "This panel runs CRUD operations on the notes table. If Supabase is not configured yet, it uses local mock data.",
+      "This panel simulates CRUD operations on the notes table and stores changes in this browser.",
     supabaseMode: "Supabase mode",
-    mockMode: "Mock mode",
+    mockMode: "Local frontend mode",
     statusOk: "200 OK",
     statusLoading: "Loading...",
     statusError: "400 ERROR",
@@ -201,10 +207,10 @@ export const apiUtilitiesTranslations = {
     utilityCountWordsTitle: "Count words in a text",
     utilityCountWordsDescription:
       "Returns the total number of words and characters from the input text.",
-    notesTableEyebrow: "Live data",
+    notesTableEyebrow: "Local data",
     notesTableTitle: "Notes table",
     notesTableDescription:
-      "View of the current records. It refreshes after CRUD operations to reflect the real state of the data.",
+      "View of this demo's records. It refreshes after every CRUD operation and persists in this browser.",
     refreshTable: "Refresh table",
     notesTableTitleColumn: "Title",
     notesTableContentColumn: "Content",

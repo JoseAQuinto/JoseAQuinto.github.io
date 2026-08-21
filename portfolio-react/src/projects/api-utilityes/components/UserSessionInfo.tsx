@@ -1,20 +1,9 @@
-import { useEffect, useState } from "react";
-import { supabase } from "../services/supabaseClient";
+import { useAuth } from "../hooks/useAuth";
 import { useApiUtilitiesLanguage } from "../translations/ApiUtilitiesLanguageProvider";
 
 export default function UserSessionInfo() {
   const { t } = useApiUtilitiesLanguage();
-  const [email, setEmail] = useState<string | null>(null);
-
-  useEffect(() => {
-    const loadUser = async () => {
-      if (!supabase) return;
-      const { data } = await supabase.auth.getUser();
-      setEmail(data.user?.email ?? null);
-    };
-
-    void loadUser();
-  }, []);
+  const { userEmail: email } = useAuth();
 
   return (
     <div className="flex min-w-0 items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-600">

@@ -1,13 +1,28 @@
 import type { StockPageConfigurationDto } from "../dto/configuration.dto";
 import { hasSupabaseEnv, supabase } from "./supabaseClient";
 
-let mockConfiguration: StockPageConfigurationDto = {
+const STORAGE_KEY = "portfolio-stock-configuration";
+
+const defaultConfiguration: StockPageConfigurationDto = {
   id: 1,
   showReferenceColumn: true,
   showLastModifiedColumn: true,
   showMinStockColumn: true,
   updatedAt: new Date().toISOString(),
 };
+
+function readLocalConfiguration(): StockPageConfigurationDto {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved
+      ? (JSON.parse(saved) as StockPageConfigurationDto)
+      : defaultConfiguration;
+  } catch {
+    return defaultConfiguration;
+  }
+}
+
+let mockConfiguration = readLocalConfiguration();
 
 type ConfigurationRow = {
   id: number;
@@ -33,6 +48,8 @@ export const configurationService = {
       return { ...mockConfiguration };
     }
 
+    // Supabase implementation retained as a reference. This branch is disabled
+    // by SUPABASE_CONNECTION_ENABLED in supabaseClient.ts for the public demo.
     const { data, error } = await supabase
       .from("dashboard_settings")
       .select("*")
@@ -57,6 +74,8 @@ export const configurationService = {
         id: mockConfiguration.id ?? 1,
         updatedAt: new Date().toISOString(),
       };
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(mockConfiguration));
 
       return { ...mockConfiguration };
     }

@@ -8,13 +8,15 @@ type NoteRow = {
   created_at: string;
 };
 
+const STORAGE_KEY = "api-utilities-demo-notes";
+
 function getCurrentTranslations() {
   const savedLanguage = localStorage.getItem("language");
   const language = savedLanguage === "es" ? "es" : "en";
   return apiUtilitiesTranslations[language];
 }
 
-let mockNotes: NoteRow[] = [
+const defaultNotes: NoteRow[] = [
   {
     id: 1,
     title: "Demo note",
@@ -28,6 +30,21 @@ let mockNotes: NoteRow[] = [
     created_at: new Date().toISOString(),
   },
 ];
+
+function readLocalNotes(): NoteRow[] {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? (JSON.parse(saved) as NoteRow[]) : defaultNotes;
+  } catch {
+    return defaultNotes;
+  }
+}
+
+function persistLocalNotes(notes: NoteRow[]) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+}
+
+let mockNotes = readLocalNotes();
 
 function getNextId() {
   if (mockNotes.length === 0) return 1;
@@ -47,6 +64,7 @@ async function createMock(body: Record<string, unknown>) {
   };
 
   mockNotes = [newNote, ...mockNotes];
+  persistLocalNotes(mockNotes);
   return newNote;
 }
 
@@ -71,6 +89,7 @@ async function updateMock(body: Record<string, unknown>) {
   };
 
   mockNotes = mockNotes.map((note) => (note.id === id ? updated : note));
+  persistLocalNotes(mockNotes);
   return updated;
 }
 
@@ -89,6 +108,7 @@ async function removeMock(body: Record<string, unknown>) {
   }
 
   mockNotes = mockNotes.filter((note) => note.id !== id);
+  persistLocalNotes(mockNotes);
 
   return {
     success: true,
@@ -97,6 +117,8 @@ async function removeMock(body: Record<string, unknown>) {
 }
 
 async function getAllSupabase() {
+  // Kept as the real backend reference. The public demo never reaches this
+  // branch because the connection flag in supabaseClient.ts is disabled.
   const t = getCurrentTranslations();
 
   if (!supabase) {

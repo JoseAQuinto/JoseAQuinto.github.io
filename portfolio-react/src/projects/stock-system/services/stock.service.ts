@@ -5,7 +5,9 @@ import type {
 } from "../dto/stock.dto";
 import { hasSupabaseEnv, supabase } from "./supabaseClient";
 
-let mockItems: StockItemDto[] = [
+const STORAGE_KEY = "portfolio-stock-items";
+
+const defaultItems: StockItemDto[] = [
   {
     id: 1,
     description: "Monitor 24 pulgadas",
@@ -31,6 +33,21 @@ let mockItems: StockItemDto[] = [
     minStock: 10,
   },
 ];
+
+function readLocalItems(): StockItemDto[] {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? (JSON.parse(saved) as StockItemDto[]) : defaultItems;
+  } catch {
+    return defaultItems;
+  }
+}
+
+function persistLocalItems(items: StockItemDto[]) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+}
+
+let mockItems = readLocalItems();
 
 type StockRow = {
   id: number;
@@ -58,6 +75,8 @@ export const stockService = {
       return [...mockItems];
     }
 
+    // Supabase implementation retained as a reference. This branch is disabled
+    // by SUPABASE_CONNECTION_ENABLED in supabaseClient.ts for the public demo.
     const { data, error } = await supabase
       .from("products")
       .select("*")
@@ -82,6 +101,7 @@ export const stockService = {
       };
 
       mockItems = [newItem, ...mockItems];
+      persistLocalItems(mockItems);
       return newItem;
     }
 
@@ -116,6 +136,7 @@ export const stockService = {
       };
 
       mockItems = mockItems.map((x) => (x.id === payload.id ? updated : x));
+      persistLocalItems(mockItems);
       return updated;
     }
 
@@ -142,6 +163,7 @@ export const stockService = {
   async remove(id: number): Promise<void> {
     if (!hasSupabaseEnv || !supabase) {
       mockItems = mockItems.filter((x) => x.id !== id);
+      persistLocalItems(mockItems);
       return;
     }
 

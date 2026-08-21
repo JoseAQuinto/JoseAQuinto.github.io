@@ -1,0 +1,29 @@
+type Props = {
+  message: string;
+  ariaLabel: string;
+};
+
+export default function FrontendDemoTooltip({ message, ariaLabel }: Props) {
+  return (
+    <span className="group relative inline-flex shrink-0">
+      <button
+        type="button"
+        aria-label={ariaLabel}
+        aria-describedby="frontend-demo-tooltip"
+        className="flex h-7 w-7 items-center justify-center rounded-full border border-amber-300/40 bg-amber-300/10 text-xs font-bold text-amber-200 transition hover:border-amber-200/70 hover:bg-amber-300/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300"
+      >
+        i
+      </button>
+      <span
+        id="frontend-demo-tooltip"
+        role="tooltip"
+        className="pointer-events-none absolute left-1/2 top-full z-50 mt-3 w-[min(20rem,calc(100vw-2rem))] -translate-x-1/2 rounded-xl border border-slate-200 bg-white p-4 text-left text-xs font-normal leading-5 text-slate-700 opacity-0 shadow-xl transition group-hover:opacity-100 group-focus-within:opacity-100"
+      >
+        <span className="mb-1 block font-semibold text-slate-950">
+          Demo frontend
+        </span>
+        {message}
+      </span>
+    </span>
+  );
+}

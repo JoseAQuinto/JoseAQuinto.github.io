@@ -1,15 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLockBodyScroll } from "../hooks/useLockBodyScroll";
-import { supabase } from "../services/supabaseClient";
+import {
+  DEMO_EMAIL,
+  DEMO_PASSWORD,
+  signInDemo,
+} from "../services/demoAuth";
 import { useApiUtilitiesLanguage } from "../translations/ApiUtilitiesLanguageProvider";
 
 export default function LoginModal() {
   useLockBodyScroll(true);
   const navigate = useNavigate();
   const { t } = useApiUtilitiesLanguage();
-  const [email, setEmail] = useState("user@demo.com");
-  const [password, setPassword] = useState("1234");
+  const [email, setEmail] = useState(DEMO_EMAIL);
+  const [password, setPassword] = useState(DEMO_PASSWORD);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -19,9 +23,10 @@ export default function LoginModal() {
     setIsLoading(true);
 
     try {
-      if (!supabase) throw new Error(t.supabaseNotConfigured);
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) throw new Error(error.message);
+      // Supabase auth is intentionally disabled for the public portfolio.
+      // Original implementation kept for reference:
+      // await supabase.auth.signInWithPassword({ email, password });
+      if (!signInDemo(email, password)) throw new Error(t.loginError);
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : t.loginError);
     } finally {
@@ -98,7 +103,7 @@ export default function LoginModal() {
 
             <div className="mt-5 rounded-lg border border-slate-200 bg-slate-50 p-3 text-center font-mono text-xs text-slate-600">
               <p className="mb-1 font-sans font-semibold text-slate-700">{t.demoCredentialsLabel}</p>
-              user@demo.com / 1234
+              {DEMO_EMAIL} / {DEMO_PASSWORD}
             </div>
           </form>
         </div>

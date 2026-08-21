@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import FrontendDemoTooltip from "../../components/FrontendDemoTooltip";
 import { useApiUtilitiesLanguage } from "../translations/ApiUtilitiesLanguageProvider";
 
 export default function ApiHeader() {
@@ -23,6 +24,10 @@ export default function ApiHeader() {
               <span className="hidden rounded border border-cyan-400/30 bg-cyan-400/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-cyan-200 sm:inline-flex">
                 Developer tools
               </span>
+              <FrontendDemoTooltip
+                ariaLabel={t.frontendDemoInfoAriaLabel}
+                message={t.frontendDemoInfo}
+              />
             </div>
             <p className="hidden text-xs text-slate-400 sm:block">
               {t.apiDocumentationTitle}
@@ -32,8 +37,8 @@ export default function ApiHeader() {
 
         <div className="flex items-center gap-2">
           <span className="hidden items-center gap-2 text-xs text-slate-300 md:flex">
-            <span className="h-2 w-2 rounded-full bg-emerald-400" />
-            Interactive docs
+            <span className="h-2 w-2 rounded-full bg-amber-300" />
+            Frontend demo
           </span>
           <button
             type="button"

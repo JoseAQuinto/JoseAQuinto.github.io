@@ -72,6 +72,8 @@ async function runSupabaseUtility({
   endpointId,
   body,
 }: UtilityRequest): Promise<Record<string, unknown>> {
+  // Original Edge Function integration retained for repository visitors.
+  // It is intentionally unreachable in the public frontend-only demo.
   const t = getCurrentTranslations();
 
   if (!supabase) {

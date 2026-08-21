@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import FrontendDemoTooltip from "../../../components/FrontendDemoTooltip";
 import DeleteStockItemDialog from "../../components/stock/DeleteStockItemDialog";
 import StockFilters from "../../components/stock/StockFilters";
 import StockItemModal from "../../components/stock/StockItemModal";
@@ -159,6 +160,10 @@ export default function StockPage() {
                 <span className="hidden rounded border border-blue-400/30 bg-blue-400/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-blue-200 sm:inline-flex">
                   Demo
                 </span>
+                <FrontendDemoTooltip
+                  ariaLabel="Información sobre el modo de demostración"
+                  message="Esta versión funciona solo en el navegador y guarda los cambios localmente. Supabase está desactivado para evitar que la demo dependa de un servicio que puede pausarse; la integración real se conserva y está claramente señalada en el código del repositorio."
+                />
               </div>
               <p className="hidden text-xs text-slate-400 sm:block">
                 Gestión operativa de existencias
@@ -168,8 +173,8 @@ export default function StockPage() {
 
           <div className="flex items-center gap-3">
             <span className="hidden items-center gap-2 text-xs text-slate-300 md:flex">
-              <span className="h-2 w-2 rounded-full bg-emerald-400" />
-              Sistema operativo
+              <span className="h-2 w-2 rounded-full bg-amber-300" />
+              Datos locales
             </span>
             <button
               type="button"
@@ -203,7 +208,7 @@ export default function StockPage() {
                   hour: "2-digit",
                   minute: "2-digit",
                 })}`
-              : "Pendiente de sincronización"}
+              : "Preparando datos locales"}
           </p>
         </div>
 
@@ -223,7 +228,7 @@ export default function StockPage() {
               <h3 className="font-semibold text-slate-950">Artículos</h3>
               <p className="mt-0.5 text-xs text-slate-500">
                 {loading
-                  ? "Sincronizando datos…"
+                  ? "Cargando datos locales…"
                   : `${filteredItems.length} ${
                       filteredItems.length === 1 ? "registro" : "registros"
                     }`}
@@ -232,7 +237,7 @@ export default function StockPage() {
             {!loading && !loadError ? (
               <span className="inline-flex w-fit items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                Datos sincronizados
+                Guardado en este navegador
               </span>
             ) : null}
           </div>
@@ -241,7 +246,7 @@ export default function StockPage() {
             <div className="flex min-h-72 flex-col items-center justify-center px-4 py-12" role="status">
               <div className="h-9 w-9 animate-spin rounded-full border-2 border-slate-200 border-t-blue-600" />
               <p className="mt-4 text-sm font-semibold text-slate-700">Cargando inventario</p>
-              <p className="mt-1 text-xs text-slate-500">Consultando el origen de datos</p>
+              <p className="mt-1 text-xs text-slate-500">Leyendo el almacenamiento local</p>
             </div>
           ) : loadError ? (
             <div className="flex min-h-72 flex-col items-center justify-center px-5 py-12 text-center">
