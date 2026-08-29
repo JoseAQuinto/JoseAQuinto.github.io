@@ -252,28 +252,6 @@ svg {
   gap: 0.7rem;
 }
 
-.local-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  color: var(--text-muted);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.local-badge span {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--mint);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--mint) 13%, transparent);
-}
-
 .icon-button,
 .nav-button {
   display: inline-grid;
@@ -1529,8 +1507,7 @@ dialog::backdrop {
 
 @media (max-width: 900px) {
   .back-link,
-  .topbar-divider,
-  .local-badge {
+  .topbar-divider {
     display: none;
   }
 
