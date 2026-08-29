@@ -5,6 +5,7 @@ export type PortfolioProject = {
   tags: readonly string[];
   href: string;
   cta: string;
+  standalone?: boolean;
 };
 
 export type ProjectCardCopy = {

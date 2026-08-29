@@ -18,6 +18,16 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   const reduceMotion = useReducedMotion();
 
+  const projectLinkClassName =
+    "portfolio-project-link inline-flex w-fit items-center gap-3 rounded-full border border-[#cfc6bb] bg-[#f8f5f1] px-4 py-2.5 text-[10px] uppercase tracking-[0.15em] text-[#2d2925] transition-colors hover:border-[#a99d90] hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#94887b] focus-visible:ring-offset-3";
+
+  const projectLinkContent = (
+    <>
+      {project.cta}
+      <span aria-hidden="true">↗</span>
+    </>
+  );
+
   return (
     <m.article
       className="portfolio-project-card group relative overflow-hidden rounded-[28px] border border-[#ded8cf] bg-white/80 p-6 sm:p-8"
@@ -71,13 +81,15 @@ export default function ProjectCard({
             </p>
           </div>
 
-          <Link
-            to={project.href}
-            className="portfolio-project-link inline-flex w-fit items-center gap-3 rounded-full border border-[#cfc6bb] bg-[#f8f5f1] px-4 py-2.5 text-[10px] uppercase tracking-[0.15em] text-[#2d2925] transition-colors hover:border-[#a99d90] hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#94887b] focus-visible:ring-offset-3"
-          >
-            {project.cta}
-            <span aria-hidden="true">↗</span>
-          </Link>
+          {project.standalone ? (
+            <a href={project.href} className={projectLinkClassName}>
+              {projectLinkContent}
+            </a>
+          ) : (
+            <Link to={project.href} className={projectLinkClassName}>
+              {projectLinkContent}
+            </Link>
+          )}
         </div>
       </div>
     </m.article>

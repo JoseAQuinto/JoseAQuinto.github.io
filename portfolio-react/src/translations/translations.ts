@@ -89,6 +89,16 @@ export const translations = {
 
             projects: [
                 {
+                    id: "visual-planner",
+                    title: "Visual Planner",
+                    description:
+                        "Organizador mensual interactivo con gestión de tareas, backlog, filtros y drag & drop. Construido completamente con HTML, CSS y JavaScript vanilla y persistencia local.",
+                    href: "/visual-planner/index.html",
+                    cta: "Ver demo",
+                    standalone: true,
+                    tags: ["HTML", "CSS", "JavaScript", "LocalStorage", "Drag & Drop"],
+                },
+                {
                     id: "portfolio-demo",
                     title: "Portfolio Demo",
                     description:
@@ -517,6 +527,16 @@ export const translations = {
             ],
 
             projects: [
+                {
+                    id: "visual-planner",
+                    title: "Visual Planner",
+                    description:
+                        "Interactive monthly organizer with task management, backlog, filters and drag & drop. Built entirely with HTML, CSS and vanilla JavaScript with local persistence.",
+                    href: "/visual-planner/index.html",
+                    cta: "View demo",
+                    standalone: true,
+                    tags: ["HTML", "CSS", "JavaScript", "LocalStorage", "Drag & Drop"],
+                },
                 {
                     id: "portfolio-demo",
                     title: "Portfolio Demo",

@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Visual Planner: organizador mensual interactivo con calendario, backlog y persistencia local."
+    />
+    <meta name="theme-color" content="#10141d" />
+    <title>Visual Planner · José Ángel Quinto</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="planner-data.js"></script>
+    <script defer src="planner-storage.js"></script>
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#planner-main">Saltar al planner</a>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-cluster">
+          <a class="back-link" href="/#/" aria-label="Volver al portfolio de José Ángel Quinto">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+            Portfolio
+          </a>
+          <span class="topbar-divider" aria-hidden="true"></span>
+          <div class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 28 28">
+              <rect x="4" y="5" width="20" height="19" rx="5" />
+              <path d="M9 3v5M19 3v5M4 11h20M9 16h3M16 16h3M9 20h3" />
+            </svg>
+          </div>
+          <div>
+            <p class="brand-kicker">Workspace personal</p>
+            <h1>Visual Planner</h1>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <span class="local-badge" title="Los datos se guardan únicamente en este dispositivo">
+            <span aria-hidden="true"></span>
+            100% local
+          </span>
+          <button class="icon-button" id="theme-toggle" type="button" aria-label="Cambiar tema">
+            <svg class="icon-sun" aria-hidden="true" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41" />
+            </svg>
+            <svg class="icon-moon" aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M20.5 14.2A8 8 0 0 1 9.8 3.5 8.5 8.5 0 1 0 20.5 14.2Z" />
+            </svg>
+          </button>
+          <button class="primary-button" id="new-task-button" type="button">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+            Nueva tarea
+          </button>
+        </div>
+      </header>
+
+      <main id="planner-main">
+        <section class="planner-heading" aria-labelledby="current-month">
+          <div>
+            <p class="eyebrow"><span></span> Plan mensual</p>
+            <div class="month-title-row">
+              <h2 id="current-month" aria-live="polite"></h2>
+              <button class="today-button" id="today-button" type="button">Hoy</button>
+            </div>
+            <p class="month-subtitle" id="month-summary">Organiza el trabajo y protege el foco.</p>
+          </div>
+
+          <div class="month-navigation" aria-label="Navegación por meses">
+            <button class="nav-button" id="previous-month" type="button" aria-label="Mes anterior">
+              <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" /></svg>
+            </button>
+            <button class="nav-button" id="next-month" type="button" aria-label="Mes siguiente">
+              <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></svg>
+            </button>
+          </div>
+        </section>
+
+        <section class="metrics-grid" aria-label="Resumen de productividad">
+          <article class="metric-card metric-card--accent">
+            <div>
+              <p>Total tareas</p>
+              <strong id="metric-total">0</strong>
+            </div>
+            <span class="metric-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" /></svg>
+            </span>
+          </article>
+          <article class="metric-card">
+            <div>
+              <p>Completadas</p>
+              <strong id="metric-completed">0</strong>
+            </div>
+            <span class="metric-caption" id="metric-completed-caption">0 este mes</span>
+          </article>
+          <article class="metric-card">
+            <div>
+              <p>En progreso</p>
+              <strong id="metric-progress">0</strong>
+            </div>
+            <span class="metric-caption">Trabajo activo</span>
+          </article>
+          <article class="metric-card">
+            <div>
+              <p>Atrasadas</p>
+              <strong id="metric-overdue">0</strong>
+            </div>
+            <span class="metric-caption metric-caption--warning">Requieren atención</span>
+          </article>
+          <article class="metric-card metric-card--progress">
+            <div class="progress-copy">
+              <p>Progreso global</p>
+              <strong id="metric-percentage">0%</strong>
+            </div>
+            <div class="progress-track" aria-hidden="true">
+              <span id="progress-bar"></span>
+            </div>
+          </article>
+        </section>
+
+        <section class="control-bar" aria-label="Filtros del planner">
+          <div class="status-filters" id="status-filters" role="group" aria-label="Filtrar por estado">
+            <button class="filter-pill is-active" type="button" data-status="all">Todas</button>
+            <button class="filter-pill" type="button" data-status="todo">Pendientes</button>
+            <button class="filter-pill" type="button" data-status="in-progress">En progreso</button>
+            <button class="filter-pill" type="button" data-status="done">Completadas</button>
+          </div>
+
+          <div class="filter-tools">
+            <label class="select-control">
+              <span class="visually-hidden">Filtrar por categoría</span>
+              <span class="select-dot" aria-hidden="true"></span>
+              <select id="category-filter">
+                <option value="all">Todas las categorías</option>
+              </select>
+              <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5" /></svg>
+            </label>
+            <label class="search-control">
+              <span class="visually-hidden">Buscar tareas</span>
+              <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></svg>
+              <input id="task-search" type="search" placeholder="Buscar tarea…" autocomplete="off" />
+              <kbd>/</kbd>
+            </label>
+            <button class="reset-button" id="reset-demo" type="button" title="Restaurar los datos de demostración">
+              <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5" /></svg>
+              Restaurar demo
+            </button>
+          </div>
+        </section>
+
+        <div class="planner-layout">
+          <aside class="backlog-panel">
+            <details id="backlog-details" open>
+              <summary>
+                <span>
+                  <span class="panel-kicker">Sin fecha</span>
+                  <strong>Backlog</strong>
+                </span>
+                <span class="count-badge" id="backlog-count">0</span>
+                <svg class="summary-chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5" /></svg>
+              </summary>
+              <p class="panel-description">Arrastra tareas a un día para planificarlas.</p>
+              <div class="task-list backlog-list" id="backlog-list" data-drop-date="backlog" aria-label="Tareas sin fecha"></div>
+              <button class="backlog-add" id="backlog-add" type="button">
+                <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" /></svg>
+                Añadir al backlog
+              </button>
+            </details>
+          </aside>
+
+          <section class="calendar-panel" aria-label="Calendario mensual">
+            <div class="calendar-weekdays" aria-hidden="true">
+              <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span>
+            </div>
+            <div class="calendar-grid" id="calendar-grid" aria-live="polite"></div>
+          </section>
+        </div>
+      </main>
+
+      <footer class="app-footer">
+        <p><span aria-hidden="true"></span> Guardado automático en este dispositivo</p>
+        <p>Diseño y desarrollo · José Ángel Quinto</p>
+      </footer>
+    </div>
+
+    <dialog class="task-drawer" id="task-drawer" aria-labelledby="drawer-title">
+      <form id="task-form" method="dialog" novalidate>
+        <header class="drawer-header">
+          <div>
+            <p class="eyebrow"><span></span> Detalle de tarea</p>
+            <h2 id="drawer-title">Nueva tarea</h2>
+          </div>
+          <button class="icon-button" id="close-drawer" type="button" aria-label="Cerrar panel">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" /></svg>
+          </button>
+        </header>
+
+        <div class="drawer-content">
+          <input id="task-id" type="hidden" />
+
+          <label class="field field--title">
+            <span>Título <small>Obligatorio</small></span>
+            <input id="task-title" name="title" type="text" maxlength="80" required placeholder="¿Qué necesitas hacer?" />
+            <em class="field-error" id="title-error" role="alert"></em>
+          </label>
+
+          <label class="field">
+            <span>Descripción</span>
+            <textarea id="task-description" name="description" rows="4" maxlength="320" placeholder="Añade contexto, notas o el resultado esperado…"></textarea>
+          </label>
+
+          <div class="field-grid">
+            <label class="field">
+              <span>Fecha</span>
+              <input id="task-date" name="date" type="date" />
+              <small>Déjala vacía para enviar la tarea al backlog.</small>
+            </label>
+            <label class="field">
+              <span>Categoría</span>
+              <select id="task-category" name="category"></select>
+            </label>
+          </div>
+
+          <fieldset class="choice-fieldset">
+            <legend>Prioridad</legend>
+            <div class="segmented-control" id="priority-options"></div>
+          </fieldset>
+
+          <fieldset class="choice-fieldset">
+            <legend>Estado</legend>
+            <div class="status-options" id="status-options"></div>
+          </fieldset>
+
+          <div class="task-meta" id="task-meta" hidden>
+            <span>Creada</span>
+            <time id="task-created-at"></time>
+          </div>
+        </div>
+
+        <footer class="drawer-footer">
+          <button class="danger-button" id="delete-task" type="button" hidden>
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5M14 11v5" /></svg>
+            Eliminar
+          </button>
+          <div class="drawer-footer-actions">
+            <button class="secondary-button" id="cancel-task" type="button">Cancelar</button>
+            <button class="primary-button" type="submit">
+              Guardar tarea
+              <span class="shortcut-hint">⌘ ↵</span>
+            </button>
+          </div>
+        </footer>
+      </form>
+    </dialog>
+
+    <dialog class="confirm-dialog" id="confirm-dialog" aria-labelledby="confirm-title">
+      <div class="confirm-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M12 8v5M12 17h.01" /><circle cx="12" cy="12" r="9" /></svg>
+      </div>
+      <h2 id="confirm-title">¿Eliminar esta tarea?</h2>
+      <p id="confirm-message">Esta acción no se puede deshacer.</p>
+      <div class="confirm-actions">
+        <button class="secondary-button" id="confirm-cancel" type="button">Cancelar</button>
+        <button class="danger-button danger-button--solid" id="confirm-action" type="button">Eliminar</button>
+      </div>
+    </dialog>
+
+    <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+  </body>
+</html>
