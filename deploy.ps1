@@ -39,7 +39,10 @@ Assert-SafeDeploymentTarget -Target $indexTarget
 Write-Host "Construyendo portfolio React..." -ForegroundColor Cyan
 Push-Location -LiteralPath $projectDirectory
 try {
-    npm run build
+    # npm.cmd y no npm: en PowerShell, "npm" resuelve al wrapper npm.ps1, que
+    # accede a $MyInvocation.Statement y revienta bajo Set-StrictMode -Version
+    # Latest en Windows PowerShell 5.1 antes siquiera de lanzar el build.
+    npm.cmd run build
     Assert-CommandSucceeded -Step "El build"
 }
 finally {

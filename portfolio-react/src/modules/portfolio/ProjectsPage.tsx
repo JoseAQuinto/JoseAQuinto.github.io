@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useLanguage } from "../../translations/LanguageContext";
 import PortfolioHeader from "./components/PortfolioHeader";
 import PortfolioGalleryTeaser from "./components/PortfolioGalleryTeaser";
+import FeaturedProject from "./components/FeaturedProject";
 import ProjectCard from "./components/ProjectCard";
 import Reveal from "./components/Reveal";
 import { useActiveSection } from "./hooks/useActiveSection";
@@ -22,6 +23,7 @@ const SOCIAL_LINKS = [
 
 const SECTION_IDS = [
   "hero",
+  "featured-project",
   "about",
   "projects",
   "operational-projects",
@@ -60,6 +62,7 @@ export default function ProjectsPage() {
 
   const navItems = useMemo(
     () => [
+      { id: "featured-project", label: page.featuredNavLabel },
       { id: "about", label: page.aboutTitle },
       { id: "projects", label: page.projectsTitle },
       {
@@ -74,6 +77,7 @@ export default function ProjectsPage() {
     [
       language,
       page.aboutTitle,
+      page.featuredNavLabel,
       page.operationalProjectsNavLabel,
       page.projectsTitle,
     ]
@@ -207,7 +211,9 @@ export default function ProjectsPage() {
                       </dt>
                       <dd className="mt-2 text-2xl text-[#211e1b]">
                         {String(
-                          page.projects.length + page.operationalProjects.length
+                          1 +
+                            page.projects.length +
+                            page.operationalProjects.length
                         ).padStart(2, "0")}
                       </dd>
                     </div>
@@ -217,6 +223,8 @@ export default function ProjectsPage() {
             </div>
           </header>
 
+          <FeaturedProject />
+
           <section
             id="about"
             className="portfolio-section-lazy relative scroll-mt-20 overflow-hidden bg-white py-24 sm:py-32"
@@ -225,7 +233,7 @@ export default function ProjectsPage() {
               className="portfolio-wordmark pointer-events-none absolute -right-5 top-8 text-[clamp(7rem,20vw,17rem)] leading-none tracking-[-0.06em]"
               aria-hidden="true"
             >
-              01
+              02
             </span>
 
             <div className="relative mx-auto max-w-6xl px-5 sm:px-8">
@@ -284,7 +292,7 @@ export default function ProjectsPage() {
               className="portfolio-wordmark pointer-events-none absolute -bottom-6 -left-6 text-[clamp(7rem,20vw,17rem)] leading-none tracking-[-0.06em]"
               aria-hidden="true"
             >
-              02
+              03
             </span>
 
             <div className="relative mx-auto max-w-6xl px-5 sm:px-8">
@@ -325,7 +333,7 @@ export default function ProjectsPage() {
               className="pointer-events-none absolute -right-5 -top-5 text-[clamp(7rem,20vw,17rem)] leading-none tracking-[-0.06em] text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.1)]"
               aria-hidden="true"
             >
-              03
+              04
             </span>
 
             <div className="relative mx-auto max-w-6xl px-5 sm:px-8">

@@ -33,6 +33,55 @@ export const translations = {
             operationalProjectsOnlineLabel: "En línea",
             operationalProjectsTechLabel: "Tecnologías",
             operationalProjectsCta: "Abrir aplicación",
+
+            featuredEyebrow: "Proyecto destacado",
+            featuredNavLabel: "Arcadia WMS",
+            featuredProject: {
+                title: "Arcadia WMS",
+                kicker: "Sistema de gestión de almacenes",
+                statusLabel: "En producción",
+                description:
+                    "Aplicación full-stack completa para gestionar un almacén real: entradas de proveedor, preparación de pedidos, movimientos internos entre ubicaciones, regularizaciones de inventario y trazabilidad total del stock. Frontend en React con TypeScript, API serverless sobre Vercel Functions y PostgreSQL en Neon.",
+                highlights: [
+                    {
+                        title: "Integridad del stock garantizada",
+                        description:
+                            "Cada operación ocurre dentro de una transacción de PostgreSQL con bloqueo de fila y de documento. El stock nunca puede quedar negativo, y un doble clic no aplica la operación dos veces.",
+                    },
+                    {
+                        title: "Trazabilidad completa",
+                        description:
+                            "Todo cambio de stock genera un movimiento en un histórico inmutable con artículo, cantidad, origen, destino, usuario y documento asociado. El stock siempre cuadra con ese histórico.",
+                    },
+                    {
+                        title: "Autenticación con roles",
+                        description:
+                            "Sesiones JWT con perfiles ADMIN y OPERATOR verificados en el backend en cada petición, no solo ocultando botones en la interfaz.",
+                    },
+                    {
+                        title: "Mapa visual del almacén",
+                        description:
+                            "Vista por zonas con estado y porcentaje de ocupación calculados en tiempo real, ubicaciones bloqueadas y detalle del contenido de cada hueco.",
+                    },
+                ],
+                tags: [
+                    "React",
+                    "TypeScript",
+                    "Tailwind",
+                    "Vercel Functions",
+                    "PostgreSQL",
+                    "Neon",
+                    "Drizzle ORM",
+                    "JWT",
+                    "Zod",
+                ],
+                demoHref: "https://arcadia-wms.vercel.app",
+                demoCta: "Abrir aplicación",
+                codeHref: "https://github.com/JoseAQuinto/ArcadiaWMS",
+                codeCta: "Ver código",
+                credentialsLabel: "Acceso de demostración",
+                credentialsValue: "admin / Admin123!",
+            },
             footer: "Jose Ángel Quinto Ferrández · Portafolio",
 
             heroAsideTitle: "Enfoque",
@@ -472,6 +521,55 @@ export const translations = {
             operationalProjectsOnlineLabel: "Online",
             operationalProjectsTechLabel: "Technologies",
             operationalProjectsCta: "Open application",
+
+            featuredEyebrow: "Featured project",
+            featuredNavLabel: "Arcadia WMS",
+            featuredProject: {
+                title: "Arcadia WMS",
+                kicker: "Warehouse Management System",
+                statusLabel: "In production",
+                description:
+                    "A complete full-stack application for running a real warehouse: supplier receipts, order picking, internal transfers between locations, inventory adjustments and full stock traceability. React frontend with TypeScript, serverless API on Vercel Functions and PostgreSQL on Neon.",
+                highlights: [
+                    {
+                        title: "Guaranteed stock integrity",
+                        description:
+                            "Every operation runs inside a PostgreSQL transaction with row and document locking. Stock can never go negative, and a double click never applies the same operation twice.",
+                    },
+                    {
+                        title: "Full traceability",
+                        description:
+                            "Every stock change writes a movement to an immutable ledger with item, quantity, source, destination, user and source document. Stock always reconciles against that ledger.",
+                    },
+                    {
+                        title: "Role-based authentication",
+                        description:
+                            "JWT sessions with ADMIN and OPERATOR roles enforced in the backend on every request, not just by hiding buttons in the interface.",
+                    },
+                    {
+                        title: "Visual warehouse map",
+                        description:
+                            "Zone view with status and occupancy percentage computed in real time, blocked locations and the contents of every slot.",
+                    },
+                ],
+                tags: [
+                    "React",
+                    "TypeScript",
+                    "Tailwind",
+                    "Vercel Functions",
+                    "PostgreSQL",
+                    "Neon",
+                    "Drizzle ORM",
+                    "JWT",
+                    "Zod",
+                ],
+                demoHref: "https://arcadia-wms.vercel.app",
+                demoCta: "Open application",
+                codeHref: "https://github.com/JoseAQuinto/ArcadiaWMS",
+                codeCta: "View code",
+                credentialsLabel: "Demo access",
+                credentialsValue: "admin / Admin123!",
+            },
             footer: "Jose Ángel Quinto Ferrández · Portfolio",
 
             heroAsideTitle: "Focus",
