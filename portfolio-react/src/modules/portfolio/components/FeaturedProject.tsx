@@ -40,7 +40,7 @@ export default function FeaturedProject() {
                 <div className="flex flex-wrap items-center gap-3">
                   <span className="inline-flex items-center gap-2 rounded-full border border-[#c2ceba] bg-[#eef2ea] px-3 py-1.5 text-[9px] uppercase tracking-[0.16em] text-[#4d5b46]">
                     <span
-                      className="h-1.5 w-1.5 rounded-full bg-[#6f8566] portfolio-status-dot"
+                      className="h-1.5 w-1.5 rounded-full bg-[#6f8566]"
                       aria-hidden="true"
                     />
                     {project.statusLabel}

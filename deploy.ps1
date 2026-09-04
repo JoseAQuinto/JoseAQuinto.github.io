@@ -21,6 +21,21 @@ function Assert-CommandSucceeded {
     }
 }
 
+function Resolve-NpmPath {
+    # -CommandType Application es la clave: fuerza a resolver el ejecutable real
+    # (npm.cmd en Windows) y descarta el wrapper npm.ps1, que accede a
+    # $MyInvocation.Statement y lanza excepción bajo Set-StrictMode -Version
+    # Latest en Windows PowerShell 5.1, antes siquiera de arrancar el build.
+    $npm = Get-Command -Name "npm" -CommandType Application -ErrorAction SilentlyContinue |
+        Select-Object -First 1
+
+    if (-not $npm) {
+        throw "No se ha encontrado npm en el PATH. Instala Node.js o revisa la variable PATH."
+    }
+
+    return $npm.Source
+}
+
 function Assert-SafeDeploymentTarget {
     param([string]$Target)
 
@@ -36,13 +51,18 @@ function Assert-SafeDeploymentTarget {
 Assert-SafeDeploymentTarget -Target $assetsTarget
 Assert-SafeDeploymentTarget -Target $indexTarget
 
-Write-Host "Construyendo portfolio React..." -ForegroundColor Cyan
+$npmPath = Resolve-NpmPath
+
 Push-Location -LiteralPath $projectDirectory
 try {
-    # npm.cmd y no npm: en PowerShell, "npm" resuelve al wrapper npm.ps1, que
-    # accede a $MyInvocation.Statement y revienta bajo Set-StrictMode -Version
-    # Latest en Windows PowerShell 5.1 antes siquiera de lanzar el build.
-    npm.cmd run build
+    if (-not (Test-Path -LiteralPath (Join-Path $projectDirectory "node_modules"))) {
+        Write-Host "Instalando dependencias..." -ForegroundColor Cyan
+        & $npmPath ci
+        Assert-CommandSucceeded -Step "La instalación de dependencias"
+    }
+
+    Write-Host "Construyendo portfolio React..." -ForegroundColor Cyan
+    & $npmPath run build
     Assert-CommandSucceeded -Step "El build"
 }
 finally {
