@@ -6,6 +6,11 @@ import Reveal from "./Reveal";
  * cards, this one gets a section of its own: it is the largest project in the
  * portfolio and the only full-stack application running in production.
  */
+// La sección NO lleva portfolio-section-lazy a propósito. Esa clase aplica
+// content-visibility: auto reservando 900px, y esta sección mide ~1200: al
+// renderizarse desplazaría casi 300px de contenido, y mientras está diferida no
+// responde a los clics aunque ya se vea pintada. Al ir justo después del hero,
+// el renderizado diferido no ahorra nada aquí.
 export default function FeaturedProject() {
   const { t } = useLanguage();
   const page = t.projectsPage;
@@ -14,7 +19,7 @@ export default function FeaturedProject() {
   return (
     <section
       id="featured-project"
-      className="portfolio-section-lazy relative scroll-mt-20 overflow-hidden border-t border-[#e1dcd5] bg-[#f7f6f3] py-24 sm:py-32"
+      className="relative scroll-mt-20 overflow-hidden border-t border-[#e1dcd5] bg-[#f7f6f3] py-24 sm:py-32"
     >
       <span
         className="portfolio-wordmark pointer-events-none absolute -right-5 -top-6 text-[clamp(7rem,20vw,17rem)] leading-none tracking-[-0.06em]"
