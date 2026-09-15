@@ -60,51 +60,8 @@ export const PORTFOLIO_SHOWCASES: readonly PortfolioShowcase[] = [
     url: "https://proposal2--portfoliowebeventplanner.netlify.app/",
     domain: "proposal2--portfoliowebeventplanner.netlify.app",
   },
-  {
-    id: "wedding",
-    number: "04",
-    title: "Boda",
-    category: {
-      es: "Web de celebración · Boda",
-      en: "Celebration website · Wedding",
-    },
-    description: {
-      es: "Una web de boda que reúne la historia, los datos esenciales y la celebración en una experiencia elegante, cercana y fácil de recorrer.",
-      en: "A wedding website that brings together the story, essential details and celebration in an elegant, warm and easy-to-navigate experience.",
-    },
-    url: "https://webweddingplanner.netlify.app/",
-    domain: "webweddingplanner.netlify.app",
-  },
-  {
-    id: "bosque-etereo",
-    number: "05",
-    title: "Redesign · Bosque Etéreo",
-    category: {
-      es: "Rediseño conceptual · Boda",
-      en: "Concept redesign · Wedding",
-    },
-    description: {
-      es: "Una reinterpretación orgánica y envolvente de la web de boda, construida alrededor de una atmósfera natural y una composición más sensorial.",
-      en: "An organic, immersive reinterpretation of the wedding website, built around a natural atmosphere and a more sensory composition.",
-    },
-    url: "https://redesign-bosque-etereo--webweddingplanner.netlify.app/",
-    domain: "redesign-bosque-etereo--webweddingplanner.netlify.app",
-  },
-  {
-    id: "jardin-lunar",
-    number: "06",
-    title: "Redesign · Jardín Lunar",
-    category: {
-      es: "Rediseño conceptual · Boda",
-      en: "Concept redesign · Wedding",
-    },
-    description: {
-      es: "Una variante nocturna y contemporánea que utiliza el contraste y una estética atmosférica para dar a la misma celebración una identidad distinta.",
-      en: "A nocturnal, contemporary variation using contrast and an atmospheric aesthetic to give the same celebration a distinct identity.",
-    },
-    url: "https://redesign-jardin-lunar--webweddingplanner.netlify.app/",
-    domain: "redesign-jardin-lunar--webweddingplanner.netlify.app",
-  },
+  // Las webs de boda (Boda, Bosque Etéreo y Jardín Lunar) están retiradas de
+  // momento. Para recuperarlas, ver este fichero en el commit aa710a2.
 ] as const;
 
 export const PORTFOLIO_GALLERY_COPY = {
@@ -114,7 +71,7 @@ export const PORTFOLIO_GALLERY_COPY = {
     eyebrow: "Web portfolio collection · 2026",
     title: "Portfolios con una identidad propia.",
     intro:
-      "Una colección de webs creadas para perfiles y momentos diferentes. Cada propuesta adapta estructura, tono y dirección visual a la historia que necesita contar.",
+      "Una colección de webs creadas para perfiles diferentes. Cada propuesta adapta estructura, tono y dirección visual a la historia que necesita contar.",
     index: "Índice de proyectos",
     preview: "Vista previa interactiva",
     open: "Visitar portfolio",
@@ -128,7 +85,7 @@ export const PORTFOLIO_GALLERY_COPY = {
     eyebrow: "Web portfolio collection · 2026",
     title: "Portfolios with an identity of their own.",
     intro:
-      "A collection of websites created for different profiles and moments. Each proposal adapts its structure, tone and visual direction to the story it needs to tell.",
+      "A collection of websites created for different profiles. Each proposal adapts its structure, tone and visual direction to the story it needs to tell.",
     index: "Project index",
     preview: "Interactive preview",
     open: "Visit portfolio",

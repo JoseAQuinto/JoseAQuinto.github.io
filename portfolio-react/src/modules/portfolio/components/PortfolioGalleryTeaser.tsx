@@ -8,17 +8,17 @@ const copy = {
     eyebrow: "Portfolios web",
     title: "Una web distinta para cada historia.",
     description:
-      "Además de producto digital, diseño portfolios y webs de presentación donde la identidad visual se adapta por completo a cada perfil, sector o celebración.",
+      "Además de producto digital, diseño portfolios y webs de presentación donde la identidad visual se adapta por completo a cada perfil y sector.",
     cta: "Explorar la galería",
-    count: "6 propuestas publicadas",
+    count: `${PORTFOLIO_SHOWCASES.length} propuestas publicadas`,
   },
   en: {
     eyebrow: "Web portfolios",
     title: "A different website for every story.",
     description:
-      "Alongside digital products, I design portfolios and presentation websites whose visual identity is fully adapted to each profile, field or celebration.",
+      "Alongside digital products, I design portfolios and presentation websites whose visual identity is fully adapted to each profile and field.",
     cta: "Explore the gallery",
-    count: "6 published concepts",
+    count: `${PORTFOLIO_SHOWCASES.length} published concepts`,
   },
 } as const;
 

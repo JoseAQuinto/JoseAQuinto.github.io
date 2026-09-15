@@ -9,6 +9,8 @@ import {
 } from "./portfolioGallery.data";
 import "./portfolio.css";
 
+const SHOWCASE_TOTAL = String(PORTFOLIO_SHOWCASES.length).padStart(2, "0");
+
 function scrollToSection(id: string) {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   document.getElementById(id)?.scrollIntoView({
@@ -64,7 +66,7 @@ export default function PortfolioGalleryPage() {
             className="portfolio-gallery-hero relative overflow-hidden border-b border-[#d8d0c6]"
           >
             <span className="portfolio-gallery-hero-mark" aria-hidden="true">
-              06
+              {SHOWCASE_TOTAL}
             </span>
             <div className="relative mx-auto grid min-h-[calc(100svh-65px)] max-w-7xl gap-14 px-5 py-20 sm:px-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-end lg:py-24">
               <div className="self-center lg:self-end">
@@ -127,7 +129,7 @@ export default function PortfolioGalleryPage() {
                       <div>
                         <div className="mb-5 flex items-center gap-4">
                           <span className="text-[10px] tabular-nums tracking-[0.2em] text-[#91877d]">
-                            {project.number} / 06
+                            {project.number} / {SHOWCASE_TOTAL}
                           </span>
                           <span className="h-px w-8 bg-[#a69b90]" aria-hidden="true" />
                           <span className="text-[9px] uppercase tracking-[0.19em] text-[#81776d]">
