@@ -1,31 +1,48 @@
 import { useLanguage } from "../../../translations/LanguageContext";
 import Reveal from "./Reveal";
 
+type FeaturedProjectProps = {
+  /** Bloque de textos del proyecto dentro de projectsPage. */
+  projectKey: "featuredProject" | "featuredProjectDimension";
+  sectionId: string;
+  /** Número decorativo de la sección ("01", "02"...). */
+  sectionNumber: string;
+  /** Alterna el fondo para separar dos destacados consecutivos. */
+  tone?: "muted" | "light";
+};
+
 /**
  * Highlighted project block, placed right after the hero. Unlike the demo
- * cards, this one gets a section of its own: it is the largest project in the
- * portfolio and the only full-stack application running in production.
+ * cards, each featured project gets a section of its own: they are the largest
+ * projects in the portfolio and full-stack applications running in production.
  */
 // La sección NO lleva portfolio-section-lazy a propósito. Esa clase aplica
 // content-visibility: auto reservando 900px, y esta sección mide ~1200: al
 // renderizarse desplazaría casi 300px de contenido, y mientras está diferida no
 // responde a los clics aunque ya se vea pintada. Al ir justo después del hero,
 // el renderizado diferido no ahorra nada aquí.
-export default function FeaturedProject() {
+export default function FeaturedProject({
+  projectKey,
+  sectionId,
+  sectionNumber,
+  tone = "muted",
+}: FeaturedProjectProps) {
   const { t } = useLanguage();
   const page = t.projectsPage;
-  const project = page.featuredProject;
+  const project = page[projectKey];
 
   return (
     <section
-      id="featured-project"
-      className="relative scroll-mt-20 overflow-hidden border-t border-[#e1dcd5] bg-[#f7f6f3] py-24 sm:py-32"
+      id={sectionId}
+      className={`relative scroll-mt-20 overflow-hidden border-t border-[#e1dcd5] py-24 sm:py-32 ${
+        tone === "light" ? "bg-white" : "bg-[#f7f6f3]"
+      }`}
     >
       <span
         className="portfolio-wordmark pointer-events-none absolute -right-5 -top-6 text-[clamp(7rem,20vw,17rem)] leading-none tracking-[-0.06em]"
         aria-hidden="true"
       >
-        01
+        {sectionNumber}
       </span>
 
       <div className="relative mx-auto max-w-6xl px-5 sm:px-8">

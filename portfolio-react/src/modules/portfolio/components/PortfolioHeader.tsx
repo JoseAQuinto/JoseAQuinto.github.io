@@ -1,6 +1,8 @@
 type NavItem = {
   id: string;
   label: string;
+  /** Solo se muestra desde xl: por debajo el menú no cabe en una línea. */
+  wideOnly?: boolean;
 };
 
 type PortfolioHeaderProps = {
@@ -38,7 +40,9 @@ export default function PortfolioHeader({
                 key={item.id}
                 href={`#${item.id}`}
                 aria-current={activeSection === item.id ? "location" : undefined}
-                className="portfolio-nav-link rounded-sm pb-1 text-[11px] uppercase tracking-[0.16em] text-[#817970] transition-colors hover:text-[#201d1a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#94887b] focus-visible:ring-offset-4 focus-visible:ring-offset-[#f7f6f3] data-[active=true]:text-[#201d1a]"
+                className={`portfolio-nav-link rounded-sm pb-1 text-[11px] uppercase tracking-[0.16em] text-[#817970] transition-colors hover:text-[#201d1a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#94887b] focus-visible:ring-offset-4 focus-visible:ring-offset-[#f7f6f3] data-[active=true]:text-[#201d1a] ${
+                  item.wideOnly ? "hidden xl:block" : ""
+                }`}
                 data-active={activeSection === item.id}
               >
                 {item.label}

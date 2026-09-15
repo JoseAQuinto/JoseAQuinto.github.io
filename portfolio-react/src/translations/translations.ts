@@ -82,6 +82,55 @@ export const translations = {
                 credentialsLabel: "Acceso de demostración",
                 credentialsValue: "admin / Admin123!",
             },
+            featuredDimensionNavLabel: "ArcadiaDimension",
+            featuredProjectDimension: {
+                title: "ArcadiaDimension",
+                kicker: "Diseñador visual de almacenes",
+                statusLabel: "En producción",
+                description:
+                    "Editor gráfico para diseñar la distribución física de un almacén sobre un plano a escala real, al estilo de una herramienta CAD ligera o de Figma pero centrado en la logística: zonas, racks con ubicaciones, muelles, puertas y obstáculos. La ocupación y el contenido de cada hueco se representan directamente sobre el plano. Frontend en React con react-konva y Zustand, API Fastify como función serverless en Vercel y PostgreSQL en Neon.",
+                highlights: [
+                    {
+                        title: "Canvas interactivo con precisión métrica",
+                        description:
+                            "Drag & drop desde la paleta, redimensionado y rotación con imanes cada 45°, snap a cuadrícula, zoom centrado en el cursor y pan. Todas las medidas se expresan en metros reales.",
+                    },
+                    {
+                        title: "Deshacer, rehacer y guardado automático",
+                        description:
+                            "Historial con etiquetas descriptivas y autoguardado con debounce del plano completo. El servidor calcula el diff mínimo y lo aplica en una única transacción.",
+                    },
+                    {
+                        title: "Ubicaciones y mapa de ocupación",
+                        description:
+                            "Cada rack genera sus ubicaciones por niveles y huecos (A-01-01…) con artículo, cantidad y lote. Los huecos se colorean según su ocupación y un buscador localiza cualquier artículo en el plano.",
+                    },
+                    {
+                        title: "Concurrencia optimista sin pérdida de stock",
+                        description:
+                            "Si el plano cambia en otra pestaña o sesión, el editor avisa en lugar de sobrescribir. Eliminar un rack con stock y deshacer lo restaura con todo su contenido.",
+                    },
+                ],
+                tags: [
+                    "React",
+                    "TypeScript",
+                    "Konva",
+                    "Zustand",
+                    "TanStack Query",
+                    "Fastify",
+                    "PostgreSQL",
+                    "Neon",
+                    "Drizzle ORM",
+                    "Zod",
+                    "Vitest",
+                ],
+                demoHref: "https://arcadiadimension.vercel.app",
+                demoCta: "Abrir aplicación",
+                codeHref: "https://github.com/JoseAQuinto/ArcadiaDimension",
+                codeCta: "Ver código",
+                credentialsLabel: "Acceso de demostración",
+                credentialsValue: "demo@arcadiadimension.app / demo1234",
+            },
             footer: "Jose Ángel Quinto Ferrández · Portafolio",
 
             heroAsideTitle: "Enfoque",
@@ -569,6 +618,55 @@ export const translations = {
                 codeCta: "View code",
                 credentialsLabel: "Demo access",
                 credentialsValue: "admin / Admin123!",
+            },
+            featuredDimensionNavLabel: "ArcadiaDimension",
+            featuredProjectDimension: {
+                title: "ArcadiaDimension",
+                kicker: "Visual Warehouse Designer",
+                statusLabel: "In production",
+                description:
+                    "A graphical editor for designing the physical layout of a warehouse on a real-scale floor plan, like a lightweight CAD tool or Figma but focused on logistics: zones, racks with locations, docks, doors and obstacles. Occupancy and the contents of every slot are shown directly on the plan. React frontend with react-konva and Zustand, Fastify API as a serverless function on Vercel and PostgreSQL on Neon.",
+                highlights: [
+                    {
+                        title: "Interactive canvas with metric precision",
+                        description:
+                            "Drag & drop from the palette, resizing and rotation with 45° snapping, grid snap, cursor-centred zoom and pan. Every measurement is expressed in real metres.",
+                    },
+                    {
+                        title: "Undo, redo and autosave",
+                        description:
+                            "History with descriptive labels and debounced autosave of the whole plan. The server computes the minimal diff and applies it in a single transaction.",
+                    },
+                    {
+                        title: "Locations and occupancy map",
+                        description:
+                            "Each rack generates its locations by level and slot (A-01-01…) with item, quantity and lot. Slots are coloured by occupancy and a search box finds any item on the plan.",
+                    },
+                    {
+                        title: "Optimistic concurrency with no stock loss",
+                        description:
+                            "If the plan changes in another tab or session, the editor warns instead of overwriting. Deleting a rack with stock and undoing restores it with all of its contents.",
+                    },
+                ],
+                tags: [
+                    "React",
+                    "TypeScript",
+                    "Konva",
+                    "Zustand",
+                    "TanStack Query",
+                    "Fastify",
+                    "PostgreSQL",
+                    "Neon",
+                    "Drizzle ORM",
+                    "Zod",
+                    "Vitest",
+                ],
+                demoHref: "https://arcadiadimension.vercel.app",
+                demoCta: "Open application",
+                codeHref: "https://github.com/JoseAQuinto/ArcadiaDimension",
+                codeCta: "View code",
+                credentialsLabel: "Demo access",
+                credentialsValue: "demo@arcadiadimension.app / demo1234",
             },
             footer: "Jose Ángel Quinto Ferrández · Portfolio",
 
