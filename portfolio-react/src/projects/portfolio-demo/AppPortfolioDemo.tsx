@@ -81,9 +81,9 @@ function Header() {
 
           <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <h1 className="truncate text-sm font-semibold sm:text-base">{demo.title}</h1>
+              <h1 className="text-sm font-semibold leading-tight sm:text-base">{demo.title}</h1>
               <span className="hidden rounded border border-indigo-400/30 bg-indigo-400/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-indigo-200 sm:inline-flex">
-                Operations suite
+                Demo
               </span>
             </div>
             <p className="hidden truncate text-xs text-slate-400 sm:block">{demo.subtitle}</p>

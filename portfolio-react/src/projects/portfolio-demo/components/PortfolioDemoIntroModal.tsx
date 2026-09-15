@@ -11,6 +11,7 @@ function cx(...classes: Array<string | false | null | undefined>) {
 type ModalProps = {
   open: boolean;
   onClose: () => void;
+  eyebrow: string;
   title: string;
   subtitle?: string;
   paragraphs: string[];
@@ -113,6 +114,7 @@ function ArrowRightIcon({
 function Modal({
   open,
   onClose,
+  eyebrow,
   title,
   subtitle,
   paragraphs,
@@ -171,7 +173,7 @@ function Modal({
               <div className="mb-5 flex items-center gap-4">
                 <div className="h-px w-8 bg-[#b6bbb7]" />
                 <span className="text-[10px] uppercase tracking-[0.22em] text-[#727872]">
-                  Portfolio Demo
+                  {eyebrow}
                 </span>
               </div>
 
@@ -276,6 +278,7 @@ export default function PortfolioDemoIntroModal() {
     <Modal
       open={open}
       onClose={handleClose}
+      eyebrow={t.portfolioDemo.title}
       title={modalT.title}
       paragraphs={[modalT.description1, modalT.description2]}
       confirmLabel={modalT.confirm}

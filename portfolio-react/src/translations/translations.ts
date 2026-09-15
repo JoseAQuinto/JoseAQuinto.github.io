@@ -25,11 +25,11 @@ export const translations = {
             projectsTitle: "Proyectos",
             projectsSubtitle:
                 "Una selección de demos y proyectos donde muestro estructura, componentes reutilizables e interfaces conectadas a datos mock o APIs.",
-            operationalProjectsNavLabel: "Proyectos operativos",
-            operationalProjectsEyebrow: "En producción",
-            operationalProjectsTitle: "Proyectos operativos",
+            operationalProjectsNavLabel: "Otros proyectos",
+            operationalProjectsEyebrow: "Proyectos paralelos",
+            operationalProjectsTitle: "Otros proyectos",
             operationalProjectsSubtitle:
-                "Aplicaciones propias publicadas, disponibles para uso real y mantenidas como productos en evolución.",
+                "Pequeñas aplicaciones que he publicado por mi cuenta.",
             operationalProjectsOnlineLabel: "En línea",
             operationalProjectsTechLabel: "Tecnologías",
             operationalProjectsCta: "Abrir aplicación",
@@ -155,6 +155,8 @@ export const translations = {
                 ".NET",
                 "PostgreSQL",
                 "Entity Framework",
+                "n8n",
+                "RabbitMQ",
             ],
 
             experience: [
@@ -193,12 +195,12 @@ export const translations = {
                 },
                 {
                     id: "portfolio-demo",
-                    title: "Portfolio Demo",
+                    title: "Enterprise Operations Suite",
                     description:
-                        "Aplicación demo con módulos interactivos de operaciones y analítica. Incluye navegación interna, componentes reutilizables, tipado con TypeScript y servicios mock.",
+                        "Suite de paneles de operaciones inspirada en interfaces de ERP, SGA y MES en las que he trabajado: incidencias e inactividad por recurso, analítica de rendimiento (disponibilidad, calidad y eficiencia), gestión de pedidos en móvil y monitorización de un centro de soporte con SLA. Datos mock y componentes reutilizables.",
                     href: "/portfolio-demo",
                     cta: "Ver demo",
-                    tags: ["React", "TypeScript", "Tailwind", "Mock API"],
+                    tags: ["React", "TypeScript", "Tailwind", "Highcharts", "Mock API"],
                 },
                 {
                     id: "stock-system",
@@ -232,7 +234,7 @@ export const translations = {
         },
 
         portfolioDemo: {
-            title: "Portfolio Demo",
+            title: "Enterprise Operations Suite",
             subtitle: "Módulos interactivos de front-end",
 
             nav: {
@@ -557,11 +559,11 @@ export const translations = {
             projectsTitle: "Projects",
             projectsSubtitle:
                 "A selection of demos and projects where I showcase structure, reusable components and interfaces connected to mock data or APIs.",
-            operationalProjectsNavLabel: "Live projects",
-            operationalProjectsEyebrow: "In production",
-            operationalProjectsTitle: "Live projects",
+            operationalProjectsNavLabel: "Other projects",
+            operationalProjectsEyebrow: "Side projects",
+            operationalProjectsTitle: "Other projects",
             operationalProjectsSubtitle:
-                "Published applications available for real-world use and maintained as evolving products.",
+                "Small applications I have published on my own.",
             operationalProjectsOnlineLabel: "Online",
             operationalProjectsTechLabel: "Technologies",
             operationalProjectsCta: "Open application",
@@ -687,6 +689,8 @@ export const translations = {
                 ".NET",
                 "PostgreSQL",
                 "Entity Framework",
+                "n8n",
+                "RabbitMQ",
             ],
 
             experience: [
@@ -725,12 +729,12 @@ export const translations = {
                 },
                 {
                     id: "portfolio-demo",
-                    title: "Portfolio Demo",
+                    title: "Enterprise Operations Suite",
                     description:
-                        "Demo application with interactive operations and analytics modules. Includes internal navigation, reusable components, TypeScript typing and mock services.",
+                        "A suite of operations dashboards inspired by ERP, WMS and MES interfaces I have worked on: downtime and incidents by resource, performance analytics (availability, quality and efficiency), mobile order management and support centre monitoring with SLAs. Mock data and reusable components.",
                     href: "/portfolio-demo",
                     cta: "View demo",
-                    tags: ["React", "TypeScript", "Tailwind", "Mock API"],
+                    tags: ["React", "TypeScript", "Tailwind", "Highcharts", "Mock API"],
                 },
                 {
                     id: "stock-system",
@@ -764,7 +768,7 @@ export const translations = {
         },
 
         portfolioDemo: {
-            title: "Portfolio Demo",
+            title: "Enterprise Operations Suite",
             subtitle: "Interactive front-end modules",
 
             nav: {
