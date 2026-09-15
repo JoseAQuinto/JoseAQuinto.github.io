@@ -220,6 +220,7 @@ export default function ProjectsPage() {
             sectionId="featured-project-dimension"
             sectionNumber="02"
             tone="light"
+            layout="stacked"
           />
 
           <section

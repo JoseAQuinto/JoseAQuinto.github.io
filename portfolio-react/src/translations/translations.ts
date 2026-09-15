@@ -58,11 +58,6 @@ export const translations = {
                         description:
                             "Sesiones JWT con perfiles ADMIN y OPERATOR verificados en el backend en cada petición, no solo ocultando botones en la interfaz.",
                     },
-                    {
-                        title: "Mapa visual del almacén",
-                        description:
-                            "Vista por zonas con estado y porcentaje de ocupación calculados en tiempo real, ubicaciones bloqueadas y detalle del contenido de cada hueco.",
-                    },
                 ],
                 tags: [
                     "React",
@@ -594,11 +589,6 @@ export const translations = {
                         title: "Role-based authentication",
                         description:
                             "JWT sessions with ADMIN and OPERATOR roles enforced in the backend on every request, not just by hiding buttons in the interface.",
-                    },
-                    {
-                        title: "Visual warehouse map",
-                        description:
-                            "Zone view with status and occupancy percentage computed in real time, blocked locations and the contents of every slot.",
                     },
                 ],
                 tags: [
