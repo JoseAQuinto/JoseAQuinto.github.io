@@ -260,7 +260,7 @@ export default function ProjectsPage() {
 
                   <div className="my-6 h-px bg-[#e2ddd6]" />
 
-                  <dl className="grid grid-cols-2 gap-5">
+                  <dl>
                     <div>
                       <dt className="text-[9px] uppercase tracking-[0.18em] text-[#9a9289]">
                         {page.experienceLabel}
@@ -283,18 +283,6 @@ export default function ProjectsPage() {
                             </span>
                           </>
                         )}
-                      </dd>
-                    </div>
-                    <div>
-                      <dt className="text-[9px] uppercase tracking-[0.18em] text-[#9a9289]">
-                        {page.selectedProjectsLabel}
-                      </dt>
-                      <dd className="mt-2 text-2xl text-[#211e1b]">
-                        {String(
-                          2 +
-                            page.projects.length +
-                            page.operationalProjects.length
-                        ).padStart(2, "0")}
                       </dd>
                     </div>
                   </dl>

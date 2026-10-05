@@ -20,7 +20,7 @@ export const translations = {
             downloadCvAriaLabel: "Descargar CV en PDF (inglés)",
             availabilityLabel: "Disponibilidad",
             availabilityText:
-                "Valencia, España · Abierto a remoto y a oportunidades full-stack o frontend.",
+                "Valencia, España · Abierto a remoto y a oportunidades full-stack.",
             experienceLabel: "Experiencia",
             experienceUnits: {
                 year: "año",
@@ -28,7 +28,6 @@ export const translations = {
                 month: "mes",
                 months: "meses",
             },
-            selectedProjectsLabel: "Proyectos",
             skillsTitle: "Stack técnico",
             skills: [
                 {
@@ -590,7 +589,7 @@ export const translations = {
             downloadCvAriaLabel: "Download CV as PDF",
             availabilityLabel: "Availability",
             availabilityText:
-                "Valencia, Spain · Open to remote and to full-stack or frontend opportunities.",
+                "Valencia, Spain · Open to remote and to full-stack opportunities.",
             experienceLabel: "Experience",
             experienceUnits: {
                 year: "year",
@@ -598,7 +597,6 @@ export const translations = {
                 month: "month",
                 months: "months",
             },
-            selectedProjectsLabel: "Projects",
             skillsTitle: "Tech stack",
             skills: [
                 {
