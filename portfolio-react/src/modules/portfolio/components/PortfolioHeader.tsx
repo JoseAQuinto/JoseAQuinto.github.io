@@ -1,3 +1,5 @@
+import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
+
 type NavItem = {
   id: string;
   label: string;
@@ -5,9 +7,16 @@ type NavItem = {
   wideOnly?: boolean;
 };
 
+type CvLink = {
+  href: string;
+  fileName: string;
+  ariaLabel: string;
+};
+
 type PortfolioHeaderProps = {
   activeSection: string;
   changeLanguageLabel: string;
+  cv: CvLink;
   language: "es" | "en";
   navItems: readonly NavItem[];
   onToggleLanguage: () => void;
@@ -16,6 +25,7 @@ type PortfolioHeaderProps = {
 export default function PortfolioHeader({
   activeSection,
   changeLanguageLabel,
+  cv,
   language,
   navItems,
   onToggleLanguage,
@@ -33,8 +43,8 @@ export default function PortfolioHeader({
           José Ángel Quinto
         </a>
 
-        <div className="flex items-center gap-2 sm:gap-5">
-          <div className="hidden items-center gap-7 sm:flex">
+        <div className="flex items-center gap-5">
+          <div className="hidden items-center gap-5 lg:flex">
             {navItems.map((item) => (
               <a
                 key={item.id}
@@ -65,14 +75,26 @@ export default function PortfolioHeader({
           </button>
           */}
 
-          <button
-            type="button"
-            onClick={onToggleLanguage}
-            aria-label={changeLanguageLabel}
-            className="rounded-full border border-[#d8d1c8] bg-white/70 px-3 py-1.5 text-[10px] uppercase tracking-[0.16em] text-[#5e5750] transition hover:border-[#b9aea1] hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#94887b] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f7f6f3]"
-          >
-            {language === "es" ? "ES" : "EN"}
-          </button>
+          <div className="flex items-center gap-2">
+            <a
+              href={cv.href}
+              download={cv.fileName}
+              aria-label={cv.ariaLabel}
+              className="inline-flex items-center gap-1.5 rounded-full bg-[#1d1a18] px-3 py-1.5 text-[10px] uppercase tracking-[0.16em] text-white transition hover:bg-[#403a35] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#94887b] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f7f6f3]"
+            >
+              CV
+              <ArrowDownTrayIcon className="h-3 w-3" aria-hidden="true" />
+            </a>
+
+            <button
+              type="button"
+              onClick={onToggleLanguage}
+              aria-label={changeLanguageLabel}
+              className="rounded-full border border-[#d8d1c8] bg-white/70 px-3 py-1.5 text-[10px] uppercase tracking-[0.16em] text-[#5e5750] transition hover:border-[#b9aea1] hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#94887b] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f7f6f3]"
+            >
+              {language === "es" ? "ES" : "EN"}
+            </button>
+          </div>
         </div>
       </div>
     </nav>

@@ -11,16 +11,52 @@ export const translations = {
         projectsPage: {
             badge: "Full-stack Developer",
             title: "Jose Ángel Quinto",
-            subtitle: "Junior Full-Stack con foco en React",
+            subtitle: "React · TypeScript · .NET · PostgreSQL",
             intro:
-                "1 año de experiencia desarrollando aplicaciones empresariales en entornos profesionales. Especializado en React y backend con .NET.",
+                "Desarrollo software en producción para logística y fabricación: frontends en React/TypeScript, APIs REST en ASP.NET Core y bases de datos PostgreSQL y SQL Server, con integración ERP, RabbitMQ y despliegues en Docker e IIS.",
             skipToContent: "Saltar al contenido",
-            viewSelectedWork: "Ver proyectos seleccionados",
+            viewSelectedWork: "Ver proyectos",
+            downloadCv: "Descargar CV",
+            downloadCvAriaLabel: "Descargar CV en PDF (inglés)",
             availabilityLabel: "Disponibilidad",
             availabilityText:
-                "Abierto a oportunidades frontend y full-stack con foco en producto.",
-            experienceLabel: "Años de experiencia",
+                "Valencia, España · Abierto a remoto y a oportunidades full-stack o frontend.",
+            experienceLabel: "Experiencia",
+            experienceUnits: {
+                year: "año",
+                years: "años",
+                month: "mes",
+                months: "meses",
+            },
             selectedProjectsLabel: "Proyectos",
+            skillsTitle: "Stack técnico",
+            skills: [
+                {
+                    label: "Frontend",
+                    core: ["React", "TypeScript"],
+                    extra: ["JavaScript", "HTML5 / CSS", "Tailwind"],
+                },
+                {
+                    label: "Backend",
+                    core: ["C#", "ASP.NET Core"],
+                    extra: ["EF Core", "Dapper", "Node.js", "APIs REST"],
+                },
+                {
+                    label: "Datos",
+                    core: ["PostgreSQL", "SQL Server"],
+                    extra: ["TimescaleDB", "Row-Level Security"],
+                },
+                {
+                    label: "DevOps",
+                    core: ["Docker"],
+                    extra: ["IIS / Windows Server", "Git", "CI/CD"],
+                },
+                {
+                    label: "Integración",
+                    core: ["RabbitMQ"],
+                    extra: ["n8n", "ERP", "Stimulsoft"],
+                },
+            ],
             aboutTitle: "Sobre mí",
             projectsTitle: "Proyectos",
             projectsSubtitle:
@@ -545,16 +581,52 @@ export const translations = {
         projectsPage: {
             badge: "Full-stack Developer",
             title: "Jose Ángel Quinto",
-            subtitle: "Junior Full-Stack focused on React",
+            subtitle: "React · TypeScript · .NET · PostgreSQL",
             intro:
-                "1 year of experience building enterprise applications in professional environments. Specialized in React and backend with .NET.",
+                "I build production software for logistics and manufacturing: React/TypeScript frontends, ASP.NET Core REST APIs and PostgreSQL and SQL Server databases, with ERP integration, RabbitMQ and Docker and IIS deployments.",
             skipToContent: "Skip to content",
-            viewSelectedWork: "View selected projects",
+            viewSelectedWork: "View projects",
+            downloadCv: "Download CV",
+            downloadCvAriaLabel: "Download CV as PDF",
             availabilityLabel: "Availability",
             availabilityText:
-                "Open to frontend and full-stack product-focused opportunities.",
-            experienceLabel: "Years of experience",
+                "Valencia, Spain · Open to remote and to full-stack or frontend opportunities.",
+            experienceLabel: "Experience",
+            experienceUnits: {
+                year: "year",
+                years: "years",
+                month: "month",
+                months: "months",
+            },
             selectedProjectsLabel: "Projects",
+            skillsTitle: "Tech stack",
+            skills: [
+                {
+                    label: "Frontend",
+                    core: ["React", "TypeScript"],
+                    extra: ["JavaScript", "HTML5 / CSS", "Tailwind"],
+                },
+                {
+                    label: "Backend",
+                    core: ["C#", "ASP.NET Core"],
+                    extra: ["EF Core", "Dapper", "Node.js", "REST APIs"],
+                },
+                {
+                    label: "Data",
+                    core: ["PostgreSQL", "SQL Server"],
+                    extra: ["TimescaleDB", "Row-Level Security"],
+                },
+                {
+                    label: "DevOps",
+                    core: ["Docker"],
+                    extra: ["IIS / Windows Server", "Git", "CI/CD"],
+                },
+                {
+                    label: "Integration",
+                    core: ["RabbitMQ"],
+                    extra: ["n8n", "ERP", "Stimulsoft"],
+                },
+            ],
             aboutTitle: "About me",
             projectsTitle: "Projects",
             projectsSubtitle:

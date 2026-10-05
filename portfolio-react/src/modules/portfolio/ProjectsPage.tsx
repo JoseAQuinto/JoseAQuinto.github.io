@@ -1,3 +1,4 @@
+import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 import { domAnimation, LazyMotion } from "framer-motion";
 import { useEffect, useMemo } from "react";
 import { useLanguage } from "../../translations/LanguageContext";
@@ -20,6 +21,23 @@ const SOCIAL_LINKS = [
     label: "GitHub",
   },
 ] as const;
+
+const CV_FILE_NAME = "CV_JoseAngelQuinto_FullStack.pdf";
+const CV_HREF = `/cv/${CV_FILE_NAME}`;
+
+// Se cuenta desde las prácticas en GrupoInnova (enero de 2025), igual que en
+// el CV, incluyendo el mes en curso.
+const CAREER_START = new Date(2025, 0, 1);
+
+function getExperience(now = new Date()) {
+  const months =
+    (now.getFullYear() - CAREER_START.getFullYear()) * 12 +
+    now.getMonth() -
+    CAREER_START.getMonth() +
+    1;
+
+  return { years: Math.floor(months / 12), months: months % 12 };
+}
 
 const SECTION_IDS = [
   "hero",
@@ -47,6 +65,12 @@ export default function ProjectsPage() {
   const activeSection = useActiveSection(SECTION_IDS);
   const page = t.projectsPage;
   const common = t.common;
+  const experience = getExperience();
+  const cvLink = {
+    href: CV_HREF,
+    fileName: CV_FILE_NAME,
+    ariaLabel: page.downloadCvAriaLabel,
+  };
 
   // El estilo "Tecno style" queda desactivado: se limpia cualquier resto que
   // hubiera quedado guardado de una visita anterior.
@@ -96,6 +120,7 @@ export default function ProjectsPage() {
         <PortfolioHeader
           activeSection={activeSection}
           changeLanguageLabel={common.changeLanguageAriaLabel}
+          cv={cvLink}
           language={language}
           navItems={navItems}
           onToggleLanguage={toggleLanguage}
@@ -113,7 +138,7 @@ export default function ProjectsPage() {
               JQ
             </span>
 
-            <div className="relative z-10 mx-auto grid w-full max-w-6xl gap-14 px-5 py-20 sm:px-8 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-end lg:py-24">
+            <div className="relative z-10 mx-auto grid w-full max-w-6xl gap-14 px-5 py-20 sm:px-8 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-center lg:gap-12 lg:py-20">
               <div>
                 <Reveal>
                   <div className="mb-9 flex flex-wrap items-center gap-4">
@@ -152,6 +177,19 @@ export default function ProjectsPage() {
                       </span>
                     </a>
 
+                    <a
+                      href={cvLink.href}
+                      download={cvLink.fileName}
+                      aria-label={cvLink.ariaLabel}
+                      className="group inline-flex items-center gap-3 rounded-full border border-[#cdc4b9] bg-white/70 px-5 py-3 text-[10px] uppercase tracking-[0.17em] text-[#25211e] transition hover:border-[#9d9185] hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#94887b] focus-visible:ring-offset-3 focus-visible:ring-offset-[#f7f6f3]"
+                    >
+                      {page.downloadCv}
+                      <ArrowDownTrayIcon
+                        className="h-3.5 w-3.5 transition-transform group-hover:translate-y-0.5"
+                        aria-hidden="true"
+                      />
+                    </a>
+
                     {SOCIAL_LINKS.map((link) => (
                       <a
                         key={link.label}
@@ -168,8 +206,8 @@ export default function ProjectsPage() {
                 </Reveal>
               </div>
 
-              <Reveal delay={0.16} className="lg:pb-1">
-                <aside className="rounded-[26px] border border-[#ded8d0] bg-white/65 p-6 shadow-[0_20px_70px_rgba(44,38,32,0.05)] backdrop-blur-sm">
+              <Reveal delay={0.16}>
+                <aside className="rounded-[26px] border border-[#ded8d0] bg-white/65 p-6 shadow-[0_20px_70px_rgba(44,38,32,0.05)] backdrop-blur-sm sm:p-7">
                   <div className="flex items-start gap-3">
                     <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-[#6f7967]" />
                     <div>
@@ -184,12 +222,68 @@ export default function ProjectsPage() {
 
                   <div className="my-6 h-px bg-[#e2ddd6]" />
 
+                  <h2 className="text-[9px] uppercase tracking-[0.2em] text-[#948b82]">
+                    {page.skillsTitle}
+                  </h2>
+                  <dl className="mt-4 grid gap-3">
+                    {page.skills.map((group) => (
+                      <div
+                        key={group.label}
+                        className="grid grid-cols-[84px_minmax(0,1fr)] items-baseline gap-3"
+                      >
+                        <dt className="text-[9px] uppercase tracking-[0.16em] text-[#8f877f]">
+                          {group.label}
+                        </dt>
+                        <dd>
+                          <ul className="flex flex-wrap gap-1.5">
+                            {group.core.map((tech) => (
+                              <li
+                                key={tech}
+                                className="rounded-full bg-[#2a2622] px-2.5 py-1 text-xs leading-none text-white"
+                              >
+                                {tech}
+                              </li>
+                            ))}
+                            {group.extra.map((tech) => (
+                              <li
+                                key={tech}
+                                className="rounded-full border border-[#ddd6cd] bg-white/70 px-2.5 py-[3px] text-xs leading-none text-[#57504a]"
+                              >
+                                {tech}
+                              </li>
+                            ))}
+                          </ul>
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+
+                  <div className="my-6 h-px bg-[#e2ddd6]" />
+
                   <dl className="grid grid-cols-2 gap-5">
                     <div>
                       <dt className="text-[9px] uppercase tracking-[0.18em] text-[#9a9289]">
                         {page.experienceLabel}
                       </dt>
-                      <dd className="mt-2 text-2xl text-[#211e1b]">1+</dd>
+                      <dd className="mt-2 text-2xl text-[#211e1b]">
+                        {experience.years}{" "}
+                        <span className="text-sm text-[#8f877f]">
+                          {experience.years === 1
+                            ? page.experienceUnits.year
+                            : page.experienceUnits.years}
+                        </span>
+                        {experience.months > 0 && (
+                          <>
+                            {" "}
+                            {experience.months}{" "}
+                            <span className="text-sm text-[#8f877f]">
+                              {experience.months === 1
+                                ? page.experienceUnits.month
+                                : page.experienceUnits.months}
+                            </span>
+                          </>
+                        )}
+                      </dd>
                     </div>
                     <div>
                       <dt className="text-[9px] uppercase tracking-[0.18em] text-[#9a9289]">
@@ -437,6 +531,14 @@ export default function ProjectsPage() {
                   {link.label}
                 </a>
               ))}
+              <a
+                href={cvLink.href}
+                download={cvLink.fileName}
+                aria-label={cvLink.ariaLabel}
+                className="portfolio-social-link pb-1 text-[10px] uppercase tracking-[0.16em] text-[#8f877f] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#94887b]"
+              >
+                CV
+              </a>
             </div>
           </div>
         </footer>
