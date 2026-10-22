@@ -468,17 +468,30 @@ export default function ProjectsPage() {
                         ))}
                       </ul>
 
-                      <a
-                        href={project.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-9 inline-flex w-fit items-center gap-3 border-b border-[#8f857c] pb-1 text-[10px] uppercase tracking-[0.17em] text-white transition hover:border-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b8aea4]"
-                      >
-                        {page.operationalProjectsCta}
-                        <span className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" aria-hidden="true">
-                          {"\u2197"}
-                        </span>
-                      </a>
+                      <div className="mt-auto flex flex-wrap items-center gap-x-7 gap-y-4 pt-9">
+                        <a
+                          href={project.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex w-fit items-center gap-3 border-b border-[#8f857c] pb-1 text-[10px] uppercase tracking-[0.17em] text-white transition hover:border-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b8aea4]"
+                        >
+                          {page.operationalProjectsCta}
+                          <span className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" aria-hidden="true">
+                            {"\u2197"}
+                          </span>
+                        </a>
+
+                        {"codeHref" in project && (
+                          <a
+                            href={project.codeHref}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex w-fit items-center border-b border-transparent pb-1 text-[10px] uppercase tracking-[0.17em] text-[#a9a098] transition hover:border-[#8f857c] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b8aea4]"
+                          >
+                            {page.operationalProjectsCodeCta}
+                          </a>
+                        )}
+                      </div>
                     </article>
                   </Reveal>
                 ))}

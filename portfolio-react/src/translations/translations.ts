@@ -68,6 +68,7 @@ export const translations = {
             operationalProjectsOnlineLabel: "En línea",
             operationalProjectsTechLabel: "Tecnologías",
             operationalProjectsCta: "Abrir aplicación",
+            operationalProjectsCodeCta: "Ver código",
 
             featuredEyebrow: "Proyecto destacado",
             featuredNavLabel: "Arcadia WMS",
@@ -264,6 +265,15 @@ export const translations = {
                         "Aplicación web pública que analiza señales habituales de phishing y estafa en correos, SMS, WhatsApp y otros mensajes sospechosos, ofreciendo un resultado de riesgo explicable y recomendaciones prácticas.",
                     href: "https://esestafaa.netlify.app/",
                     tags: ["Next.js", "TypeScript", "Supabase", "Seguridad"],
+                },
+                {
+                    id: "did-u-sleep-well",
+                    title: "DidUSleepWell",
+                    description:
+                        "App de seguimiento del sueño minimalista y 100% offline. Cada mañana registras en unos segundos cómo has dormido y la app muestra tendencias, estadísticas y patrones calculados en el propio dispositivo. Sin backend, cuentas ni analítica: los datos nunca salen del móvil, con exportación e importación en JSON, recordatorio diario, modo oscuro y versión en español e inglés.",
+                    href: "https://didusleepwell.netlify.app/",
+                    codeHref: "https://github.com/JoseAQuinto/DidUSleepWell",
+                    tags: ["React Native", "Expo", "TypeScript", "AsyncStorage", "i18next", "Offline-first"],
                 },
             ],
         },
@@ -637,6 +647,7 @@ export const translations = {
             operationalProjectsOnlineLabel: "Online",
             operationalProjectsTechLabel: "Technologies",
             operationalProjectsCta: "Open application",
+            operationalProjectsCodeCta: "View code",
 
             featuredEyebrow: "Featured project",
             featuredNavLabel: "Arcadia WMS",
@@ -833,6 +844,15 @@ export const translations = {
                         "A public web application that analyzes common phishing and scam signals in emails, SMS, WhatsApp and other suspicious messages, providing an explainable risk result and practical recommendations.",
                     href: "https://esestafaa.netlify.app/",
                     tags: ["Next.js", "TypeScript", "Supabase", "Security"],
+                },
+                {
+                    id: "did-u-sleep-well",
+                    title: "DidUSleepWell",
+                    description:
+                        "A minimal, fully offline sleep-tracking app. Every morning you log how you slept in a few seconds, and the app surfaces trends, statistics and patterns computed on the device itself. No backend, accounts or analytics: your data never leaves your phone, with JSON export and import, a daily reminder, dark mode and English and Spanish versions.",
+                    href: "https://didusleepwell.netlify.app/",
+                    codeHref: "https://github.com/JoseAQuinto/DidUSleepWell",
+                    tags: ["React Native", "Expo", "TypeScript", "AsyncStorage", "i18next", "Offline-first"],
                 },
             ],
         },
