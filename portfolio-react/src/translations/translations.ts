@@ -284,16 +284,31 @@ export const translations = {
                     },
                 ],
                 educationTitle: "Formación",
+                // En orden cronológico: la línea temporal va del pasado al presente.
                 education: [
                     {
-                        title: "CFGS Desarrollo de Aplicaciones Web (DAW)",
-                        detail: "IES Abastos, Valencia. 2023–2025",
+                        title: "CFGS Administración y Finanzas",
+                        place: "IES El Grao, Valencia",
+                        period: "2021 – 2023",
                     },
                     {
-                        title: "CFGS Administración y Finanzas",
-                        detail: "IES El Grao, Valencia. 2021–2023",
+                        title: "CFGS Desarrollo de Aplicaciones Web (DAW)",
+                        place: "IES Abastos, Valencia",
+                        period: "2023 – 2025",
                     },
                 ],
+                timeline: {
+                    label: "Formación y experiencia, de 2021 a hoy",
+                    hint: "Sigue bajando: la línea avanza de 2021 a hoy.",
+                    scrollHint: "Desliza en horizontal para recorrer la línea.",
+                    today: "Hoy",
+                    kinds: {
+                        education: "Formación",
+                        internship: "Prácticas",
+                        work: "Trabajo actual",
+                        area: "Grupo Innova",
+                    },
+                },
                 languagesTitle: "Idiomas",
                 languages: [
                     { title: "Español", detail: "Nativo" },
@@ -950,16 +965,31 @@ export const translations = {
                     },
                 ],
                 educationTitle: "Education",
+                // Chronological order: the timeline runs from past to present.
                 education: [
                     {
-                        title: "Higher Vocational Diploma in Web Application Development (DAW)",
-                        detail: "IES Abastos, Valencia. 2023–2025",
+                        title: "Higher Vocational Diploma in Administration and Finance",
+                        place: "IES El Grao, Valencia",
+                        period: "2021 – 2023",
                     },
                     {
-                        title: "Higher Vocational Diploma in Administration and Finance",
-                        detail: "IES El Grao, Valencia. 2021–2023",
+                        title: "Higher Vocational Diploma in Web Application Development (DAW)",
+                        place: "IES Abastos, Valencia",
+                        period: "2023 – 2025",
                     },
                 ],
+                timeline: {
+                    label: "Education and experience, from 2021 to today",
+                    hint: "Keep scrolling: the line moves from 2021 to today.",
+                    scrollHint: "Swipe sideways to follow the line.",
+                    today: "Today",
+                    kinds: {
+                        education: "Education",
+                        internship: "Internship",
+                        work: "Current role",
+                        area: "Grupo Innova",
+                    },
+                },
                 languagesTitle: "Languages",
                 languages: [
                     { title: "Spanish", detail: "Native" },

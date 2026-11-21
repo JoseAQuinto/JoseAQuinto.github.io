@@ -1,5 +1,6 @@
 import { ArrowUpRightIcon } from "@heroicons/react/24/outline";
 import type { ReactNode } from "react";
+import ShelfItem from "./ShelfItem";
 
 export type FeaturedProjectCopy = {
   title: string;
@@ -110,11 +111,16 @@ export default function FeaturedProject({
       </div>
 
       <ul className="pf-feature__points" aria-label={pointsLabel}>
-        {project.highlights.map((highlight) => (
-          <li key={highlight.title} className="pf-point">
+        {project.highlights.map((highlight, index) => (
+          <ShelfItem
+            key={highlight.title}
+            index={index}
+            className="pf-point"
+            distance={60}
+          >
             <h4 className="pf-h4">{highlight.title}</h4>
             <p>{highlight.description}</p>
-          </li>
+          </ShelfItem>
         ))}
       </ul>
     </article>

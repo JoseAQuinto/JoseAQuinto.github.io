@@ -244,3 +244,27 @@ git switch main
 git revert --no-edit 356e8dc d5b68d1 3b7dc4d
 .\deploy.ps1 -CommitMessage "Volver al portfolio anterior"
 ```
+
+## 9. Efectos de scroll (elegidos en el laboratorio)
+
+Se probaron siete efectos (A–G) en `/lab/` y se eligieron dos:
+
+- **Estantería** (`components/ShelfItem.tsx`): cada elemento entra desde un
+  lado, alternando, y se coloca siguiendo el scroll; en las filas de demos y
+  los grupos de tecnologías, una marca ámbar se rellena a la vez. Se usa en
+  demos, apps publicadas, puntos clave de los proyectos, tecnologías,
+  idiomas, lista de portfolios web y canales de contacto.
+- **Línea temporal horizontal** (`components/HorizontalTimeline.tsx`): la
+  sección Experiencia queda fija bajo la cabecera y el scroll vertical solo
+  hace avanzar la línea de 2021 a hoy (formación → prácticas → puesto actual
+  → sus cinco áreas). La altura extra del contenedor es exactamente el
+  recorrido horizontal, con una breve pausa al entrar y al salir.
+
+Accesibilidad: con `prefers-reduced-motion` o con poca altura útil
+(< 560 px, p. ej. zoom al 200 %) la línea no se fija y pasa a ser una franja
+con scroll horizontal nativo, enfocable y desplazable con las flechas. La
+auditoría axe da 0 infracciones con los elementos en su sitio; mientras un
+elemento está entrando (por debajo de la vista) aparece atenuado a propósito.
+
+El código del laboratorio queda en la rama `explore/scroll-effects` (no se
+integra) y la carpeta `/lab/` se ha retirado de la publicación.

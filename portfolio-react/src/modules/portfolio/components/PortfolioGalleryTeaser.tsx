@@ -2,6 +2,7 @@ import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../../../translations/LanguageContext";
 import { PORTFOLIO_SHOWCASES } from "../portfolioGallery.data";
+import ShelfItem from "./ShelfItem";
 
 export default function PortfolioGalleryTeaser() {
   const { language, t } = useLanguage();
@@ -36,11 +37,11 @@ export default function PortfolioGalleryTeaser() {
             {PORTFOLIO_SHOWCASES.length} {copy.countSuffix}
           </p>
           <ul>
-            {PORTFOLIO_SHOWCASES.map((project) => (
-              <li key={project.id}>
+            {PORTFOLIO_SHOWCASES.map((project, index) => (
+              <ShelfItem key={project.id} index={index} distance={70}>
                 <strong>{project.title}</strong>
                 <span>{project.category[language]}</span>
-              </li>
+              </ShelfItem>
             ))}
           </ul>
         </div>

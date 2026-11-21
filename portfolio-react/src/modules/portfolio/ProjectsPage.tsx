@@ -9,7 +9,11 @@ import ContactSection from "./components/ContactSection";
 import FeaturedProject from "./components/FeaturedProject";
 import PortfolioGalleryTeaser from "./components/PortfolioGalleryTeaser";
 import PortfolioHeader, { type NavItem } from "./components/PortfolioHeader";
+import HorizontalTimeline, {
+  type TimelineStop,
+} from "./components/HorizontalTimeline";
 import ProjectCard from "./components/ProjectCard";
+import ShelfItem from "./components/ShelfItem";
 import { SectionLink } from "./components/SectionLink";
 import SystemMap from "./components/SystemMap";
 import { CONTACT, CV_FILE_NAME, CV_HREF } from "./contact";
@@ -82,7 +86,46 @@ export default function ProjectsPage() {
     [page.nav]
   );
 
-  const [currentRole, internship] = page.about.roles;
+  // Línea temporal en orden cronológico: formación, prácticas, puesto
+  // actual y las áreas en las que trabajo ahora.
+  const timelineStops = useMemo<TimelineStop[]>(() => {
+    const { about } = page;
+    const kinds = about.timeline.kinds;
+    const [currentRole, internship] = about.roles;
+    return [
+      ...about.education.map((item, index) => ({
+        id: `education-${index}`,
+        kind: "education" as const,
+        kindLabel: kinds.education,
+        period: item.period,
+        title: item.title,
+        place: item.place,
+      })),
+      {
+        id: "internship",
+        kind: "internship" as const,
+        kindLabel: kinds.internship,
+        period: internship.period,
+        title: internship.title,
+        place: internship.org,
+      },
+      {
+        id: "current-role",
+        kind: "work" as const,
+        kindLabel: kinds.work,
+        period: currentRole.period,
+        title: currentRole.title,
+        place: currentRole.org,
+      },
+      ...currentRole.areas.map((area, index) => ({
+        id: `area-${index}`,
+        kind: "area" as const,
+        kindLabel: kinds.area,
+        title: area.name,
+        text: area.text,
+      })),
+    ];
+  }, [page]);
 
   return (
     <div className="pf">
@@ -191,9 +234,10 @@ export default function ProjectsPage() {
               <p className="pf-body pf-small">{page.demos.intro}</p>
             </div>
             <ul className="pf-rows">
-              {(page.projects as readonly PortfolioProject[]).map((project) => (
+              {(page.projects as readonly PortfolioProject[]).map((project, index) => (
                 <ProjectCard
                   key={project.id}
+                  index={index}
                   project={project}
                   techLabel={page.techLabel}
                 />
@@ -205,8 +249,8 @@ export default function ProjectsPage() {
               <p className="pf-body pf-small">{page.apps.intro}</p>
             </div>
             <ul className="pf-apps">
-              {page.operationalProjects.map((project) => (
-                <li key={project.id} className="pf-app">
+              {page.operationalProjects.map((project, index) => (
+                <ShelfItem key={project.id} index={index} className="pf-app">
                   <div className="pf-app__top">
                     <h4 className="pf-row__title">{project.title}</h4>
                     <span className="pf-status">{page.apps.onlineLabel}</span>
@@ -243,7 +287,7 @@ export default function ProjectsPage() {
                       </a>
                     )}
                   </div>
-                </li>
+                </ShelfItem>
               ))}
             </ul>
           </div>
@@ -252,68 +296,35 @@ export default function ProjectsPage() {
         {/* ---------------------------------------------------------- */}
         <section
           id="about"
-          className="pf-section pf-about"
+          className="pf-about"
           aria-labelledby="about-title"
         >
-          <div className="pf-wrap">
-            <div className="pf-section-head">
-              <div>
-                <span className="pf-aisle" aria-hidden="true" />
-                <h2 id="about-title" className="pf-display pf-h2">
-                  {page.about.title}
-                </h2>
+          <HorizontalTimeline
+            stops={timelineStops}
+            copy={page.about.timeline}
+            head={
+              <div className="pf-section-head">
+                <div>
+                  <span className="pf-aisle" aria-hidden="true" />
+                  <h2 id="about-title" className="pf-display pf-h2">
+                    {page.about.title}
+                  </h2>
+                </div>
+                <p className="pf-body">{page.about.intro}</p>
               </div>
-              <p className="pf-body">{page.about.intro}</p>
-            </div>
+            }
+          />
 
-            <div className="pf-xp">
-              <ol className="pf-xp__timeline">
-                {[currentRole, internship].map((role) => (
-                  <li key={role.period} className="pf-role">
-                    <p className="pf-role__period">{role.period}</p>
-                    <div>
-                      <h3 className="pf-h3">{role.title}</h3>
-                      <p className="pf-role__org">{role.org}</p>
-                      {role.areas.length > 0 && (
-                        <ul className="pf-areas">
-                          {role.areas.map((area) => (
-                            <li key={area.name} className="pf-area">
-                              <h4 className="pf-area__name">{area.name}</h4>
-                              <p className="pf-area__text">{area.text}</p>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  </li>
-                ))}
-              </ol>
-
-              <aside className="pf-xp__side">
-                <div className="pf-side-block">
-                  <h3>{page.about.educationTitle}</h3>
-                  <ul className="pf-side-list">
-                    {page.about.education.map((item) => (
-                      <li key={item.title}>
-                        <strong>{item.title}</strong>
-                        <span>{item.detail}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="pf-side-block">
-                  <h3>{page.about.languagesTitle}</h3>
-                  <ul className="pf-side-list">
-                    {page.about.languages.map((item) => (
-                      <li key={item.title}>
-                        <strong>{item.title}</strong>
-                        <span>{item.detail}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </aside>
-            </div>
+          <div className="pf-wrap pf-langs-wrap">
+            <h3 className="pf-langs-title">{page.about.languagesTitle}</h3>
+            <ul className="pf-langs">
+              {page.about.languages.map((item, index) => (
+                <ShelfItem key={item.title} index={index} distance={50}>
+                  <strong>{item.title}</strong>
+                  <span>{item.detail}</span>
+                </ShelfItem>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -331,8 +342,13 @@ export default function ProjectsPage() {
             </div>
 
             <ul className="pf-stack">
-              {page.stack.groups.map((group) => (
-                <li key={group.name} className="pf-stack__group">
+              {page.stack.groups.map((group, index) => (
+                <ShelfItem
+                  key={group.name}
+                  index={index}
+                  className="pf-stack__group"
+                  marker
+                >
                   <h3 className="pf-stack__name">{group.name}</h3>
                   <ul className="pf-tags">
                     {group.core.map((tech) => (
@@ -347,7 +363,7 @@ export default function ProjectsPage() {
                     ))}
                   </ul>
                   <p className="pf-stack__use">{group.use}</p>
-                </li>
+                </ShelfItem>
               ))}
             </ul>
           </div>

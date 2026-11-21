@@ -1,8 +1,10 @@
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import type { PortfolioProject } from "../portfolio.types";
+import ShelfItem from "./ShelfItem";
 
 type ProjectCardProps = {
+  index: number;
   project: PortfolioProject;
   techLabel: string;
 };
@@ -11,7 +13,11 @@ type ProjectCardProps = {
  * Fila del listado de demos. Las demos internas navegan con el router
  * (HashRouter); Visual Planner es una página estática aparte.
  */
-export default function ProjectCard({ project, techLabel }: ProjectCardProps) {
+export default function ProjectCard({
+  index,
+  project,
+  techLabel,
+}: ProjectCardProps) {
   const linkContent = (
     <>
       {project.cta}
@@ -21,7 +27,7 @@ export default function ProjectCard({ project, techLabel }: ProjectCardProps) {
   );
 
   return (
-    <li className="pf-row">
+    <ShelfItem index={index} className="pf-row" marker>
       <h4 className="pf-row__title">{project.title}</h4>
 
       <div>
@@ -46,6 +52,6 @@ export default function ProjectCard({ project, techLabel }: ProjectCardProps) {
           </Link>
         )}
       </div>
-    </li>
+    </ShelfItem>
   );
 }

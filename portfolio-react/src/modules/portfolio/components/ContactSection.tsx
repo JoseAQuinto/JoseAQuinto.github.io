@@ -6,6 +6,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import type { CvLink } from "../portfolio.types";
 import { CONTACT } from "../contact";
+import ShelfItem from "./ShelfItem";
 
 type ContactCopy = {
   title: string;
@@ -93,7 +94,7 @@ export default function ContactSection({ copy, cv }: ContactSectionProps) {
         <div className="pf-contact__channels">
           <h3 className="pf-sr-only">{copy.channelsLabel}</h3>
           <ul className="pf-channels">
-            <li>
+            <ShelfItem index={0} distance={60}>
               <a href={CONTACT.linkedin} target="_blank" rel="noopener noreferrer">
                 <span className="pf-channels__name">{copy.linkedin}</span>
                 <span className="pf-channels__detail">
@@ -101,8 +102,8 @@ export default function ContactSection({ copy, cv }: ContactSectionProps) {
                   <ArrowUpRightIcon aria-hidden="true" />
                 </span>
               </a>
-            </li>
-            <li>
+            </ShelfItem>
+            <ShelfItem index={1} distance={60}>
               <a href={CONTACT.github} target="_blank" rel="noopener noreferrer">
                 <span className="pf-channels__name">{copy.github}</span>
                 <span className="pf-channels__detail">
@@ -110,8 +111,8 @@ export default function ContactSection({ copy, cv }: ContactSectionProps) {
                   <ArrowUpRightIcon aria-hidden="true" />
                 </span>
               </a>
-            </li>
-            <li>
+            </ShelfItem>
+            <ShelfItem index={2} distance={60}>
               <a href={cv.href} download={cv.fileName} aria-label={cv.ariaLabel}>
                 <span className="pf-channels__name">{copy.cv}</span>
                 <span className="pf-channels__detail">
@@ -119,13 +120,13 @@ export default function ContactSection({ copy, cv }: ContactSectionProps) {
                   <ArrowDownTrayIcon aria-hidden="true" />
                 </span>
               </a>
-            </li>
-            <li>
+            </ShelfItem>
+            <ShelfItem index={3} distance={60}>
               <p className="pf-channels__static">
                 <span className="pf-channels__name">{copy.location}</span>
                 <span className="pf-channels__detail">{copy.locationDetail}</span>
               </p>
-            </li>
+            </ShelfItem>
           </ul>
         </div>
       </div>
