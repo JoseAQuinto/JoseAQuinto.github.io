@@ -3,7 +3,7 @@ import {
   ArrowUpIcon,
   ArrowUpRightIcon,
 } from "@heroicons/react/24/outline";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, type ReactNode } from "react";
 import { useLanguage } from "../../translations/LanguageContext";
 import ContactSection from "./components/ContactSection";
 import FeaturedProject from "./components/FeaturedProject";
@@ -18,6 +18,22 @@ import type { CvLink, PortfolioProject } from "./portfolio.types";
 import { scrollToSection } from "./sectionNav";
 import "@fontsource-variable/archivo/wdth.css";
 import "./portfolio.css";
+
+/**
+ * Evita que una palabra con guion ("full-stack") se parta en dos líneas en
+ * titulares grandes.
+ */
+function keepHyphenatedWords(text: string): ReactNode[] {
+  return text.split(/(\S+-\S+)/).map((part, index) =>
+    index % 2 === 1 ? (
+      <span key={index} className="pf-nowrap">
+        {part}
+      </span>
+    ) : (
+      part
+    )
+  );
+}
 
 // Secciones de primer nivel que sigue el indicador de la navegación.
 const SECTION_IDS = [
@@ -101,7 +117,7 @@ export default function ProjectsPage() {
               </p>
 
               <h1 id="hero-title" className="pf-display pf-h1">
-                {page.hero.title}
+                {keepHyphenatedWords(page.hero.title)}
               </h1>
 
               <p className="pf-lead pf-hero__summary">{page.hero.summary}</p>

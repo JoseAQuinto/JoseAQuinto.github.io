@@ -145,6 +145,10 @@
   transform: translateY(0);
 }
 
+.pf-nowrap {
+  white-space: nowrap;
+}
+
 .pf-sr-only {
   position: absolute;
   width: 1px;

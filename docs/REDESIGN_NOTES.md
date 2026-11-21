@@ -65,7 +65,10 @@ software real sin terminales falsas ni neón.
   "qué uso y para qué", contacto en bloque oscuro.
 - **Radios por jerarquía** (4/6/10 px), no uno para todo; sin sombras
   decorativas ni degradados.
-- **Copy:** el H1 dice qué haces; se eliminan frases genéricas ("Enfoque",
+- **Copy:** el H1 presenta el perfil ("Desarrollador full-stack, de la
+  interfaz a la base de datos"); el sector actual (almacén, fabricación,
+  SAT) va como contexto en la entradilla y en el plano "Mi trabajo actual",
+  para no encasillar el perfil en un solo sector; se eliminan frases genéricas ("Enfoque",
   "Selected work", "Listo para producción") y los números decorativos 01–06.
 
 ## 3. Contenido actualizado según el CV

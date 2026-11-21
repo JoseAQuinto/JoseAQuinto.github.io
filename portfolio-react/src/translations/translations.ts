@@ -32,10 +32,10 @@ export const translations = {
             },
             hero: {
                 name: "Jose Ángel Quinto Ferrández",
-                role: "Desarrollador full-stack en Valencia",
-                title: "Desarrollo software industrial para logística y fabricación.",
+                role: "React, TypeScript, .NET y PostgreSQL",
+                title: "Desarrollador full-stack, de la interfaz a la base de datos.",
                 summary:
-                    "Construyo interfaces en React y TypeScript y APIs en ASP.NET Core para sistemas SGA/WMS, MES y SAT, con PostgreSQL y SQL Server, flujos transaccionales e integración con el ERP.",
+                    "Construyo aplicaciones web completas: interfaces en React y TypeScript, APIs REST en ASP.NET Core y Node.js, y bases de datos PostgreSQL y SQL Server. Ahora trabajo en software de almacén, fabricación y servicio técnico integrado con el ERP.",
                 primaryCta: "Ver proyectos",
                 contactCta: "Contactar",
                 facts: [
@@ -54,8 +54,8 @@ export const translations = {
                 ],
             },
             systemMap: {
-                title: "Dónde encaja mi trabajo",
-                hint: "Módulos en los que desarrollo y capas que toco",
+                title: "Mi trabajo actual",
+                hint: "Módulos en los que desarrollo en Grupo Innova y capas que toco en cada uno",
                 modules: [
                     {
                         name: "SGA / WMS",
@@ -698,10 +698,10 @@ export const translations = {
             },
             hero: {
                 name: "Jose Ángel Quinto Ferrández",
-                role: "Full-stack developer based in Valencia",
-                title: "I build industrial software for logistics and manufacturing.",
+                role: "React, TypeScript, .NET and PostgreSQL",
+                title: "Full-stack developer, from interface to database.",
                 summary:
-                    "I build React/TypeScript interfaces and ASP.NET Core APIs for SGA/WMS, MES and SAT systems, with PostgreSQL and SQL Server, transactional workflows and ERP integration.",
+                    "I build complete web applications: React and TypeScript interfaces, ASP.NET Core and Node.js REST APIs, and PostgreSQL and SQL Server databases. I currently work on warehouse, manufacturing and technical service software integrated with the ERP.",
                 primaryCta: "View projects",
                 contactCta: "Get in touch",
                 facts: [
@@ -720,8 +720,8 @@ export const translations = {
                 ],
             },
             systemMap: {
-                title: "Where my work fits",
-                hint: "Modules I build for and the layers I work on",
+                title: "My current work",
+                hint: "Modules I develop at Grupo Innova and the layers I work on in each",
                 modules: [
                     {
                         name: "SGA / WMS",
