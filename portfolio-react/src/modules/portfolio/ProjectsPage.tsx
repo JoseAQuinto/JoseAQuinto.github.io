@@ -3,15 +3,22 @@ import {
   ArrowUpIcon,
   ArrowUpRightIcon,
 } from "@heroicons/react/24/outline";
-import { useEffect, useMemo, type ReactNode } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useMemo, useRef, type ReactNode } from "react";
 import { useLanguage } from "../../translations/LanguageContext";
 import ContactSection from "./components/ContactSection";
 import FeaturedProject from "./components/FeaturedProject";
 import PortfolioGalleryTeaser from "./components/PortfolioGalleryTeaser";
 import PortfolioHeader, { type NavItem } from "./components/PortfolioHeader";
-import ProjectCard from "./components/ProjectCard";
 import { SectionLink } from "./components/SectionLink";
-import SystemMap from "./components/SystemMap";
+import DrawnTimeline from "./lab/DrawnTimeline";
+import ExplodedSystemMap from "./lab/ExplodedSystemMap";
+import LabBadge from "./lab/LabBadge";
+import ScatterTags from "./lab/ScatterTags";
+import ScrollLetters from "./lab/ScrollLetters";
+import ShelfRow from "./lab/ShelfRow";
+import StickyStack from "./lab/StickyStack";
+import "./lab/lab.css";
 import { CONTACT, CV_FILE_NAME, CV_HREF } from "./contact";
 import { useActiveSection } from "./hooks/useActiveSection";
 import type { CvLink, PortfolioProject } from "./portfolio.types";
@@ -82,7 +89,20 @@ export default function ProjectsPage() {
     [page.nav]
   );
 
-  const [currentRole, internship] = page.about.roles;
+  // ---- Laboratorio de efectos de scroll ----
+  const reduceMotion = useReducedMotion();
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const titleY = useTransform(heroProgress, [0, 1], [0, -110]);
+  const summaryY = useTransform(heroProgress, [0, 1], [0, -50]);
+  const stackRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: stackProgress } = useScroll({
+    target: stackRef,
+    offset: ["start end", "start 0.55"],
+  });
 
   return (
     <div className="pf">
@@ -108,7 +128,14 @@ export default function ProjectsPage() {
 
       <main id="main-content" tabIndex={-1}>
         {/* ---------------------------------------------------------- */}
-        <section id="hero" className="pf-hero" aria-labelledby="hero-title">
+        <section ref={heroRef} id="hero" className="pf-hero" aria-labelledby="hero-title">
+          <div className="pf-wrap lab-intro">
+            <p>
+              <strong>Laboratorio de efectos.</strong> Cada sección prueba un efecto
+              de scroll distinto, marcado con una letra. Dime cuál te gusta.
+            </p>
+            <LabBadge letter="A" name="Vista explosionada y parallax del titular" />
+          </div>
           <div className="pf-wrap pf-hero__grid">
             <div className="pf-hero__intro">
               <p className="pf-hero__who">
@@ -116,11 +143,20 @@ export default function ProjectsPage() {
                 <span className="pf-hero__role">{page.hero.role}</span>
               </p>
 
-              <h1 id="hero-title" className="pf-display pf-h1">
+              <motion.h1
+                id="hero-title"
+                className="pf-display pf-h1"
+                style={reduceMotion ? undefined : { y: titleY }}
+              >
                 {keepHyphenatedWords(page.hero.title)}
-              </h1>
+              </motion.h1>
 
-              <p className="pf-lead pf-hero__summary">{page.hero.summary}</p>
+              <motion.p
+                className="pf-lead pf-hero__summary"
+                style={reduceMotion ? undefined : { y: summaryY }}
+              >
+                {page.hero.summary}
+              </motion.p>
 
               <div className="pf-hero__actions">
                 <SectionLink to="work" className="pf-btn pf-btn--primary">
@@ -152,7 +188,7 @@ export default function ProjectsPage() {
             </div>
 
             <div className="pf-hero__map">
-              <SystemMap copy={page.systemMap} />
+              <ExplodedSystemMap copy={page.systemMap} progress={heroProgress} />
             </div>
           </div>
         </section>
@@ -170,30 +206,41 @@ export default function ProjectsPage() {
               <p className="pf-body">{page.work.intro}</p>
             </div>
 
-            <FeaturedProject
-              id="featured-project"
-              project={page.featuredProject}
-              featuredLabel={page.featuredLabel}
-              techLabel={page.techLabel}
-              pointsLabel={page.pointsLabel}
-            />
-            <FeaturedProject
-              id="featured-project-dimension"
-              project={page.featuredProjectDimension}
-              featuredLabel={page.featuredLabel}
-              techLabel={page.techLabel}
-              pointsLabel={page.pointsLabel}
-              layout="wide"
+            <LabBadge letter="B" name="Paneles apilados" />
+            <StickyStack
+              items={[
+                <FeaturedProject
+                  key="wms"
+                  id="featured-project"
+                  project={page.featuredProject}
+                  featuredLabel={page.featuredLabel}
+                  techLabel={page.techLabel}
+                  pointsLabel={page.pointsLabel}
+                />,
+                <FeaturedProject
+                  key="dimension"
+                  id="featured-project-dimension"
+                  project={page.featuredProjectDimension}
+                  featuredLabel={page.featuredLabel}
+                  techLabel={page.techLabel}
+                  pointsLabel={page.pointsLabel}
+                  layout="wide"
+                />,
+              ]}
             />
 
-            <div id="projects" className="pf-subhead">
+            <div className="lab-gap">
+              <LabBadge letter="C" name="Estantería: filas que se colocan" />
+            </div>
+            <div id="projects" className="pf-subhead lab-subhead">
               <h3 className="pf-h3">{page.demos.title}</h3>
               <p className="pf-body pf-small">{page.demos.intro}</p>
             </div>
             <ul className="pf-rows">
-              {(page.projects as readonly PortfolioProject[]).map((project) => (
-                <ProjectCard
+              {(page.projects as readonly PortfolioProject[]).map((project, index) => (
+                <ShelfRow
                   key={project.id}
+                  index={index}
                   project={project}
                   techLabel={page.techLabel}
                 />
@@ -259,6 +306,7 @@ export default function ProjectsPage() {
             <div className="pf-section-head">
               <div>
                 <span className="pf-aisle" aria-hidden="true" />
+                <LabBadge letter="D" name="Línea temporal que se dibuja" />
                 <h2 id="about-title" className="pf-display pf-h2">
                   {page.about.title}
                 </h2>
@@ -267,27 +315,7 @@ export default function ProjectsPage() {
             </div>
 
             <div className="pf-xp">
-              <ol className="pf-xp__timeline">
-                {[currentRole, internship].map((role) => (
-                  <li key={role.period} className="pf-role">
-                    <p className="pf-role__period">{role.period}</p>
-                    <div>
-                      <h3 className="pf-h3">{role.title}</h3>
-                      <p className="pf-role__org">{role.org}</p>
-                      {role.areas.length > 0 && (
-                        <ul className="pf-areas">
-                          {role.areas.map((area) => (
-                            <li key={area.name} className="pf-area">
-                              <h4 className="pf-area__name">{area.name}</h4>
-                              <p className="pf-area__text">{area.text}</p>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  </li>
-                ))}
-              </ol>
+              <DrawnTimeline roles={page.about.roles} />
 
               <aside className="pf-xp__side">
                 <div className="pf-side-block">
@@ -318,34 +346,33 @@ export default function ProjectsPage() {
         </section>
 
         {/* ---------------------------------------------------------- */}
-        <section id="stack" className="pf-section" aria-labelledby="stack-title">
+        <section ref={stackRef} id="stack" className="pf-section" aria-labelledby="stack-title">
           <div className="pf-wrap">
             <div className="pf-section-head">
               <div>
                 <span className="pf-aisle" aria-hidden="true" />
+                <LabBadge letter="E" name="Letras y etiquetas que se ordenan" />
                 <h2 id="stack-title" className="pf-display pf-h2">
-                  {page.stack.title}
+                  <ScrollLetters
+                    text={page.stack.title}
+                    mode="settle"
+                    progress={stackProgress}
+                  />
                 </h2>
               </div>
               <p className="pf-body">{page.stack.intro}</p>
             </div>
 
             <ul className="pf-stack">
-              {page.stack.groups.map((group) => (
+              {page.stack.groups.map((group, groupIndex) => (
                 <li key={group.name} className="pf-stack__group">
                   <h3 className="pf-stack__name">{group.name}</h3>
-                  <ul className="pf-tags">
-                    {group.core.map((tech) => (
-                      <li key={tech} className="pf-tag pf-tag--strong">
-                        {tech}
-                      </li>
-                    ))}
-                    {group.extra.map((tech) => (
-                      <li key={tech} className="pf-tag">
-                        {tech}
-                      </li>
-                    ))}
-                  </ul>
+                  <ScatterTags
+                    core={group.core}
+                    extra={group.extra}
+                    progress={stackProgress}
+                    offset={groupIndex * 10}
+                  />
                   <p className="pf-stack__use">{group.use}</p>
                 </li>
               ))}

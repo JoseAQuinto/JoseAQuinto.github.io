@@ -2,6 +2,8 @@ import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../../../translations/LanguageContext";
 import { PORTFOLIO_SHOWCASES } from "../portfolioGallery.data";
+import HorizontalNames from "../lab/HorizontalNames";
+import LabBadge from "../lab/LabBadge";
 
 export default function PortfolioGalleryTeaser() {
   const { language, t } = useLanguage();
@@ -13,6 +15,10 @@ export default function PortfolioGalleryTeaser() {
       className="pf-section"
       aria-labelledby="portfolio-websites-title"
     >
+      <div className="pf-wrap">
+        <LabBadge letter="F" name="Nombres en horizontal con el scroll" />
+      </div>
+      <HorizontalNames names={PORTFOLIO_SHOWCASES.map((project) => project.title)} />
       <div className="pf-wrap pf-websites__grid">
         <div className="pf-websites__text">
           <span className="pf-aisle" aria-hidden="true" />

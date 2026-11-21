@@ -1,0 +1,218 @@
+/* Laboratorio de efectos de scroll (solo rama de exploración). */
+
+/* Evita scroll horizontal por elementos desplazados sin romper el sticky
+   (overflow: clip no crea contenedor de scroll, a diferencia de hidden). */
+.pf {
+  overflow-x: clip;
+}
+
+/* ---------- Etiquetas del laboratorio ---------- */
+.lab-intro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: 2rem;
+  padding-block: 0.75rem;
+  border-block: 1px dashed var(--pf-line-strong);
+  font-size: var(--pf-text-sm);
+  color: var(--pf-text-2);
+}
+
+.lab-intro strong {
+  color: var(--pf-ink);
+}
+
+.lab-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+  padding: 0.3rem 0.75rem 0.3rem 0.3rem;
+  border: 1.5px dashed var(--pf-ink);
+  border-radius: 999px;
+  background: var(--pf-signal-soft);
+  color: var(--pf-ink);
+  font-size: var(--pf-text-xs);
+  font-weight: 650;
+}
+
+.lab-intro .lab-badge {
+  margin-bottom: 0;
+}
+
+.lab-badge__letter {
+  display: inline-grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: var(--pf-ink);
+  color: #fff;
+  font-weight: 800;
+}
+
+.lab-badge--dark {
+  border-color: var(--pf-signal);
+  background: transparent;
+  color: var(--pf-on-deep);
+}
+
+.lab-badge--dark .lab-badge__letter {
+  background: var(--pf-signal);
+  color: var(--pf-ink);
+}
+
+.lab-gap {
+  margin-top: clamp(4rem, 3rem + 4vw, 6rem);
+}
+
+.lab-subhead {
+  margin-top: 0;
+}
+
+/* ---------- A · Vista explosionada ---------- */
+.lab-map {
+  overflow: visible;
+}
+
+.lab-map .pf-map__module,
+.lab-map .pf-map__layer {
+  will-change: transform;
+}
+
+/* ---------- B · Paneles apilados ---------- */
+.lab-stack {
+  display: grid;
+  gap: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+}
+
+.lab-stack__item {
+  z-index: 1;
+}
+
+.lab-stack__item + .lab-stack__item {
+  z-index: 2;
+}
+
+.lab-stack .pf-feature {
+  box-shadow: 0 -18px 40px -24px rgba(20, 33, 43, 0.35);
+}
+
+.lab-stack .pf-feature + .pf-feature {
+  margin-top: 0;
+}
+
+/* ---------- C · Estantería ---------- */
+.lab-shelf-row::before {
+  display: none;
+}
+
+.lab-shelf-row__fill {
+  position: absolute;
+  left: calc(-1 * var(--pf-gutter));
+  top: -1px;
+  bottom: -1px;
+  width: 4px;
+  background: var(--pf-signal);
+  transform-origin: top;
+}
+
+/* ---------- D · Línea temporal ---------- */
+.lab-timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.lab-timeline__rail {
+  position: absolute;
+  left: 0.45rem;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--pf-line);
+  border-radius: 2px;
+}
+
+.lab-timeline__progress {
+  position: absolute;
+  inset: 0;
+  background: var(--pf-signal);
+  border-radius: 2px;
+  transform-origin: top;
+}
+
+.lab-timeline__role {
+  position: relative;
+}
+
+.lab-timeline__dot {
+  position: absolute;
+  left: -2rem;
+  top: 1.85rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-left: 0.4rem;
+  transform: translateX(-50%);
+  border: 3px solid var(--pf-surface);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1.5px var(--pf-ink);
+}
+
+.lab-timeline .pf-area {
+  border-left-width: 3px;
+}
+
+/* ---------- E / G · Letras ---------- */
+.lab-letters {
+  display: inline-block;
+}
+
+.lab-letter {
+  display: inline-block;
+  will-change: transform;
+}
+
+.lab-contact-title {
+  font-size: clamp(3rem, 2rem + 6vw, 6.5rem);
+}
+
+/* ---------- F · Nombres en horizontal ---------- */
+.lab-marquee {
+  margin-bottom: clamp(2.5rem, 2rem + 2vw, 4rem);
+  overflow: hidden;
+  border-block: 1.5px solid var(--pf-ink);
+  padding-block: 0.75rem;
+}
+
+.lab-marquee__row {
+  display: flex;
+  gap: 0.6em;
+  width: max-content;
+  font-stretch: 70%;
+  font-weight: 800;
+  font-size: clamp(3rem, 2rem + 6vw, 7.5rem);
+  line-height: 1;
+  color: var(--pf-ink);
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.lab-marquee__row span::after {
+  content: "/";
+  margin-left: 0.6em;
+  color: var(--pf-signal);
+  -webkit-text-stroke: 0;
+}
+
+.lab-marquee__row--small {
+  margin-top: 0.4rem;
+  font-size: clamp(1.75rem, 1.2rem + 3vw, 3.5rem);
+  font-stretch: 85%;
+}
+
+.lab-marquee__outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--pf-ink);
+}

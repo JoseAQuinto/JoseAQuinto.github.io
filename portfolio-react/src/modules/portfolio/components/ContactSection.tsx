@@ -3,7 +3,10 @@ import {
   ArrowUpRightIcon,
   ClipboardDocumentIcon,
 } from "@heroicons/react/24/outline";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import LabBadge from "../lab/LabBadge";
+import ScrollLetters from "../lab/ScrollLetters";
 import type { CvLink } from "../portfolio.types";
 import { CONTACT } from "../contact";
 
@@ -34,6 +37,13 @@ export default function ContactSection({ copy, cv }: ContactSectionProps) {
     "idle"
   );
   const resetTimer = useRef<number | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "start 0.3"],
+  });
+  const tape = useTransform(scrollYProgress, [0.5, 1], [1, 6]);
 
   useEffect(
     () => () => {
@@ -55,15 +65,21 @@ export default function ContactSection({ copy, cv }: ContactSectionProps) {
 
   return (
     <section
+      ref={sectionRef}
       id="contact"
       className="pf-section pf-contact"
       aria-labelledby="contact-title"
     >
       <div className="pf-wrap pf-contact__grid">
         <div className="pf-contact__intro">
-          <span className="pf-aisle" aria-hidden="true" />
-          <h2 id="contact-title" className="pf-display pf-h2">
-            {copy.title}
+          <LabBadge letter="G" name="Letras que caen y se apilan" tone="dark" />
+          <motion.span
+            className="pf-aisle"
+            aria-hidden="true"
+            style={reduceMotion ? undefined : { scaleX: tape, transformOrigin: "left" }}
+          />
+          <h2 id="contact-title" className="pf-display pf-h2 lab-contact-title">
+            <ScrollLetters text={copy.title} mode="drop" progress={scrollYProgress} />
           </h2>
           <p className="pf-contact__text">{copy.text}</p>
 
