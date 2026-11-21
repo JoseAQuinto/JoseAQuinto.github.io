@@ -1,102 +1,161 @@
-import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowDownTrayIcon,
+  Bars3Icon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
+import { useEffect, useId, useRef, useState } from "react";
+import { SectionLink } from "./SectionLink";
+import type { CvLink } from "../portfolio.types";
 
-type NavItem = {
+export type NavItem = {
   id: string;
   label: string;
-  /** Solo se muestra desde xl: por debajo el menú no cabe en una línea. */
-  wideOnly?: boolean;
-};
-
-type CvLink = {
-  href: string;
-  fileName: string;
-  ariaLabel: string;
 };
 
 type PortfolioHeaderProps = {
-  activeSection: string;
-  changeLanguageLabel: string;
+  activeItem: string;
+  brandName: string;
+  copy: {
+    label: string;
+    menu: string;
+    closeMenu: string;
+    home: string;
+  };
   cv: CvLink;
+  cvShort: string;
+  cvLabel: string;
   language: "es" | "en";
+  languageAriaLabel: string;
   navItems: readonly NavItem[];
   onToggleLanguage: () => void;
 };
 
 export default function PortfolioHeader({
-  activeSection,
-  changeLanguageLabel,
+  activeItem,
+  brandName,
+  copy,
   cv,
+  cvShort,
+  cvLabel,
   language,
+  languageAriaLabel,
   navItems,
   onToggleLanguage,
 }: PortfolioHeaderProps) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuId = useId();
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Escape cierra el menú y devuelve el foco al botón que lo abrió.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [menuOpen]);
+
+  // Si se pasa a escritorio con el menú abierto, se cierra.
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 64rem)");
+    const onChange = () => media.matches && setMenuOpen(false);
+    media.addEventListener("change", onChange);
+    return () => media.removeEventListener("change", onChange);
+  }, []);
+
   return (
-    <nav
-      className="sticky top-0 z-50 border-b border-[#ddd8d0]/90 bg-[#f7f6f3]/90 backdrop-blur-xl"
-      aria-label={language === "es" ? "Navegación principal" : "Main navigation"}
-    >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
-        <a
-          href="#hero"
-          className="rounded-sm text-xs uppercase tracking-[0.2em] text-[#24211e] transition-colors hover:text-[#6e655c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#94887b] focus-visible:ring-offset-4 focus-visible:ring-offset-[#f7f6f3] sm:text-sm"
-        >
-          José Ángel Quinto
-        </a>
+    <header className="pf-header">
+      <div className="pf-wrap pf-header__bar">
+        <SectionLink to="hero" className="pf-brand" aria-label={`${brandName}. ${copy.home}`}>
+          <span className="pf-brand__mark" aria-hidden="true">
+            JQ
+          </span>
+          <span className="pf-brand__name">{brandName}</span>
+        </SectionLink>
 
-        <div className="flex items-center gap-5">
-          <div className="hidden items-center gap-5 lg:flex">
-            {navItems.map((item) => (
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                aria-current={activeSection === item.id ? "location" : undefined}
-                className={`portfolio-nav-link rounded-sm pb-1 text-[11px] uppercase tracking-[0.16em] text-[#817970] transition-colors hover:text-[#201d1a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#94887b] focus-visible:ring-offset-4 focus-visible:ring-offset-[#f7f6f3] data-[active=true]:text-[#201d1a] ${
-                  item.wideOnly ? "hidden xl:block" : ""
-                }`}
-                data-active={activeSection === item.id}
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
+        <nav className="pf-nav" aria-label={copy.label}>
+          {navItems.map((item) => (
+            <SectionLink
+              key={item.id}
+              to={item.id}
+              className="pf-nav__link"
+              aria-current={activeItem === item.id ? "true" : undefined}
+            >
+              {item.label}
+            </SectionLink>
+          ))}
+        </nav>
 
-          {/* Estilo "Tecno style" desactivado. Para reactivarlo hay que
-              restaurar también el estado en ProjectsPage.tsx (isTechnoStyle,
-              toggleTechnoStyle y la clase portfolio-page--techno).
+        <div className="pf-header__actions">
+          <a
+            href={cv.href}
+            download={cv.fileName}
+            aria-label={cv.ariaLabel}
+            className="pf-btn pf-btn--primary pf-btn--small"
+          >
+            <ArrowDownTrayIcon aria-hidden="true" />
+            <span className="pf-header__cv-short">{cvShort}</span>
+            <span className="pf-header__cv-label">{cvLabel}</span>
+          </a>
+
           <button
             type="button"
-            onClick={onToggleTechnoStyle}
-            aria-label={language === "es" ? "Alternar estilo tecnológico" : "Toggle techno style"}
-            aria-pressed={isTechnoStyle}
-            className="portfolio-theme-toggle"
+            className="pf-lang"
+            onClick={onToggleLanguage}
+            aria-label={languageAriaLabel}
           >
-            <span className="portfolio-theme-toggle__signal" aria-hidden="true" />
-            Tecno style
+            <span className="pf-lang__option" data-active={language === "es"}>
+              ES
+            </span>
+            <span className="pf-lang__option" data-active={language === "en"}>
+              EN
+            </span>
           </button>
-          */}
 
-          <div className="flex items-center gap-2">
-            <a
-              href={cv.href}
-              download={cv.fileName}
-              aria-label={cv.ariaLabel}
-              className="inline-flex items-center gap-1.5 rounded-full bg-[#1d1a18] px-3 py-1.5 text-[10px] uppercase tracking-[0.16em] text-white transition hover:bg-[#403a35] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#94887b] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f7f6f3]"
-            >
-              CV
-              <ArrowDownTrayIcon className="h-3 w-3" aria-hidden="true" />
-            </a>
-
-            <button
-              type="button"
-              onClick={onToggleLanguage}
-              aria-label={changeLanguageLabel}
-              className="rounded-full border border-[#d8d1c8] bg-white/70 px-3 py-1.5 text-[10px] uppercase tracking-[0.16em] text-[#5e5750] transition hover:border-[#b9aea1] hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#94887b] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f7f6f3]"
-            >
-              {language === "es" ? "ES" : "EN"}
-            </button>
-          </div>
+          <button
+            ref={menuButtonRef}
+            type="button"
+            className="pf-btn pf-btn--ghost pf-btn--small pf-menu-btn"
+            aria-expanded={menuOpen}
+            aria-controls={menuId}
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            {menuOpen ? (
+              <XMarkIcon aria-hidden="true" />
+            ) : (
+              <Bars3Icon aria-hidden="true" />
+            )}
+            <span className="pf-menu-btn__label">
+              {menuOpen ? copy.closeMenu : copy.menu}
+            </span>
+          </button>
         </div>
       </div>
-    </nav>
+
+      <nav
+        id={menuId}
+        className="pf-mobile-nav"
+        aria-label={copy.label}
+        hidden={!menuOpen}
+      >
+        <ul className="pf-wrap">
+          {navItems.map((item) => (
+            <li key={item.id}>
+              <SectionLink
+                to={item.id}
+                aria-current={activeItem === item.id ? "true" : undefined}
+                onNavigate={() => setMenuOpen(false)}
+              >
+                {item.label}
+              </SectionLink>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </header>
   );
 }

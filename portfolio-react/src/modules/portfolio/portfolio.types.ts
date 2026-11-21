@@ -8,9 +8,8 @@ export type PortfolioProject = {
   standalone?: boolean;
 };
 
-export type ProjectCardCopy = {
-  projectFootnote: string;
-  projectMetaLabel: string;
-  projectMetaSubLabel: string;
-  projectYear: string;
+export type CvLink = {
+  href: string;
+  fileName: string;
+  ariaLabel: string;
 };

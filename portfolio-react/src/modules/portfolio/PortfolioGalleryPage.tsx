@@ -1,236 +1,202 @@
-import { domAnimation, LazyMotion } from "framer-motion";
+import {
+  ArrowLeftIcon,
+  ArrowUpIcon,
+  ArrowUpRightIcon,
+} from "@heroicons/react/24/outline";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../../translations/LanguageContext";
-import Reveal from "./components/Reveal";
 import {
   PORTFOLIO_GALLERY_COPY,
   PORTFOLIO_SHOWCASES,
 } from "./portfolioGallery.data";
+import { scrollToSection } from "./sectionNav";
+import "@fontsource-variable/archivo/wdth.css";
 import "./portfolio.css";
 
-const SHOWCASE_TOTAL = String(PORTFOLIO_SHOWCASES.length).padStart(2, "0");
-
-function scrollToSection(id: string) {
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  document.getElementById(id)?.scrollIntoView({
-    behavior: reduceMotion ? "auto" : "smooth",
-  });
-}
+const SHOWCASE_TOTAL = PORTFOLIO_SHOWCASES.length;
 
 export default function PortfolioGalleryPage() {
-  const { language, toggleLanguage } = useLanguage();
+  const { language, toggleLanguage, t } = useLanguage();
   const copy = PORTFOLIO_GALLERY_COPY[language];
+  const page = t.projectsPage;
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
   }, []);
 
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
+
   return (
-    <LazyMotion features={domAnimation} strict>
-      <div className="portfolio-page portfolio-gallery-page min-h-screen overflow-x-hidden">
-        <nav
-          className="sticky top-0 z-50 border-b border-[#d9d2c9]/90 bg-[#f3f0ea]/90 backdrop-blur-xl"
-          aria-label={language === "es" ? "Navegación de la galería" : "Gallery navigation"}
-        >
-          <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 sm:px-8">
-            <Link
-              to="/"
-              className="text-xs uppercase tracking-[0.2em] text-[#24211e] transition-colors hover:text-[#6e655c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#94887b]"
-            >
-              José Ángel Quinto
-            </Link>
-
-            <div className="flex items-center gap-3 sm:gap-6">
-              <Link
-                to="/"
-                className="hidden text-[10px] uppercase tracking-[0.17em] text-[#716960] transition hover:text-[#211e1b] sm:inline"
-              >
-                ← {copy.back}
-              </Link>
-              <button
-                type="button"
-                onClick={toggleLanguage}
-                aria-label={copy.changeLanguage}
-                className="rounded-full border border-[#d2c9be] bg-white/70 px-3 py-1.5 text-[10px] uppercase tracking-[0.16em] text-[#5e5750] transition hover:border-[#ac9f91] hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#94887b]"
-              >
-                {language === "es" ? "ES" : "EN"}
-              </button>
-            </div>
-          </div>
-        </nav>
-
-        <main>
-          <header
-            id="gallery-top"
-            className="portfolio-gallery-hero relative overflow-hidden border-b border-[#d8d0c6]"
-          >
-            <span className="portfolio-gallery-hero-mark" aria-hidden="true">
-              {SHOWCASE_TOTAL}
+    <div className="pf">
+      <header className="pf-header">
+        <div className="pf-wrap pf-header__bar">
+          <Link to="/" className="pf-brand">
+            <span className="pf-brand__mark" aria-hidden="true">
+              JQ
             </span>
-            <div className="relative mx-auto grid min-h-[calc(100svh-65px)] max-w-7xl gap-14 px-5 py-20 sm:px-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-end lg:py-24">
-              <div className="self-center lg:self-end">
-                <Reveal>
-                  <p className="mb-7 text-[10px] uppercase tracking-[0.23em] text-[#716960]">
-                    {copy.eyebrow}
-                  </p>
-                </Reveal>
-                <Reveal delay={0.06}>
-                  <h1 className="max-w-4xl text-[clamp(3.6rem,8vw,8.2rem)] font-normal leading-[0.88] tracking-[-0.06em] text-[#171513]">
-                    {copy.title}
-                  </h1>
-                </Reveal>
-                <Reveal delay={0.12}>
-                  <p className="mt-8 max-w-2xl text-[clamp(1rem,1.7vw,1.3rem)] leading-relaxed text-[#514a43]">
-                    {copy.intro}
-                  </p>
-                </Reveal>
-              </div>
+            <span className="pf-brand__name">Jose Ángel Quinto</span>
+          </Link>
 
-              <Reveal delay={0.14} className="lg:justify-self-end">
-                <aside className="w-full rounded-[28px] border border-[#d8d0c6] bg-white/55 p-6 backdrop-blur-sm sm:p-8 lg:max-w-md">
-                  <p className="mb-5 text-[9px] uppercase tracking-[0.22em] text-[#928980]">
-                    {copy.index}
-                  </p>
-                  <ol className="divide-y divide-[#ded7ce]">
-                    {PORTFOLIO_SHOWCASES.map((project) => (
-                      <li key={project.id}>
-                        <button
-                          type="button"
-                          onClick={() => scrollToSection(project.id)}
-                          className="group flex w-full items-center gap-4 py-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#94887b]"
-                        >
-                          <span className="text-[9px] tabular-nums tracking-[0.18em] text-[#a0978e]">
-                            {project.number}
-                          </span>
-                          <span className="text-sm text-[#39342f] transition group-hover:translate-x-1 group-hover:text-[#171513]">
-                            {project.title}
-                          </span>
-                        </button>
-                      </li>
-                    ))}
-                  </ol>
-                </aside>
-              </Reveal>
-            </div>
-          </header>
+          <nav
+            className="pf-header__actions"
+            aria-label={language === "es" ? "Navegación de la galería" : "Gallery navigation"}
+          >
+            <Link to="/" className="pf-btn pf-btn--ghost pf-btn--small">
+              <ArrowLeftIcon aria-hidden="true" />
+              {copy.back}
+            </Link>
+            <button
+              type="button"
+              className="pf-lang"
+              onClick={toggleLanguage}
+              aria-label={page.language.ariaLabel}
+            >
+              <span className="pf-lang__option" data-active={language === "es"}>
+                ES
+              </span>
+              <span className="pf-lang__option" data-active={language === "en"}>
+                EN
+              </span>
+            </button>
+          </nav>
+        </div>
+      </header>
 
-          <div>
-            {PORTFOLIO_SHOWCASES.map((project, index) => (
-              <section
-                id={project.id}
-                key={project.id}
-                className="portfolio-gallery-project scroll-mt-20 border-b border-[#dcd5cc] py-20 sm:py-28"
-                data-tone={String((index % 3) + 1)}
-              >
-                <div className="mx-auto max-w-7xl px-5 sm:px-8">
-                  <Reveal>
-                    <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
-                      <div>
-                        <div className="mb-5 flex items-center gap-4">
-                          <span className="text-[10px] tabular-nums tracking-[0.2em] text-[#91877d]">
-                            {project.number} / {SHOWCASE_TOTAL}
-                          </span>
-                          <span className="h-px w-8 bg-[#a69b90]" aria-hidden="true" />
-                          <span className="text-[9px] uppercase tracking-[0.19em] text-[#81776d]">
-                            {project.category[language]}
-                          </span>
-                        </div>
-                        <h2 className="text-[clamp(2.65rem,5.8vw,6rem)] leading-[0.94] tracking-[-0.05em] text-[#191613]">
-                          {project.title}
-                        </h2>
-                      </div>
-
-                      <div className="max-w-2xl lg:justify-self-end">
-                        <p className="text-sm leading-7 text-[#5f5750]">
-                          {project.description[language]}
-                        </p>
-                        <div className="mt-6 flex flex-wrap items-center gap-5">
-                          <a
-                            href={project.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="portfolio-gallery-external group inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.18em] text-[#27231f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#94887b]"
-                          >
-                            {copy.open}
-                            <span aria-hidden="true">↗</span>
-                          </a>
-                          <span className="inline-flex items-center gap-2 text-[9px] uppercase tracking-[0.16em] text-[#887f76]">
-                            <span className="h-1.5 w-1.5 rounded-full bg-[#6f7967]" aria-hidden="true" />
-                            {copy.live}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </Reveal>
-
-                  <Reveal delay={0.08} className="mt-10 sm:mt-14">
-                    <div className="portfolio-gallery-browser">
-                      <div className="portfolio-gallery-browser-bar">
-                        <div className="flex gap-1.5" aria-hidden="true">
-                          <span />
-                          <span />
-                          <span />
-                        </div>
-                        <p>{project.domain}</p>
-                        <small>{copy.preview}</small>
-                      </div>
-                      {project.previewImage ? (
-                        <a
-                          href={project.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="portfolio-gallery-static-preview"
-                          aria-label={`${copy.open}: ${project.title}`}
-                        >
-                          <img
-                            src={project.previewImage}
-                            alt={`Preview: ${project.title}`}
-                            loading="lazy"
-                          />
-                        </a>
-                      ) : (
-                        <iframe
-                          src={project.url}
-                          title={`${copy.preview}: ${project.title}`}
-                          loading="lazy"
-                          referrerPolicy="strict-origin-when-cross-origin"
-                        />
-                      )}
-                    </div>
-                  </Reveal>
-                </div>
-              </section>
-            ))}
-          </div>
-        </main>
-
-        <footer className="border-t border-[#d8d0c6] bg-[#1c1917] py-12 text-[#eee9e2]">
-          <div className="mx-auto flex max-w-7xl flex-col gap-7 px-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-[#b9afa5]">
-                {copy.footer}
+      <main>
+        <section
+          id="gallery-top"
+          className="pf-gallery-hero"
+          aria-labelledby="gallery-title"
+        >
+          <div className="pf-wrap pf-gallery-hero__grid">
+            <div className="pf-gallery-hero__text">
+              <span className="pf-aisle" aria-hidden="true" />
+              <h1 id="gallery-title" className="pf-display pf-h1">
+                {copy.title}
+              </h1>
+              <p className="pf-lead pf-gallery-hero__intro">
+                {copy.intro}
               </p>
-              <p className="mt-2 text-xs text-[#847b73]">© {new Date().getFullYear()}</p>
             </div>
-            <div className="flex flex-wrap items-center gap-6">
-              <Link
-                to="/"
-                className="text-[10px] uppercase tracking-[0.17em] text-[#d8d0c7] transition hover:text-white"
-              >
-                ← {copy.back}
-              </Link>
-              <button
-                type="button"
-                onClick={() => scrollToSection("gallery-top")}
-                className="text-[10px] uppercase tracking-[0.17em] text-[#948b82] transition hover:text-white"
-              >
-                {copy.backToTop} ↑
-              </button>
-            </div>
+
+            <nav className="pf-gallery-hero__index" aria-label={copy.index}>
+              <p className="pf-label pf-websites__count">{copy.index}</p>
+              <ol className="pf-gallery-index">
+                {PORTFOLIO_SHOWCASES.map((project) => (
+                  <li key={project.id}>
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection(project.id)}
+                    >
+                      <strong>{project.title}</strong>
+                      <span>{project.category[language]}</span>
+                    </button>
+                  </li>
+                ))}
+              </ol>
+            </nav>
           </div>
-        </footer>
-      </div>
-    </LazyMotion>
+        </section>
+
+        <div>
+          {PORTFOLIO_SHOWCASES.map((project, index) => (
+            <section
+              id={project.id}
+              key={project.id}
+              className="pf-showcase"
+              aria-labelledby={`${project.id}-title`}
+            >
+              <div className="pf-wrap">
+                <div className="pf-showcase__head">
+                  <div>
+                    <p className="pf-label pf-showcase__count">
+                      {index + 1} / {SHOWCASE_TOTAL}. {project.category[language]}
+                    </p>
+                    <h2 id={`${project.id}-title`} className="pf-display pf-h2">
+                      {project.title}
+                    </h2>
+                  </div>
+                  <div>
+                    <p className="pf-body">{project.description[language]}</p>
+                    <div className="pf-showcase__actions">
+                      <a
+                        href={project.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="pf-btn pf-btn--primary pf-btn--small"
+                      >
+                        {copy.open}
+                        <span className="pf-sr-only">: {project.title}</span>
+                        <ArrowUpRightIcon aria-hidden="true" />
+                      </a>
+                      <span className="pf-status">{copy.live}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pf-browser">
+                  <div className="pf-browser__bar">
+                    <span className="pf-browser__dots" aria-hidden="true">
+                      <span />
+                      <span />
+                      <span />
+                    </span>
+                    <span className="pf-browser__domain">{project.domain}</span>
+                    <span className="pf-browser__hint">{copy.preview}</span>
+                  </div>
+                  {project.previewImage ? (
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="pf-browser__static"
+                      aria-label={`${copy.open}: ${project.title}`}
+                    >
+                      <img
+                        src={project.previewImage}
+                        alt={`Preview: ${project.title}`}
+                        loading="lazy"
+                      />
+                    </a>
+                  ) : (
+                    <iframe
+                      src={project.url}
+                      title={`${copy.preview}: ${project.title}`}
+                      loading="lazy"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                    />
+                  )}
+                </div>
+              </div>
+            </section>
+          ))}
+        </div>
+      </main>
+
+      <footer className="pf-footer">
+        <div className="pf-wrap pf-footer__inner">
+          <p>
+            © {new Date().getFullYear()}. {copy.footer}
+          </p>
+          <div className="pf-footer__links">
+            <Link to="/" className="pf-link pf-link--on-deep">
+              <ArrowLeftIcon aria-hidden="true" />
+              {copy.back}
+            </Link>
+            <button
+              type="button"
+              className="pf-link pf-link--on-deep pf-link--button"
+              onClick={() => scrollToSection("gallery-top")}
+            >
+              {copy.backToTop}
+              <ArrowUpIcon aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+      </footer>
+    </div>
   );
 }

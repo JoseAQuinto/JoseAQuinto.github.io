@@ -9,69 +9,82 @@ export const translations = {
         },
 
         projectsPage: {
-            badge: "Full-stack Developer",
-            title: "Jose Ángel Quinto",
-            subtitle: "React · TypeScript · .NET · PostgreSQL",
-            intro:
-                "Desarrollo software en producción para logística y fabricación: frontends en React/TypeScript, APIs REST en ASP.NET Core y bases de datos PostgreSQL y SQL Server, con integración ERP, RabbitMQ y despliegues en Docker e IIS.",
             skipToContent: "Saltar al contenido",
-            viewSelectedWork: "Ver proyectos",
-            downloadCv: "Descargar CV",
-            downloadCvAriaLabel: "Descargar CV en PDF (inglés)",
-            availabilityLabel: "Disponibilidad",
-            availabilityText:
-                "Valencia, España · Abierto a remoto y a oportunidades full-stack.",
-            experienceLabel: "Experiencia",
-            experienceUnits: {
-                year: "año",
-                years: "años",
-                month: "mes",
-                months: "meses",
+            nav: {
+                label: "Navegación principal",
+                work: "Proyectos",
+                experience: "Experiencia",
+                stack: "Tecnologías",
+                websites: "Portfolios web",
+                contact: "Contacto",
+                menu: "Menú",
+                closeMenu: "Cerrar menú",
+                home: "Ir al inicio",
             },
-            skillsTitle: "Stack técnico",
-            skills: [
-                {
-                    label: "Frontend",
-                    core: ["React", "TypeScript"],
-                    extra: ["JavaScript", "HTML5 / CSS", "Tailwind"],
-                },
-                {
-                    label: "Backend",
-                    core: ["C#", "ASP.NET Core"],
-                    extra: ["EF Core", "Dapper", "Node.js", "APIs REST"],
-                },
-                {
-                    label: "Datos",
-                    core: ["PostgreSQL", "SQL Server"],
-                    extra: ["TimescaleDB", "Row-Level Security"],
-                },
-                {
-                    label: "DevOps",
-                    core: ["Docker"],
-                    extra: ["IIS / Windows Server", "Git", "CI/CD"],
-                },
-                {
-                    label: "Integración",
-                    core: ["RabbitMQ"],
-                    extra: ["n8n", "ERP", "Stimulsoft"],
-                },
-            ],
-            aboutTitle: "Sobre mí",
-            projectsTitle: "Proyectos",
-            projectsSubtitle:
-                "Una selección de demos y proyectos donde muestro estructura, componentes reutilizables e interfaces conectadas a datos mock o APIs.",
-            operationalProjectsNavLabel: "Otros proyectos",
-            operationalProjectsEyebrow: "Proyectos paralelos",
-            operationalProjectsTitle: "Otros proyectos",
-            operationalProjectsSubtitle:
-                "Pequeñas aplicaciones que he publicado por mi cuenta.",
-            operationalProjectsOnlineLabel: "En línea",
-            operationalProjectsTechLabel: "Tecnologías",
-            operationalProjectsCta: "Abrir aplicación",
-            operationalProjectsCodeCta: "Ver código",
-
-            featuredEyebrow: "Proyecto destacado",
-            featuredNavLabel: "Arcadia WMS",
+            cv: {
+                label: "Descargar CV",
+                short: "CV",
+                note: "PDF, en inglés",
+                ariaLabel: "Descargar CV en PDF (en inglés)",
+            },
+            language: {
+                ariaLabel: "Cambiar idioma a inglés",
+            },
+            hero: {
+                name: "Jose Ángel Quinto Ferrández",
+                role: "Desarrollador full-stack en Valencia",
+                title: "Desarrollo software industrial para logística y fabricación.",
+                summary:
+                    "Construyo interfaces en React y TypeScript y APIs en ASP.NET Core para sistemas SGA/WMS, MES y SAT, con PostgreSQL y SQL Server, flujos transaccionales e integración con el ERP.",
+                primaryCta: "Ver proyectos",
+                contactCta: "Contactar",
+                facts: [
+                    {
+                        label: "Ahora",
+                        value: "Full-stack developer en Grupo Innova, desde abril de 2025",
+                    },
+                    {
+                        label: "Ubicación",
+                        value: "Valencia, España. Abierto a remoto",
+                    },
+                    {
+                        label: "Idiomas",
+                        value: "Español y valenciano nativos, inglés B2",
+                    },
+                ],
+            },
+            systemMap: {
+                title: "Dónde encaja mi trabajo",
+                hint: "Módulos en los que desarrollo y capas que toco",
+                modules: [
+                    {
+                        name: "SGA / WMS",
+                        detail: "Recepciones, expediciones, movimientos de stock y lotes",
+                    },
+                    {
+                        name: "MES",
+                        detail: "Órdenes de producción, paradas, consumos y calidad",
+                    },
+                    {
+                        name: "SAT",
+                        detail: "Partes de servicio conectados al ERP",
+                    },
+                ],
+                layers: [
+                    { name: "Interfaz", tech: "React, TypeScript, Tailwind" },
+                    { name: "API", tech: "ASP.NET Core, EF Core, Dapper" },
+                    { name: "Datos", tech: "PostgreSQL, SQL Server" },
+                    { name: "Integración", tech: "ERP, RabbitMQ, n8n" },
+                ],
+            },
+            work: {
+                title: "Proyectos",
+                intro:
+                    "Dos aplicaciones de almacén completas que he desarrollado por mi cuenta, demos de interfaz inspiradas en mi trabajo y pequeñas apps publicadas.",
+            },
+            featuredLabel: "Proyecto personal",
+            techLabel: "Tecnologías",
+            pointsLabel: "Puntos clave",
             featuredProject: {
                 title: "Arcadia WMS",
                 kicker: "Sistema de gestión de almacenes",
@@ -113,7 +126,6 @@ export const translations = {
                 credentialsLabel: "Acceso de demostración",
                 credentialsValue: "admin / Admin123!",
             },
-            featuredDimensionNavLabel: "ArcadiaDimension",
             featuredProjectDimension: {
                 title: "ArcadiaDimension",
                 kicker: "Diseñador visual de almacenes",
@@ -162,62 +174,11 @@ export const translations = {
                 credentialsLabel: "Acceso de demostración",
                 credentialsValue: "demo@arcadiadimension.app / demo1234",
             },
-            footer: "Jose Ángel Quinto Ferrández · Portafolio",
-
-            heroAsideTitle: "Enfoque",
-            heroAsideText:
-                "Interfaces en React, arquitectura frontend y demos funcionales con intención real de producto.",
-            heroBottomNote:
-                "Interfaces minimalistas, demos reales y trabajo frontend con sensibilidad de producto.",
-
-            aboutSectionNote:
-                "Una selección de capacidades, forma de trabajo y enfoque técnico presentada con el mismo nivel de contención que el resto del portfolio.",
-            aboutDetailLabel: "Detalle",
-
-            projectsEyebrow: "Selected work",
-            projectMetaLabel: "Listo para producción",
-            projectMetaSubLabel: "Demo funcional real",
-            projectYear: "2026",
-            projectSideDescription:
-                "UI cuidada, estructura real y un lenguaje visual sobrio alineado con trabajo de producto.",
-            projectFootnote: "Demo funcional de portfolio",
-
-            techStackTitle: "Stack",
-
-            techStack: [
-                "React",
-                "TypeScript",
-                "Tailwind",
-                ".NET",
-                "PostgreSQL",
-                "Entity Framework",
-                "n8n",
-                "RabbitMQ",
-            ],
-
-            experience: [
-                {
-                    title: "Experiencia Actual",
-                    description:
-                        "Trabajo en una consultora tecnológica desarrollando aplicaciones empresariales (ERP, SGA y MES). Participo en todo el ciclo: desde el diseño de base de datos hasta la interfaz de usuario.",
-                },
-                {
-                    title: "Stack Frontend",
-                    description:
-                        "React con hooks, Context API, TypeScript y Tailwind. Desarrollo componentes complejos como modales, tablas dinámicas y formularios, conectando con APIs REST propias.",
-                },
-                {
-                    title: "Stack Backend",
-                    description:
-                        ".NET con Entity Framework, PostgreSQL (joins, migraciones), DTOs y validaciones de negocio. Experiencia en diseño de endpoints REST y flujos de autenticación.",
-                },
-                {
-                    title: "Enfoque Profesional",
-                    description:
-                        "Busco un rol junior/early-mid centrado en React, con oportunidades para crecer en backend y arquitectura. Me adapto rápido a nuevas tecnologías y entornos de negocio.",
-                },
-            ],
-
+            demos: {
+                title: "Demos de interfaz",
+                intro:
+                    "Una selección de demos donde muestro estructura, componentes reutilizables e interfaces conectadas a datos mock o APIs.",
+            },
             projects: [
                 {
                     id: "visual-planner",
@@ -257,6 +218,13 @@ export const translations = {
                     cta: "Ver proyecto",
                 },
             ],
+            apps: {
+                title: "Apps publicadas",
+                intro: "Pequeñas aplicaciones que he publicado por mi cuenta.",
+                onlineLabel: "En línea",
+                openCta: "Abrir aplicación",
+                codeCta: "Ver código",
+            },
             operationalProjects: [
                 {
                     id: "es-estafa",
@@ -276,6 +244,125 @@ export const translations = {
                     tags: ["React Native", "Expo", "TypeScript", "AsyncStorage", "i18next", "Offline-first"],
                 },
             ],
+            about: {
+                title: "Experiencia",
+                intro:
+                    "Trabajo en Grupo Innova desde enero de 2025: primero en prácticas y, desde abril, como desarrollador full-stack. Mi día a día es software para almacén, fábrica y servicio técnico: pantallas de operario, APIs REST, SQL y la integración con el ERP.",
+                roles: [
+                    {
+                        period: "Abr 2025 – actualidad",
+                        title: "Full-stack developer",
+                        org: "Grupo Innova",
+                        areas: [
+                            {
+                                name: "SGA / WMS (gestión de almacén)",
+                                text: "Funcionalidades de recepciones, expediciones, movimientos de stock, regularizaciones y devoluciones, con trazabilidad por lote y pantallas de operario. Operaciones de stock transaccionales en C# y PostgreSQL.",
+                            },
+                            {
+                                name: "MES (ejecución de fabricación)",
+                                text: "Desarrollo y mantenimiento de interfaces en React y APIs en .NET para órdenes y partes de producción, máquinas, paradas, consumos, calidad y flujos relacionados con costes.",
+                            },
+                            {
+                                name: "SAT (servicio técnico)",
+                                text: "Flujos de servicio conectados al ERP, incluida la obtención de la configuración del SAT y la creación de partes de servicio con su estado inicial.",
+                            },
+                            {
+                                name: "Integración con ERP",
+                                text: "Endpoints REST y flujos de sincronización de artículos, clientes, proveedores, pedidos, documentos y stock, con eventos en RabbitMQ y flujos en n8n.",
+                            },
+                            {
+                                name: "Datos y despliegue",
+                                text: "SQL, esquemas y migraciones con EF Core y Dapper sobre PostgreSQL y SQL Server. Despliegue de servicios con IIS, Docker y CI/CD.",
+                            },
+                        ],
+                    },
+                    {
+                        period: "Ene – mar 2025",
+                        title: "Prácticas de desarrollo de software",
+                        org: "Grupo Innova",
+                        areas: [],
+                    },
+                ],
+                educationTitle: "Formación",
+                education: [
+                    {
+                        title: "CFGS Desarrollo de Aplicaciones Web (DAW)",
+                        detail: "IES Abastos, Valencia. 2023–2025",
+                    },
+                    {
+                        title: "CFGS Administración y Finanzas",
+                        detail: "IES El Grao, Valencia. 2021–2023",
+                    },
+                ],
+                languagesTitle: "Idiomas",
+                languages: [
+                    { title: "Español", detail: "Nativo" },
+                    { title: "Valenciano / catalán", detail: "Nativo" },
+                    { title: "Inglés", detail: "B2" },
+                    { title: "Alemán", detail: "A1" },
+                ],
+            },
+            stack: {
+                title: "Tecnologías",
+                intro:
+                    "Lo que uso en el día a día y para qué. En oscuro, lo que más trabajo.",
+                groups: [
+                    {
+                        name: "Frontend",
+                        core: ["React", "TypeScript"],
+                        extra: ["JavaScript", "HTML y CSS", "Tailwind CSS", "Zustand"],
+                        use: "Pantallas de operario, tablas dinámicas, formularios y modales conectados a APIs REST propias.",
+                    },
+                    {
+                        name: "Backend",
+                        core: ["C#", "ASP.NET Core (.NET 7/8)"],
+                        extra: ["APIs REST", "EF Core", "Dapper", "JWT", "SignalR", "Node.js"],
+                        use: "Endpoints REST, validaciones de negocio y operaciones de stock dentro de transacciones.",
+                    },
+                    {
+                        name: "Datos",
+                        core: ["PostgreSQL", "SQL Server"],
+                        extra: ["SQL", "TimescaleDB", "Triggers", "Row-Level Security"],
+                        use: "Diseño relacional, migraciones, transacciones y consultas para operaciones y listados.",
+                    },
+                    {
+                        name: "Integración y entrega",
+                        core: ["RabbitMQ", "Docker"],
+                        extra: ["n8n", "APIs de ERP", "IIS", "Git", "Gitea Actions", "Stimulsoft"],
+                        use: "Sincronización con el ERP mediante eventos, informes y despliegues en IIS y Docker con CI/CD.",
+                    },
+                ],
+            },
+            websites: {
+                title: "Portfolios web",
+                text:
+                    "Además de software de gestión, diseño y desarrollo portfolios y webs de presentación donde la identidad visual se adapta a cada perfil y sector.",
+                cta: "Ver la galería",
+                countSuffix: "webs publicadas",
+            },
+            contact: {
+                title: "Contacto",
+                text:
+                    "Si buscas a alguien para desarrollar o mantener software de almacén, fabricación o integración con ERP, escríbeme.",
+                copy: "Copiar email",
+                copied: "Email copiado al portapapeles",
+                copyFailed: "No se ha podido copiar. Selecciona el email y cópialo a mano.",
+                channelsLabel: "Otros canales",
+                linkedin: "LinkedIn",
+                linkedinDetail: "Perfil profesional",
+                github: "GitHub",
+                githubDetail: "Código de mis proyectos",
+                cv: "CV",
+                cvDetail: "PDF, en inglés",
+                location: "Ubicación",
+                locationDetail: "Valencia, España. Abierto a remoto",
+            },
+            footer: {
+                rights: "Jose Ángel Quinto Ferrández",
+                built: "Diseñado y desarrollado por mí con React y TypeScript.",
+                source: "Código de esta web",
+                backToTop: "Volver arriba",
+            },
         },
 
         portfolioDemo: {
@@ -588,69 +675,82 @@ export const translations = {
         },
 
         projectsPage: {
-            badge: "Full-stack Developer",
-            title: "Jose Ángel Quinto",
-            subtitle: "React · TypeScript · .NET · PostgreSQL",
-            intro:
-                "I build production software for logistics and manufacturing: React/TypeScript frontends, ASP.NET Core REST APIs and PostgreSQL and SQL Server databases, with ERP integration, RabbitMQ and Docker and IIS deployments.",
             skipToContent: "Skip to content",
-            viewSelectedWork: "View projects",
-            downloadCv: "Download CV",
-            downloadCvAriaLabel: "Download CV as PDF",
-            availabilityLabel: "Availability",
-            availabilityText:
-                "Valencia, Spain · Open to remote and to full-stack opportunities.",
-            experienceLabel: "Experience",
-            experienceUnits: {
-                year: "year",
-                years: "years",
-                month: "month",
-                months: "months",
+            nav: {
+                label: "Main navigation",
+                work: "Projects",
+                experience: "Experience",
+                stack: "Tech stack",
+                websites: "Web portfolios",
+                contact: "Contact",
+                menu: "Menu",
+                closeMenu: "Close menu",
+                home: "Go to top",
             },
-            skillsTitle: "Tech stack",
-            skills: [
-                {
-                    label: "Frontend",
-                    core: ["React", "TypeScript"],
-                    extra: ["JavaScript", "HTML5 / CSS", "Tailwind"],
-                },
-                {
-                    label: "Backend",
-                    core: ["C#", "ASP.NET Core"],
-                    extra: ["EF Core", "Dapper", "Node.js", "REST APIs"],
-                },
-                {
-                    label: "Data",
-                    core: ["PostgreSQL", "SQL Server"],
-                    extra: ["TimescaleDB", "Row-Level Security"],
-                },
-                {
-                    label: "DevOps",
-                    core: ["Docker"],
-                    extra: ["IIS / Windows Server", "Git", "CI/CD"],
-                },
-                {
-                    label: "Integration",
-                    core: ["RabbitMQ"],
-                    extra: ["n8n", "ERP", "Stimulsoft"],
-                },
-            ],
-            aboutTitle: "About me",
-            projectsTitle: "Projects",
-            projectsSubtitle:
-                "A selection of demos and projects where I showcase structure, reusable components and interfaces connected to mock data or APIs.",
-            operationalProjectsNavLabel: "Other projects",
-            operationalProjectsEyebrow: "Side projects",
-            operationalProjectsTitle: "Other projects",
-            operationalProjectsSubtitle:
-                "Small applications I have published on my own.",
-            operationalProjectsOnlineLabel: "Online",
-            operationalProjectsTechLabel: "Technologies",
-            operationalProjectsCta: "Open application",
-            operationalProjectsCodeCta: "View code",
-
-            featuredEyebrow: "Featured project",
-            featuredNavLabel: "Arcadia WMS",
+            cv: {
+                label: "Download CV",
+                short: "CV",
+                note: "PDF",
+                ariaLabel: "Download CV as PDF",
+            },
+            language: {
+                ariaLabel: "Change language to Spanish",
+            },
+            hero: {
+                name: "Jose Ángel Quinto Ferrández",
+                role: "Full-stack developer based in Valencia",
+                title: "I build industrial software for logistics and manufacturing.",
+                summary:
+                    "I build React/TypeScript interfaces and ASP.NET Core APIs for SGA/WMS, MES and SAT systems, with PostgreSQL and SQL Server, transactional workflows and ERP integration.",
+                primaryCta: "View projects",
+                contactCta: "Get in touch",
+                facts: [
+                    {
+                        label: "Now",
+                        value: "Full-stack developer at Grupo Innova since April 2025",
+                    },
+                    {
+                        label: "Location",
+                        value: "Valencia, Spain. Open to remote",
+                    },
+                    {
+                        label: "Languages",
+                        value: "Native Spanish and Valencian, English B2",
+                    },
+                ],
+            },
+            systemMap: {
+                title: "Where my work fits",
+                hint: "Modules I build for and the layers I work on",
+                modules: [
+                    {
+                        name: "SGA / WMS",
+                        detail: "Receipts, dispatch, stock movements and lots",
+                    },
+                    {
+                        name: "MES",
+                        detail: "Production orders, downtime, consumption and quality",
+                    },
+                    {
+                        name: "SAT",
+                        detail: "Service reports connected to the ERP",
+                    },
+                ],
+                layers: [
+                    { name: "Interface", tech: "React, TypeScript, Tailwind" },
+                    { name: "API", tech: "ASP.NET Core, EF Core, Dapper" },
+                    { name: "Data", tech: "PostgreSQL, SQL Server" },
+                    { name: "Integration", tech: "ERP, RabbitMQ, n8n" },
+                ],
+            },
+            work: {
+                title: "Projects",
+                intro:
+                    "Two complete warehouse applications I built on my own, interface demos inspired by my day-to-day work and a few small published apps.",
+            },
+            featuredLabel: "Personal project",
+            techLabel: "Technologies",
+            pointsLabel: "Key points",
             featuredProject: {
                 title: "Arcadia WMS",
                 kicker: "Warehouse Management System",
@@ -692,7 +792,6 @@ export const translations = {
                 credentialsLabel: "Demo access",
                 credentialsValue: "admin / Admin123!",
             },
-            featuredDimensionNavLabel: "ArcadiaDimension",
             featuredProjectDimension: {
                 title: "ArcadiaDimension",
                 kicker: "Visual Warehouse Designer",
@@ -741,62 +840,11 @@ export const translations = {
                 credentialsLabel: "Demo access",
                 credentialsValue: "demo@arcadiadimension.app / demo1234",
             },
-            footer: "Jose Ángel Quinto Ferrández · Portfolio",
-
-            heroAsideTitle: "Focus",
-            heroAsideText:
-                "React interfaces, frontend architecture and functional demos with real product intent.",
-            heroBottomNote:
-                "Minimal interfaces, real demos and frontend work with product sensibility.",
-
-            aboutSectionNote:
-                "A selection of capabilities, working style and technical focus presented with the same level of restraint as the rest of the portfolio.",
-            aboutDetailLabel: "Detail",
-
-            projectsEyebrow: "Selected work",
-            projectMetaLabel: "Production Ready",
-            projectMetaSubLabel: "Real functional demo",
-            projectYear: "2026",
-            projectSideDescription:
-                "Clean UI, real structure and a restrained visual language aligned with product work.",
-            projectFootnote: "Functional portfolio demo",
-
-            techStackTitle: "Stack",
-
-            techStack: [
-                "React",
-                "TypeScript",
-                "Tailwind",
-                ".NET",
-                "PostgreSQL",
-                "Entity Framework",
-                "n8n",
-                "RabbitMQ",
-            ],
-
-            experience: [
-                {
-                    title: "Current Experience",
-                    description:
-                        "Working at a technology consultancy developing enterprise applications (ERP, WMS and MES). I participate in the full cycle: from database design to user interfaces.",
-                },
-                {
-                    title: "Frontend Stack",
-                    description:
-                        "React with hooks, Context API, TypeScript and Tailwind. Building complex components like modals, dynamic tables and forms, connecting to in-house REST APIs.",
-                },
-                {
-                    title: "Backend Stack",
-                    description:
-                        ".NET with Entity Framework, PostgreSQL (joins, migrations), DTOs and business validations. Experience designing REST endpoints and authentication flows.",
-                },
-                {
-                    title: "Professional Focus",
-                    description:
-                        "Looking for a junior/early-mid role focused on React, with opportunities to grow in backend and architecture. I adapt quickly to new technologies and business environments.",
-                },
-            ],
-
+            demos: {
+                title: "Interface demos",
+                intro:
+                    "A selection of demos where I showcase structure, reusable components and interfaces connected to mock data or APIs.",
+            },
             projects: [
                 {
                     id: "visual-planner",
@@ -836,6 +884,13 @@ export const translations = {
                     cta: "View project",
                 },
             ],
+            apps: {
+                title: "Published apps",
+                intro: "Small applications I have published on my own.",
+                onlineLabel: "Online",
+                openCta: "Open application",
+                codeCta: "View code",
+            },
             operationalProjects: [
                 {
                     id: "es-estafa",
@@ -855,6 +910,125 @@ export const translations = {
                     tags: ["React Native", "Expo", "TypeScript", "AsyncStorage", "i18next", "Offline-first"],
                 },
             ],
+            about: {
+                title: "Experience",
+                intro:
+                    "I have worked at Grupo Innova since January 2025: first as an intern and, since April, as a full-stack developer. My day-to-day is software for warehouses, factories and technical service: operator screens, REST APIs, SQL and ERP integration.",
+                roles: [
+                    {
+                        period: "Apr 2025 – present",
+                        title: "Full-stack developer",
+                        org: "Grupo Innova",
+                        areas: [
+                            {
+                                name: "SGA / WMS (warehouse management)",
+                                text: "Features for receipts, dispatch, stock movements, adjustments and returns, with lot traceability and operator screens. Transactional stock operations in C# and PostgreSQL.",
+                            },
+                            {
+                                name: "MES (manufacturing execution)",
+                                text: "Developed and maintained React interfaces and .NET APIs for production orders and reports, machines, downtime, consumption, quality and cost-related workflows.",
+                            },
+                            {
+                                name: "SAT (technical service)",
+                                text: "ERP-connected service workflows, including SAT configuration retrieval and creation of service reports with their initial status.",
+                            },
+                            {
+                                name: "ERP integration",
+                                text: "REST endpoints and synchronisation flows for articles, customers, suppliers, orders, documents and stock, with RabbitMQ events and n8n workflows.",
+                            },
+                            {
+                                name: "Data and delivery",
+                                text: "SQL, schemas and migrations using EF Core and Dapper across PostgreSQL and SQL Server. Services deployed with IIS, Docker and CI/CD.",
+                            },
+                        ],
+                    },
+                    {
+                        period: "Jan – Mar 2025",
+                        title: "Software development intern",
+                        org: "Grupo Innova",
+                        areas: [],
+                    },
+                ],
+                educationTitle: "Education",
+                education: [
+                    {
+                        title: "Higher Vocational Diploma in Web Application Development (DAW)",
+                        detail: "IES Abastos, Valencia. 2023–2025",
+                    },
+                    {
+                        title: "Higher Vocational Diploma in Administration and Finance",
+                        detail: "IES El Grao, Valencia. 2021–2023",
+                    },
+                ],
+                languagesTitle: "Languages",
+                languages: [
+                    { title: "Spanish", detail: "Native" },
+                    { title: "Valencian / Catalan", detail: "Native" },
+                    { title: "English", detail: "B2" },
+                    { title: "German", detail: "A1" },
+                ],
+            },
+            stack: {
+                title: "Tech stack",
+                intro:
+                    "What I use day to day and what for. Dark tags mark what I work with most.",
+                groups: [
+                    {
+                        name: "Frontend",
+                        core: ["React", "TypeScript"],
+                        extra: ["JavaScript", "HTML & CSS", "Tailwind CSS", "Zustand"],
+                        use: "Operator screens, dynamic tables, forms and modals connected to in-house REST APIs.",
+                    },
+                    {
+                        name: "Backend",
+                        core: ["C#", "ASP.NET Core (.NET 7/8)"],
+                        extra: ["REST APIs", "EF Core", "Dapper", "JWT", "SignalR", "Node.js"],
+                        use: "REST endpoints, business validation and stock operations inside transactions.",
+                    },
+                    {
+                        name: "Data",
+                        core: ["PostgreSQL", "SQL Server"],
+                        extra: ["SQL", "TimescaleDB", "Triggers", "Row-Level Security"],
+                        use: "Relational design, migrations, transactions and queries for operations and listings.",
+                    },
+                    {
+                        name: "Integration & delivery",
+                        core: ["RabbitMQ", "Docker"],
+                        extra: ["n8n", "ERP APIs", "IIS", "Git", "Gitea Actions", "Stimulsoft"],
+                        use: "Event-based ERP synchronisation, reports and deployments on IIS and Docker with CI/CD.",
+                    },
+                ],
+            },
+            websites: {
+                title: "Web portfolios",
+                text:
+                    "Alongside business software, I design and build portfolios and presentation websites whose visual identity is adapted to each profile and field.",
+                cta: "View the gallery",
+                countSuffix: "published websites",
+            },
+            contact: {
+                title: "Contact",
+                text:
+                    "If you need someone to build or maintain warehouse, manufacturing or ERP integration software, send me an email.",
+                copy: "Copy email",
+                copied: "Email copied to clipboard",
+                copyFailed: "Could not copy. Select the email and copy it manually.",
+                channelsLabel: "Other channels",
+                linkedin: "LinkedIn",
+                linkedinDetail: "Professional profile",
+                github: "GitHub",
+                githubDetail: "Code for my projects",
+                cv: "CV",
+                cvDetail: "PDF",
+                location: "Location",
+                locationDetail: "Valencia, Spain. Open to remote",
+            },
+            footer: {
+                rights: "Jose Ángel Quinto Ferrández",
+                built: "Designed and built by me with React and TypeScript.",
+                source: "Source code of this site",
+                backToTop: "Back to top",
+            },
         },
 
         portfolioDemo: {
