@@ -215,3 +215,29 @@ git restore --source pre-portfolio-redesign-20261121-1627 -- portfolio-react/pub
 Volver a publicar la versión anterior sin reescribir historia: crear un
 commit que revierta los del rediseño (`git revert <sha>…`) en `main` y
 ejecutar `deploy.ps1`. No se ha ejecutado ninguna restauración.
+
+## 8. Despliegue
+
+Por petición expresa, el rediseño se publicó al terminar:
+
+1. `main` avanzó por fast-forward hasta la rama de rediseño (`e49bfc3`).
+2. Build de `portfolio-react` y copia de `dist/` a la raíz, igual que
+   `deploy.ps1` (solo cambian `index.html` y `assets/`; `cv/`,
+   `visual-planner/`, `img/` y los PNG ya eran idénticos).
+3. Commit `356e8dc` ("deploy: publicar el rediseño del portfolio") subido a
+   `origin/main`.
+
+Verificado en `https://joseaquinto.github.io/` tras publicar: carga el
+bundle nuevo (`assets/index-MyVq1cBU.js`), el H1 nuevo, tres enlaces de
+descarga del CV, y `/cv/CV_JoseAngelQuinto_FullStack.pdf` responde 200
+`application/pdf` con SHA-256 `ed08b0db…b8d9`. `visual-planner/` y los
+proyectos de `ProyectosEstudiosGS/*/index.html` responden 200 (la carpeta
+`ProyectosEstudiosGS/` no tiene `index.html` propio; ya daba 404 antes).
+
+Para volver a la versión anterior en producción sin reescribir historia:
+
+```powershell
+git switch main
+git revert --no-edit 356e8dc d5b68d1 3b7dc4d
+.\deploy.ps1 -CommitMessage "Volver al portfolio anterior"
+```
